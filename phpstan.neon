@@ -1,0 +1,12 @@
+parameters:
+    checkMissingIterableValueType: true
+
+    level: 5
+
+    paths:
+        - src
+        - tests
+
+    ignoreErrors:
+        - '#Undefined variable: \$this#'
+        - '#Unsafe usage of new static\(\)#'

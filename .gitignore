@@ -1,0 +1,13 @@
+/_data
+/_markdown
+/.idea
+/build
+/node_modules
+/vendor
+.env
+.env.production
+.env.backup
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+.DS_Store

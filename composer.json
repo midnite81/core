@@ -1,0 +1,50 @@
+{
+    "name": "midnite81/core",
+    "description": "A package for core activity within laravel projects",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Rogers",
+            "email": "webdev@midnite.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Midnite81\\Core\\": "src/",
+            "Midnite81\\Core\\Tests\\": "tests/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.1"
+    },
+    "scripts": {
+        "test": [
+            "@pint",
+            "./vendor/bin/pest --parallel --processes=24"
+        ],
+        "coverage": [
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --processes=24 --coverage --coverage-html build/html --min=70",
+            "open build/html/index.html"
+        ],
+        "stan": "vendor/bin/phpstan --memory-limit=-1",
+        "pint": "vendor/bin/pint -v --config=./pint.json"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.1",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "orchestra/testbench": "^7.6",
+        "phpstan/phpstan": "^1.8"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
