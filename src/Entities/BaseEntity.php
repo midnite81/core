@@ -41,7 +41,7 @@ abstract class BaseEntity
      */
     public function toArray(): array
     {
-        return $this->getInitialisedProperties();
+        return json_decode(json_encode($this->getInitialisedProperties()), true);
     }
 
     /**
