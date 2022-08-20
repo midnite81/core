@@ -25,8 +25,8 @@ it('gets sub string sections', function () {
         ->and($sut->matches)->toBeInstanceOf(Collection::class)
         ->and($sut->matches)->toHaveCount(2)
         ->sequence(
-            fn($match) => $match->toBe('id="dave"'),
-            fn($match) => $match->toBe('dave'),
+            fn ($match) => $match->toBe('id="dave"'),
+            fn ($match) => $match->toBe('dave'),
         );
 });
 
@@ -43,9 +43,9 @@ it('can run global search', function () {
         ->and($sut->matches)->toBeInstanceOf(Collection::class)
         ->and($sut->matches)->toHaveCount(4)
         ->sequence(
-            fn($match) => $match->toContain('foobarbaz'),
-            fn($match) => $match->toContain('foo'),
-            fn($match) => $match->toContain('bar'),
-            fn($match) => $match->toContain('baz'),
-        );;
+            fn ($match) => $match->toContain('foobarbaz'),
+            fn ($match) => $match->toContain('foo'),
+            fn ($match) => $match->toContain('bar'),
+            fn ($match) => $match->toContain('baz'),
+        );
 });

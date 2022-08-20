@@ -12,14 +12,14 @@ class Matches
     public static function match(
         string $pattern,
         string $string,
-        bool   $global = false,
-        int    $flags = 0,
-        int    $offset = 0
+        bool $global = false,
+        int $flags = 0,
+        int $offset = 0
     ): MatchEntity {
         $matches = [];
 
         $function = $global ? 'preg_match_all' : 'preg_match';
-        $matched = (bool)$function($pattern, $string, $matches, $flags, $offset);
+        $matched = (bool) $function($pattern, $string, $matches, $flags, $offset);
 
         return new MatchEntity($matched, new Collection($matches));
     }
