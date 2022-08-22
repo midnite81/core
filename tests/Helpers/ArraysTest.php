@@ -35,3 +35,27 @@ it('orders the array as specified', function () {
             fn ($value) => $value->name->toBe('Trevor'),
         );
 });
+
+it('adds and to an imploded array', function () {
+    $sut = Arrays::implodeAnd(['one', 'two', 'three']);
+
+    expect($sut)
+        ->toBeString()
+        ->toBe('one, two and three');
+});
+
+it('adds or to an imploded array', function () {
+    $sut = Arrays::implodeOr(['one', 'two', 'three']);
+
+    expect($sut)
+        ->toBeString()
+        ->toBe('one, two or three');
+});
+
+it('adds specified word to an imploded array', function () {
+    $sut = Arrays::implodePenultimate(['one', 'two', 'three'], 'and/or');
+
+    expect($sut)
+        ->toBeString()
+        ->toBe('one, two and/or three');
+});
