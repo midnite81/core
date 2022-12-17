@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Helpers;
 
+use Midnite81\Core\Exceptions\Arrays\ArrayKeyAlreadyExistsException;
+
 class Arrays
 {
     public static function arrayOrderBy()
@@ -73,5 +75,32 @@ class Arrays
         $both = array_filter(array_merge([$first], $last), 'strlen');
 
         return implode(" $penultimateWord ", $both);
+    }
+
+    /**
+     * Renames a key in an array, overwriting the existing key if it exists, and removes the old key
+     *
+     * @param array $array
+     * @param string $oldKey
+     * @param string $newKey
+     * @param bool $throwIfNewKeyAlreadyExists
+     * @return void
+     * @throws ArrayKeyAlreadyExistsException
+     */
+    public static function renameKey(
+        array &$array,
+        string $oldKey,
+        string $newKey,
+        bool $throwIfNewKeyAlreadyExists = false
+    ): void
+    {
+        if (array_key_exists($newKey, $array) && $throwIfNewKeyAlreadyExists) {
+            throw new ArrayKeyAlreadyExistsException($newKey);
+        }
+
+        if (array_key_exists($oldKey, $array)) {
+            $array[$newKey] = $array[$oldKey];
+            unset($array[$oldKey]);
+        }
     }
 }
