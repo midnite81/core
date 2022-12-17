@@ -284,6 +284,12 @@ abstract class BaseEntity
         return new ReflectionClass($this);
     }
 
+    /**
+     * Determines if a property has been initialised
+     *
+     * @param string $propertyName
+     * @return bool
+     */
     protected function isPropertyInitialised(string $propertyName): bool
     {
         $reflection = $this->getReflection();
