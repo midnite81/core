@@ -9,8 +9,10 @@ use Illuminate\Support\Collection;
 use Midnite81\Core\Attributes\IgnoreProperty;
 use Midnite81\Core\Attributes\PropertiesMustBeInitialised;
 use Midnite81\Core\Attributes\PropertyName;
+use Midnite81\Core\Attributes\RequiredProperty;
 use Midnite81\Core\Exceptions\Entities\DuplicatePropertyNameException;
 use Midnite81\Core\Exceptions\Entities\PropertiesMustBeInitialisedException;
+use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -38,6 +40,8 @@ abstract class BaseEntity
      * Returns the initialised properties of the entity as an array
      *
      * @return array<string, mixed>
+     *
+     * @throws PropertyIsRequiredException
      */
     public function toArray(): array
     {
@@ -49,6 +53,8 @@ abstract class BaseEntity
      *
      * @param  array  $limitToKeys
      * @return array
+     *
+     * @throws PropertyIsRequiredException
      */
     public function toLimitedArray(array $limitToKeys = []): array
     {
@@ -65,6 +71,8 @@ abstract class BaseEntity
      * Returns the initialised properties of the entity as a Json String
      *
      * @return string
+     *
+     * @throws PropertyIsRequiredException
      */
     public function toJson(): string
     {
@@ -73,6 +81,8 @@ abstract class BaseEntity
 
     /**
      * @return string
+     *
+     * @throws PropertyIsRequiredException
      */
     public function toQueryString(): string
     {
@@ -100,7 +110,7 @@ abstract class BaseEntity
 
     public function getPublicProperties(): array
     {
-        $reflection = new ReflectionClass($this);
+        $reflection = $this->getReflection();
 
         $properties = collect($reflection->getProperties(ReflectionProperty::IS_PUBLIC));
 
@@ -111,10 +121,13 @@ abstract class BaseEntity
      * Gets an array of initialised public properties
      *
      * @return array<string, mixed>
+     *
+     * @throws PropertyIsRequiredException
      */
     public function getInitialisedProperties(): array
     {
-        $reflection = new ReflectionClass($this);
+        $this->checkRequiredPropertiesAreFilled();
+        $reflection = $this->getReflection();
 
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
 
@@ -150,7 +163,7 @@ abstract class BaseEntity
      */
     public function allPropertiesInitialised(): bool
     {
-        $reflection = new ReflectionClass($this);
+        $reflection = $this->getReflection();
 
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
         $total = count($properties);
@@ -172,7 +185,7 @@ abstract class BaseEntity
      */
     protected function checkForIdenticalPropertyNameAttributeNames(): void
     {
-        $reflection = new ReflectionClass($this);
+        $reflection = $this->getReflection();
 
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
 
@@ -226,6 +239,8 @@ abstract class BaseEntity
     }
 
     /**
+     * Returns entity properties which have a key which is passed in $limitToKeys
+     *
      * @param  array  $entityProperties
      * @param  array  $limitToKeys
      * @return array
@@ -235,5 +250,37 @@ abstract class BaseEntity
         return array_filter($entityProperties, function ($key) use ($limitToKeys) {
             return in_array($key, $limitToKeys);
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * Checks to see if all required properties are initialised and not empty
+     *
+     * @return void
+     *
+     * @throws PropertyIsRequiredException
+     */
+    protected function checkRequiredPropertiesAreFilled(): void
+    {
+        $reflection = $this->getReflection();
+
+        $properties = $reflection->getProperties();
+
+        foreach ($properties as $property) {
+            if ($property->getAttributes(RequiredProperty::class)) {
+                if (!$property->isInitialized($this) || empty($property->getValue($this))) {
+                    throw new PropertyIsRequiredException($property->getName());
+                }
+            }
+        }
+    }
+
+    /**
+     * Get reflection class
+     *
+     * @return ReflectionClass
+     */
+    protected function getReflection(): ReflectionClass
+    {
+        return new ReflectionClass($this);
     }
 }
