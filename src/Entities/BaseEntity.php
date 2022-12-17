@@ -283,4 +283,18 @@ abstract class BaseEntity
     {
         return new ReflectionClass($this);
     }
+
+    protected function isPropertyInitialised(string $propertyName): bool
+    {
+        $reflection = $this->getReflection();
+        $properties = $reflection->getProperties();
+
+        foreach($properties as $property) {
+            if ($property->getName() === $propertyName) {
+                return $property->isInitialized($this);
+            }
+        }
+
+        return false;
+    }
 }
