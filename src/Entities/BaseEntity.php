@@ -76,7 +76,7 @@ abstract class BaseEntity
      */
     public function toJson(): string
     {
-        return json_encode($this->getInitialisedProperties());
+        return json_encode($this->toArray());
     }
 
     /**
@@ -287,7 +287,7 @@ abstract class BaseEntity
     /**
      * Determines if a property has been initialised
      *
-     * @param string $propertyName
+     * @param  string  $propertyName
      * @return bool
      */
     protected function isPropertyInitialised(string $propertyName): bool
@@ -295,7 +295,7 @@ abstract class BaseEntity
         $reflection = $this->getReflection();
         $properties = $reflection->getProperties();
 
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
             if ($property->getName() === $propertyName) {
                 return $property->isInitialized($this);
             }

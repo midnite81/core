@@ -28,12 +28,12 @@ it('orders the array as specified', function () {
         ->toBeArray()
         ->toHaveCount(3)
         ->sequence(
-        /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Bernard'),
             /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Sharon'),
+            fn ($value) => $value->name->toBe('Bernard'),
             /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Trevor'),
+            fn ($value) => $value->name->toBe('Sharon'),
+            /* @phpstan-ignore-next-line */
+            fn ($value) => $value->name->toBe('Trevor'),
         );
 });
 
@@ -86,7 +86,7 @@ it('throws if array key exists already', function () {
         'address' => '123 Fake Street',
     ];
 
-    expect(fn() => Arrays::renameKey($sutArray, 'age', 'name', true))
+    expect(fn () => Arrays::renameKey($sutArray, 'age', 'name', true))
         ->toThrow(
             ArrayKeyAlreadyExistsException::class,
             'The key [name] already exists in the array'

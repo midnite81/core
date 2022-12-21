@@ -80,11 +80,12 @@ class Arrays
     /**
      * Renames a key in an array, overwriting the existing key if it exists, and removes the old key
      *
-     * @param array $array
-     * @param string $oldKey
-     * @param string $newKey
-     * @param bool $throwIfNewKeyAlreadyExists
+     * @param  array  $array
+     * @param  string  $oldKey
+     * @param  string  $newKey
+     * @param  bool  $throwIfNewKeyAlreadyExists
      * @return void
+     *
      * @throws ArrayKeyAlreadyExistsException
      */
     public static function renameKey(
@@ -92,8 +93,7 @@ class Arrays
         string $oldKey,
         string $newKey,
         bool $throwIfNewKeyAlreadyExists = false
-    ): void
-    {
+    ): void {
         if (array_key_exists($newKey, $array) && $throwIfNewKeyAlreadyExists) {
             throw new ArrayKeyAlreadyExistsException($newKey);
         }
