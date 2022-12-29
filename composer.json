@@ -15,7 +15,8 @@
             "Midnite81\\Core\\Tests\\": "tests/"
         },
         "files": [
-            "src/Functions/uuid.php"
+            "src/Functions/uuid.php",
+            "src/Functions/first.php"
         ]
     },
     "autoload-dev": {
