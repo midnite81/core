@@ -55,7 +55,7 @@ class HumanReadableNumber
             }
         }
 
-        return (string)$this->number ?? '';
+        return !is_null($this->number) ? (string)$this->number : '';
     }
 
     /**
@@ -72,7 +72,7 @@ class HumanReadableNumber
         try {
             return $this->humanReadable($numberOfDecimals);
         } catch (NumberCannotBeNullException) {
-            return (string)$this->number ?? '';
+            return !is_null($this->number) ? (string)$this->number : '';
         }
     }
 
