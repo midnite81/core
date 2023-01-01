@@ -26,6 +26,6 @@ it('throws an exception when the number is null', function () {
     (new HumanReadableNumber())->humanReadable();
 })->throws(NumberCannotBeNullException::class);
 
-it('contains an acception when trying to resolve a human formatted number', function () {
+it('contains an exception when trying to resolve a human formatted number', function () {
     expect((new HumanReadableNumber())->tryHumanReadable())->toBe('');
 });

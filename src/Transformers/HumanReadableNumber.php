@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Transformers;
 
-use Midnite81\Core\Exceptions\Transformers\CannotCalculateHumanReadableNumberException;
 use Midnite81\Core\Exceptions\Transformers\NumberCannotBeNullException;
 
 class HumanReadableNumber
@@ -42,7 +41,6 @@ class HumanReadableNumber
      *
      * @param int|null $numberOfDecimals
      * @return string
-     * @throws CannotCalculateHumanReadableNumberException
      * @throws NumberCannotBeNullException
      */
     public function humanReadable(?int $numberOfDecimals = null): string
@@ -57,7 +55,7 @@ class HumanReadableNumber
             }
         }
 
-        throw new CannotCalculateHumanReadableNumberException();
+        return (string)$this->number ?? '';
     }
 
     /**
@@ -73,7 +71,7 @@ class HumanReadableNumber
     {
         try {
             return $this->humanReadable($numberOfDecimals);
-        } catch (CannotCalculateHumanReadableNumberException|NumberCannotBeNullException) {
+        } catch (NumberCannotBeNullException) {
             return (string)$this->number ?? '';
         }
     }
@@ -86,11 +84,29 @@ class HumanReadableNumber
     protected function getExponentAbbreviations(): array
     {
         return [
+            30 => 'Q',
+            27 => 'R',
+            24 => 'Y',
+            21 => 'Z',
+            18 => 'E',
+            15 => 'P',
             12 => 'T',
             9 => 'B',
             6 => 'M',
             3 => 'K',
-            0 => ''
+            0 => '',
+            -3 => 'm',
+            -6 => 'μ',
+            -9 => 'n',
+            -12 => 'p',
+            -15 => 'f',
+            -18 => 'a',
+            -21 => 'z',
+            -24 => 'y',
+            -27 => 'x',
+            -30 => 'w',
+            -33 => 'v',
+            -36 => 'u',
         ];
     }
 
@@ -125,8 +141,7 @@ class HumanReadableNumber
      */
     protected function getNumberOfDecimals(int|string $exponent, float|int $displayNumber): int
     {
-
-        return ($exponent >= 3 && round($displayNumber) < 1000 && !$this->isWholeNumber($displayNumber)) ? 1 : 0;
+        return ($exponent >= 3 && round(abs($displayNumber)) < 1000 && !$this->isWholeNumber($displayNumber)) ? 1 : 0;
     }
 
     /**
@@ -143,6 +158,4 @@ class HumanReadableNumber
 
         return is_float($value) && $value == floor($value);
     }
-
-
 }
