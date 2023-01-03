@@ -13,19 +13,22 @@ class CoreCommandServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $commandFiles = (new Filesystem())->allFiles(__DIR__ . '/Commands');
+            $commandFiles = collect((new Filesystem())->allFiles(__DIR__ . '/Commands'));
 
-            $commands = array_map(function (SplFileInfo $fileInfo) {
-                $file = $fileInfo->getRelativePathname();
-                $namespace = '\\Midnite81\\Core\\Commands';
-                if (dirname($file) !== '.') {
-                    $namespace .= "\\" . str_replace('/', '\\', dirname($file));
-                }
-                return $namespace . '\\' . basename($file, '.php');
-            }, $commandFiles);
+            $commands = $commandFiles
+                ->filter(function (SplFileInfo $fileInfo) {
+                    return !str_contains($fileInfo->getRelativePathname(), 'Traits');
+                })
+                ->map(function (SplFileInfo $fileInfo) {
+                    $file = $fileInfo->getRelativePathname();
+                    $namespace = '\\Midnite81\\Core\\Commands';
+                    if (dirname($file) !== '.') {
+                        $namespace .= "\\" . str_replace('/', '\\', dirname($file));
+                    }
+                    return $namespace . '\\' . basename($file, '.php');
+                });
 
             $this->commands($commands);
         }
-
     }
 }
