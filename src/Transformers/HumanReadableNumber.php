@@ -15,7 +15,7 @@ class HumanReadableNumber
     /**
      * Factory create of the Number Transformer
      *
-     * @param int|float $number
+     * @param  int|float  $number
      * @return static
      */
     public static function make(int|float $number): self
@@ -26,12 +26,13 @@ class HumanReadableNumber
     /**
      * Method to set the number outside the constructor
      *
-     * @param int|float $number
+     * @param  int|float  $number
      * @return $this
      */
     public function of(int|float $number): static
     {
         $this->number = $number;
+
         return $this;
     }
 
@@ -39,8 +40,9 @@ class HumanReadableNumber
      * Gets the human readable version of the number passed to this class
      * Note: returned as string
      *
-     * @param int|null $numberOfDecimals
+     * @param  int|null  $numberOfDecimals
      * @return string
+     *
      * @throws NumberCannotBeNullException
      */
     public function humanReadable(?int $numberOfDecimals = null): string
@@ -51,11 +53,12 @@ class HumanReadableNumber
             if ($this->number >= pow(10, $exponent)) {
                 $displayNumber = $this->number / pow(10, $exponent);
                 $decimals = $numberOfDecimals ?? $this->getNumberOfDecimals($exponent, $displayNumber);
+
                 return number_format($displayNumber, $decimals) . $abbreviation;
             }
         }
 
-        return !is_null($this->number) ? (string)$this->number : '';
+        return !is_null($this->number) ? (string) $this->number : '';
     }
 
     /**
@@ -64,7 +67,7 @@ class HumanReadableNumber
      *
      * Note: This method will return a string
      *
-     * @param int|null $numberOfDecimals
+     * @param  int|null  $numberOfDecimals
      * @return string
      */
     public function tryHumanReadable(?int $numberOfDecimals = null): string
@@ -72,7 +75,7 @@ class HumanReadableNumber
         try {
             return $this->humanReadable($numberOfDecimals);
         } catch (NumberCannotBeNullException) {
-            return !is_null($this->number) ? (string)$this->number : '';
+            return !is_null($this->number) ? (string) $this->number : '';
         }
     }
 
@@ -114,6 +117,7 @@ class HumanReadableNumber
      * Checks to ensure the number is set
      *
      * @return void
+     *
      * @throws NumberCannotBeNullException
      */
     protected function checkReady(): void
@@ -135,8 +139,8 @@ class HumanReadableNumber
      * hand, if the original value is 999.999, the abbreviated value without decimal places would be 1000, which
      * is easier to read than 999.999K.
      *
-     * @param int|string $exponent
-     * @param float|int $displayNumber
+     * @param  int|string  $exponent
+     * @param  float|int  $displayNumber
      * @return int
      */
     protected function getNumberOfDecimals(int|string $exponent, float|int $displayNumber): int
@@ -147,7 +151,7 @@ class HumanReadableNumber
     /**
      * This determines if a number is a whole number
      *
-     * @param float|int $value
+     * @param  float|int  $value
      * @return bool
      */
     protected function isWholeNumber(float|int $value): bool

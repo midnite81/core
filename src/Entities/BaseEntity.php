@@ -10,6 +10,7 @@ use Midnite81\Core\Attributes\IgnoreProperty;
 use Midnite81\Core\Attributes\PropertiesMustBeInitialised;
 use Midnite81\Core\Attributes\PropertyName;
 use Midnite81\Core\Attributes\RequiredProperty;
+use Midnite81\Core\Enums\ExpectedType;
 use Midnite81\Core\Exceptions\Entities\DuplicatePropertyNameException;
 use Midnite81\Core\Exceptions\Entities\PropertiesMustBeInitialisedException;
 use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
@@ -176,6 +177,34 @@ abstract class BaseEntity
         }
 
         return $total === $initialised;
+    }
+
+    protected function parseData(
+        object|array|string $data,
+        ExpectedType $expectedResponse = ExpectedType::Object
+    ): object|array|string {
+        if ((is_string($data) && $expectedResponse === ExpectedType::String) ||
+            (is_array($data) && $expectedResponse === ExpectedType::Array) ||
+            (is_object($data) && $expectedResponse === ExpectedType::Object)
+        ) {
+            return $data;
+        }
+
+        if (is_string($data) && in_array($expectedResponse, [ExpectedType::Object, ExpectedType::Array])) {
+            $assocArray = $expectedResponse === ExpectedType::Array;
+
+            return json_decode($data, $assocArray);
+        }
+
+        if (is_array($data) && $expectedResponse === ExpectedType::Object) {
+            return json_decode(json_encode($data));
+        }
+
+        if (is_object($data) && $expectedResponse === ExpectedType::Array) {
+            return (array) $data;
+        }
+
+        return $data;
     }
 
     /**
