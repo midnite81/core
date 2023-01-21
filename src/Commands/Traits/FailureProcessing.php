@@ -11,15 +11,14 @@ trait FailureProcessing
     /**
      * Displays a message and ends the script with a failure status
      *
-     * @param \Exception|string $error
-     * @param string $resolution
+     * @param  \Exception|string  $error
+     * @param  string  $resolution
      * @return int
      */
     protected function failure(
         \Exception|string $error = 'Something went wrong',
-        string $resolution = ""
-    ): int
-    {
+        string $resolution = ''
+    ): int {
         $this->error('There was an error');
         if ($error instanceof \Exception) {
             $this->error('Message: ' . $error->getMessage());

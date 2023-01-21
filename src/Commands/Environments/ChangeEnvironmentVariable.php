@@ -37,7 +37,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Create a new command instance.
-     *
      */
     public function __construct()
     {
@@ -62,6 +61,7 @@ class ChangeEnvironmentVariable extends Command
     {
         if (!$this->proceedWhenInProduction()) {
             $this->info('The command has been cancelled as you are in production');
+
             return Command::SUCCESS;
         }
 
@@ -80,9 +80,9 @@ class ChangeEnvironmentVariable extends Command
 
         $this->save($env);
         $this->info('The environmental file has been updated');
+
         return Command::SUCCESS;
     }
-
 
     /**
      * Gets and returns the env file
@@ -109,7 +109,7 @@ class ChangeEnvironmentVariable extends Command
      */
     protected function keyExists($argument, $envFile): int
     {
-        return preg_match("/^" . $argument . "=/mi", $envFile);
+        return preg_match('/^' . $argument . '=/mi', $envFile);
     }
 
     /**
@@ -142,7 +142,7 @@ class ChangeEnvironmentVariable extends Command
     /**
      * Saves the env file
      *
-     * @param string $contents
+     * @param  string  $contents
      * @return bool|int
      */
     protected function save(string $contents): bool|int
@@ -195,6 +195,7 @@ class ChangeEnvironmentVariable extends Command
 
             if (!in_array(strtolower($confirmation), ['y', 'yes'])) {
                 $this->info('Abandoned change');
+
                 return false;
             }
         }
@@ -222,6 +223,7 @@ class ChangeEnvironmentVariable extends Command
      * Finds the environmental file path
      *
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function getEnvironmentalFilePath(): string
@@ -238,8 +240,9 @@ class ChangeEnvironmentVariable extends Command
     }
 
     /**
-     * @param string $path
+     * @param  string  $path
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function find(string $path): string
@@ -250,5 +253,4 @@ class ChangeEnvironmentVariable extends Command
 
         return $path;
     }
-
 }

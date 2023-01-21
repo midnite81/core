@@ -31,14 +31,13 @@ class CreateBlankCopyOfEnvironmentFile extends Command
     /**
      * Create a new command instance.
      *
-     * @param Application $app
-     * @param Filesystem $files
+     * @param  Application  $app
+     * @param  Filesystem  $files
      */
     public function __construct(
         protected Application $app,
         protected Filesystem $files
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -46,6 +45,7 @@ class CreateBlankCopyOfEnvironmentFile extends Command
      * Execute the console command.
      *
      * @return int
+     *
      * @throws FileNotFoundException
      */
     public function handle(): int
@@ -64,9 +64,11 @@ class CreateBlankCopyOfEnvironmentFile extends Command
 
             $this->files->put($saveLocation, $freshCopy);
             $this->info("Blank env stored at: {$saveLocation}");
+
             return Command::SUCCESS;
         } else {
             $this->failure("Cannot find the env file: {$this->app->environmentFilePath()}");
+
             return Command::FAILURE;
         }
     }

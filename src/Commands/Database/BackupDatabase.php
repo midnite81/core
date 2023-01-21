@@ -21,6 +21,7 @@ class BackupDatabase extends Command
                            {chmod? : The chmod for any directories created e.g 0777}
                            {directory? : The directory in the storage folder you want to save to}
                            {--abs : This option allows you to specific any directory}';
+
     /**
      * The console command description.
      *
@@ -63,11 +64,11 @@ class BackupDatabase extends Command
         try {
             exec($command);
             $this->line("Database backed up to {$this->filePath}");
+
             return Command::SUCCESS;
         } catch (\Exception $e) {
             return $this->failure($e);
         }
-
     }
 
     /**
@@ -87,13 +88,12 @@ class BackupDatabase extends Command
         $filename = escapeshellarg($this->filename($connectionName));
 
         return "mysqldump -u $username --password=$password $database -h $host -P $port > $filename";
-
     }
 
     /**
      * Creates directory if it doesn't exist and returns a filename to write backup to
      *
-     * @param string $connectionName
+     * @param  string  $connectionName
      * @return string
      */
     public function filename(string $connectionName): string

@@ -12,10 +12,10 @@ it('returns the second value', function () {
     expect(first_value('', 'b', 'c'))->toBe('b');
 });
 
-it('returns the second value after first value is null', function() {
+it('returns the second value after first value is null', function () {
     expect(first_value(null, 'b', 'c'))->toBe('b');
 });
 
-it('returns the second value after first value is empty', function() {
+it('returns the second value after first value is empty', function () {
     expect(first_value('', ['b' => 'b'], ['c' => 'c']))->toBe(['b' => 'b']);
 });

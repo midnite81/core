@@ -23,8 +23,9 @@ class CoreCommandServiceProvider extends ServiceProvider
                     $file = $fileInfo->getRelativePathname();
                     $namespace = '\\Midnite81\\Core\\Commands';
                     if (dirname($file) !== '.') {
-                        $namespace .= "\\" . str_replace('/', '\\', dirname($file));
+                        $namespace .= '\\' . str_replace('/', '\\', dirname($file));
                     }
+
                     return $namespace . '\\' . basename($file, '.php');
                 });
 

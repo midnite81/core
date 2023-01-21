@@ -29,6 +29,7 @@ class GetEnvironmentVariable extends Command
     public function handle(): int
     {
         $this->info(env($this->argument('key')));
+
         return Command::SUCCESS;
     }
 }
