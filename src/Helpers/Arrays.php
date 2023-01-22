@@ -94,6 +94,10 @@ class Arrays
         string $newKey,
         bool $throwIfNewKeyAlreadyExists = false
     ): void {
+        if ($oldKey === $newKey) {
+            return;
+        }
+
         if (array_key_exists($newKey, $array) && $throwIfNewKeyAlreadyExists) {
             throw new ArrayKeyAlreadyExistsException($newKey);
         }
