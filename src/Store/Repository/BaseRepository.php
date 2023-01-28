@@ -13,6 +13,13 @@ abstract class BaseRepository
     protected Model $model;
 
     /**
+     * Sort by order
+     * example [['column' => 'asc/desc']]
+     * @var array<array<string, string>>
+     */
+    protected array $orderBy = [];
+
+    /**
      * @param  int  $id
      * @return Model|null
      */
@@ -77,7 +84,15 @@ abstract class BaseRepository
      */
     protected function internalListAll(): Collection
     {
-        return $this->model->all();
+        $build = $this->model->newQuery();
+
+        if (!empty($this->orderBy)) {
+            foreach($this->orderBy as $column => $direction) {
+                $build->orderBy($column, $direction);
+            }
+        }
+
+        return $build->get();
     }
 
     /**
@@ -89,6 +104,12 @@ abstract class BaseRepository
     {
         $build = $this->model->newQuery();
 
+        if (!empty($this->orderBy)) {
+            foreach($this->orderBy as $column => $direction) {
+                $build->orderBy($column, $direction);
+            }
+        }
+
         if (is_array($value)) {
             $build->whereIn($column, $value);
         } else {
@@ -96,5 +117,18 @@ abstract class BaseRepository
         }
 
         return $build->get();
+    }
+
+
+    /**
+     * Sort by order
+     * example [['column' => 'asc/desc']]
+     * @param array $orderBy
+     * @return BaseRepository
+     */
+    protected function setOrderBy(array $orderBy): BaseRepository
+    {
+        $this->orderBy = $orderBy;
+        return $this;
     }
 }
