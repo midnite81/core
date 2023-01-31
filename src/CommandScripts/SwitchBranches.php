@@ -28,7 +28,7 @@ class SwitchBranches extends AbstractCommandScript
             $command->info("> {$cmd}");
             $returnCode = $execute->passthru($cmd);
 
-            if ($returnCode > 0 && $command->abortOnFailure) {
+            if ($returnCode > 0 && $command->abortOnFailure()) {
                 throw new CommandFailedException($cmd);
             }
         }

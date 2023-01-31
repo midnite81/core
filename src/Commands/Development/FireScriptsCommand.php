@@ -27,7 +27,7 @@ class FireScriptsCommand extends Command
      * Whether the runner should abort on failure
      * @var bool
      */
-    public readonly bool $abortOnFailure;
+    protected bool $abortOnFailure;
 
     /**
      * The array of script profiles
@@ -46,9 +46,6 @@ class FireScriptsCommand extends Command
         protected ExecuteInterface $execute
     )
     {
-        $this->abortOnFailure = $this->option('abortOnFailure')
-            ?? config('core-ignition.abort-on-failure', false);
-
         $this->profiles = config('core-ignition.profiles', []);
 
         $this->defaultProfile = config('core-ignition.default-profile', 'default');
@@ -63,6 +60,9 @@ class FireScriptsCommand extends Command
      */
     public function handle(): int
     {
+        $this->abortOnFailure = $this->option('abortOnFailure')
+            ?? config('core-ignition.abort-on-failure', false);
+
         try {
             if ($this->argument('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
@@ -95,6 +95,14 @@ class FireScriptsCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function abortOnFailure(): bool
+    {
+        return $this->abortOnFailure;
     }
 
     /**
