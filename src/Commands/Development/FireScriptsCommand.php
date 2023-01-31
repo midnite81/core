@@ -15,19 +15,19 @@ class FireScriptsCommand extends Command
 {
     use AskYesNo;
 
-    protected $signature = 'scripts:fire {args* : This is the main argument passed to the command (used more in classes)}
-                                         {--profile= : This allows you pass the profile as an option}
-                                         {--script= : This allows you to pass a script shortcut as defined in the config}
-                                         {--silent : Forces the command to run silently}
-                                         {--abortOnFailure : Aborts on failure}';
+    protected $signature = 'run:scripts {args* : This is the main argument passed to the command (used more in classes)}
+                                        {--profile= : This allows you pass the profile as an option}
+                                        {--script= : This allows you to pass a script shortcut as defined in the config}
+                                        {--silent : Forces the command to run silently}
+                                        {--abortOnFailure : Aborts on failure}';
 
-    protected $description = 'Runs predefined scripts';
+    protected $description = 'Runs predefined scripts from core-ignition config';
 
     /**
      * Whether the runner should abort on failure
      * @var bool
      */
-    public bool $abortOnFailure;
+    public readonly bool $abortOnFailure;
 
     /**
      * The array of script profiles
