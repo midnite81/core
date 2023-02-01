@@ -18,11 +18,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Abort on failure
+    | Default setting for Abort on failure
     |--------------------------------------------------------------------------
     | If a script in the sequence fails, should the next scripts continue?
     | If they should, set 'abort-on-failure' to false, however if they
-    | should abort on a failed script then set it to true.
+    | should abort on a failed script then set it to true. This is a
+    | default setting you can add a flag to turn it on during runtime
     |
     */
     'abort-on-failure' => false,
@@ -68,8 +69,9 @@ return [
     |--------------------------------------------------------------------------
     | Scripts
     |--------------------------------------------------------------------------
-    | These are short cuts to running profiles.
-    |
+    | These are shortcuts to running profiles. The key is the name of the
+    | shortcut the array value is the arguments and options sent to the
+    | fire scripts command
     |
     */
     'scripts' => [
