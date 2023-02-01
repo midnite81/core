@@ -38,7 +38,8 @@
             "open build/html/index.html"
         ],
         "stan": "vendor/bin/phpstan --memory-limit=-1",
-        "pint": "vendor/bin/pint -v --config=./pint.json"
+        "pint": "vendor/bin/pint -v --config=./pint.json",
+        "docu": "php _bin/phpDocumentor.phar run -d src/ -t docs/"
     },
     "require-dev": {
         "laravel/pint": "^1.1",

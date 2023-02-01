@@ -1,4 +1,6 @@
 /_bin
+/.phpdoc
+/docs
 /_data
 /_markdown
 /.idea
