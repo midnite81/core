@@ -153,25 +153,6 @@ class FireScriptsCommand extends Command
     }
 
     /**
-     * @return bool
-     */
-    public function isSilent(): bool
-    {
-        return $this->silent;
-    }
-
-    /**
-     * This allows the user to define additional options in an array which can
-     * be made available to any extension scripts extending AbstractCommand Script
-     *
-     * @return array
-     */
-    public function getOptionsArray(): array
-    {
-        return $this->optionsArray;
-    }
-
-    /**
      * @param string $profile
      * @return array
      * @throws ProfileDoesNotExistException
