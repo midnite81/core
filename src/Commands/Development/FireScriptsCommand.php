@@ -77,7 +77,7 @@ class FireScriptsCommand extends Command
             if (!empty($scripts)) {
                 foreach ($scripts as $question => $script) {
                     if ($this->isScriptClass($script, $question)) {
-                        $this->executeClass($script, $this->execute);
+                        $this->executeClass($script);
                     } else {
                         if ($this->askYesNo($question)) {
                             $this->executeCommand($script);
