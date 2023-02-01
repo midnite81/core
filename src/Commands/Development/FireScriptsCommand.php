@@ -289,8 +289,12 @@ class FireScriptsCommand extends Command
      */
     protected function parseExtendedOptions(): void
     {
-        $this->optionsArray = array_reduce($this->option('options'), function($carry, $item) {
-            list($key, $value) = explode("|", $item);
+        $options = $this->option('options');
+
+        $this->optionsArray = array_reduce($options, function ($carry, $item) {
+            $parts = explode("|", $item);
+            $key = count($parts) > 1 ? $parts[0] : $item;
+            $value = count($parts) > 1 ? $parts[1] : $item;
             $carry[$key] = $value;
             return $carry;
         }, []);
