@@ -30,6 +30,13 @@ class FireScriptsCommand extends Command
     protected bool $abortOnFailure;
 
     /**
+     * If this should be run silently
+     *
+     * @var bool
+     */
+    protected bool $silent;
+
+    /**
      * The array of script profiles
      * @var array
      */
@@ -62,6 +69,8 @@ class FireScriptsCommand extends Command
         $this->abortOnFailure = $this->option('abortOnFailure')
             ?? config('core-ignition.abort-on-failure', false);
 
+        $this->silent = $this->option('silent');
+
         try {
             if ($this->hasOption('script') && $this->option('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
@@ -79,7 +88,7 @@ class FireScriptsCommand extends Command
                     if ($this->isScriptClass($script, $question)) {
                         $this->executeClass($script);
                     } else {
-                        if ($this->askYesNo($question)) {
+                        if ($this->silent || $this->askYesNo($question)) {
                             $this->executeCommand($script);
                         }
                     }
@@ -115,6 +124,14 @@ class FireScriptsCommand extends Command
     public function askYesNoQuestion(string $question): bool
     {
         return $this->askYesNo($question);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSilent(): bool
+    {
+        return $this->silent;
     }
 
     /**
