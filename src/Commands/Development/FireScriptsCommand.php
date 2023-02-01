@@ -63,13 +63,13 @@ class FireScriptsCommand extends Command
             ?? config('core-ignition.abort-on-failure', false);
 
         try {
-            if ($this->hasArgument('script') && $this->argument('script') !== null) {
+            if ($this->hasOption('script') && $this->option('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
                 return $this->call('ignite:scripts', $scriptArguments);
             }
 
-            $profile = $this->hasArgument('profile')
-                ? $this->argument('profile')
+            $profile = $this->hasOption('profile')
+                ? $this->option('profile')
                 : $this->defaultProfile;
             $scripts = $this->getProfileScripts($profile);
             $this->info("Running script profile [$profile]");
@@ -77,7 +77,7 @@ class FireScriptsCommand extends Command
             if (!empty($scripts)) {
                 foreach ($scripts as $question => $script) {
                     if ($this->isScriptClass($script, $question)) {
-                        $this->executeClass($script);
+                        $this->executeClass($script, $this->execute);
                     } else {
                         if ($this->askYesNo($question)) {
                             $this->executeCommand($script);
