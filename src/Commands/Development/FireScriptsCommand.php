@@ -28,39 +28,39 @@ class FireScriptsCommand extends Command
      * Whether the runner should abort on failure
      * @var bool
      */
-    protected bool $abortOnFailure;
+    public bool $abortOnFailure;
 
     /**
      * If this should be run silently
      *
      * @var bool
      */
-    protected bool $silent;
+    public bool $silent;
 
     /**
      * The array of script profiles
      * @var array
      */
-    protected array $profiles;
+    public array $profiles;
 
     /**
      * The default profile
      * @var string
      */
-    protected mixed $defaultProfile;
+    public mixed $defaultProfile;
 
     /**
      * This allows the user to define additional options in an array which can
      * be made available to any extension scripts extending AbstractCommand Script
      * @var array
      */
-    protected array $optionsArray = [];
+    public array $optionsArray = [];
 
     /**
      * The command name of this command
      * @var string
      */
-    protected string $commandName;
+    public string $commandName;
 
 
     public function __construct(
