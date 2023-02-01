@@ -15,7 +15,7 @@ class FireScriptsCommand extends Command
 {
     use AskYesNo;
 
-    protected $signature = 'run:scripts {args* : This is the main argument passed to the command (used more in classes)}
+    protected $signature = 'run:scripts {args?* : This is the main argument passed to the command (used more in classes)}
                                         {--profile= : This allows you pass the profile as an option}
                                         {--script= : This allows you to pass a script shortcut as defined in the config}
                                         {--silent : Forces the command to run silently}
