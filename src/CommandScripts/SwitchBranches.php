@@ -24,7 +24,7 @@ class SwitchBranches extends AbstractCommandScript
             $checkoutType = $command->hasOption('new') && $command->option('new') ? "new" : "existing";
             $command->info("Checking out to {$checkoutType} branch {$branchName}");
 
-            $isNewBranch = $command->ask('Is this a new branch?');
+            $isNewBranch = $command->askYesNoQuestion('Is this a new branch?');
             $checkoutBranch = $isNewBranch ? "-b" : "";
             $cmd = "git checkout {$checkoutBranch} {$branchName}";
             $command->info("> {$cmd}");

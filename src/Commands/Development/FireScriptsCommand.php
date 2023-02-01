@@ -107,6 +107,17 @@ class FireScriptsCommand extends Command
     }
 
     /**
+     * Allowed use of the yes/no asking in extended classes
+     *
+     * @param string $question
+     * @return bool
+     */
+    public function askYesNoQuestion(string $question): bool
+    {
+        return $this->askYesNo($question);
+    }
+
+    /**
      * @param string $profile
      * @return array
      * @throws ProfileDoesNotExistException
