@@ -20,7 +20,8 @@ class FireScriptsCommand extends Command
                                         {--profile= : This allows you pass the profile as an option}
                                         {--script= : This allows you to pass a script shortcut as defined in the config}
                                         {--silent : Forces the command to run silently}
-                                        {--abortOnFailure : Aborts on failure}';
+                                        {--abortOnFailure : Aborts on failure}
+                                        {--options=* : This allows you to pass additional options}';
 
     protected $description = 'Runs predefined scripts from core-ignition config';
 
@@ -49,6 +50,13 @@ class FireScriptsCommand extends Command
      */
     protected mixed $defaultProfile;
 
+    /**
+     * This allows the user to define additional options in an array which can
+     * be made available to any extension scripts extending AbstractCommand Script
+     * @var array
+     */
+    protected array $optionsArray = [];
+
 
     public function __construct(
         protected ExecuteInterface $execute
@@ -71,6 +79,8 @@ class FireScriptsCommand extends Command
             ?? config('core-ignition.abort-on-failure', false);
 
         $this->silent = $this->option('silent');
+
+        $this->parseExtendedOptions();
 
         try {
             if ($this->hasOption('script') && $this->option('script') !== null) {
@@ -135,6 +145,17 @@ class FireScriptsCommand extends Command
     public function isSilent(): bool
     {
         return $this->silent;
+    }
+
+    /**
+     * This allows the user to define additional options in an array which can
+     * be made available to any extension scripts extending AbstractCommand Script
+     *
+     * @return array
+     */
+    public function getOptionsArray(): array
+    {
+        return $this->optionsArray;
     }
 
     /**
@@ -259,5 +280,19 @@ class FireScriptsCommand extends Command
         }
 
         return $resultCode;
+    }
+
+    /**
+     * Parses extended options
+     *
+     * @return void
+     */
+    protected function parseExtendedOptions(): void
+    {
+        $this->optionsArray = array_reduce($this->option('options'), function($carry, $item) {
+            list($key, $value) = explode("|", $item);
+            $carry[$key] = $value;
+            return $carry;
+        }, []);
     }
 }
