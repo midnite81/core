@@ -29,7 +29,7 @@ class TestAllPropsEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return TestAllPropsEntity
      */
     public function setTitle(string $title): TestAllPropsEntity
@@ -48,7 +48,7 @@ class TestAllPropsEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $description
+     * @param string $description
      * @return TestAllPropsEntity
      */
     public function setDescription(string $description): TestAllPropsEntity
@@ -67,7 +67,7 @@ class TestAllPropsEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $content
+     * @param string $content
      * @return TestAllPropsEntity
      */
     public function setContent(string $content): TestAllPropsEntity

@@ -9,7 +9,6 @@ class RunArtisanCommand
     public function __construct(
         public string $commandSignature,
         public array $argumentsAndOptions = []
-    )
-    {
+    ) {
     }
 }

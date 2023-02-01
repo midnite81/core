@@ -13,7 +13,7 @@ use Midnite81\Core\Exceptions\Commands\Development\CommandFailedException;
 class SwitchBranches extends AbstractCommandScript
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int
     {
@@ -22,10 +22,10 @@ class SwitchBranches extends AbstractCommandScript
         if ($branchName !== null) {
             $command->info("Parsed branch name to {$branchName}");
             $isNewBranch = $command->askYesNoQuestion("Is {$branchName} a new branch?");
-            $checkoutType = $isNewBranch ? "new" : "existing";
+            $checkoutType = $isNewBranch ? 'new' : 'existing';
             $command->info("Checking out to {$checkoutType} branch {$branchName}");
 
-            $checkoutBranch = $isNewBranch ? "-b" : "";
+            $checkoutBranch = $isNewBranch ? '-b' : '';
             $cmd = "git checkout {$checkoutBranch} {$branchName}";
             $command->info("> {$cmd}");
             $returnCode = $execute->passthru($cmd);
@@ -51,6 +51,7 @@ class SwitchBranches extends AbstractCommandScript
         }
 
         $argsAsString = implode(' ', $command->arguments()['args']);
+
         return Str::of($argsAsString)->replace(' ', '-')->toString();
     }
 }

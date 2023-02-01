@@ -25,7 +25,7 @@ class TestIgnorePropertiesEntity extends BaseEntity
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return TestIgnorePropertiesEntity
      */
     public function setId(int $id): TestIgnorePropertiesEntity
@@ -44,7 +44,7 @@ class TestIgnorePropertiesEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return TestIgnorePropertiesEntity
      */
     public function setName(string $name): TestIgnorePropertiesEntity
@@ -63,7 +63,7 @@ class TestIgnorePropertiesEntity extends BaseEntity
     }
 
     /**
-     * @param  int  $age
+     * @param int $age
      * @return TestIgnorePropertiesEntity
      */
     public function setAge(int $age): TestIgnorePropertiesEntity

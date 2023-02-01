@@ -10,6 +10,7 @@ interface ExecuteInterface
 {
     /**
      * Factory method
+     *
      * @return ExecuteInterface
      */
     public static function make(): ExecuteInterface;
@@ -40,6 +41,7 @@ interface ExecuteInterface
 
     /**
      * Execute an external program and display the output
+     *
      * @param string $command
      * @return int
      */
@@ -47,6 +49,7 @@ interface ExecuteInterface
 
     /**
      * Escape Shell Argument
+     *
      * @param string $argument
      * @return string
      */

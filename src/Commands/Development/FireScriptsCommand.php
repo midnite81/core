@@ -18,6 +18,7 @@ class FireScriptsCommand extends Command
 
     /**
      * This will be overwritten on construct
+     *
      * @var string
      */
     protected $signature = 'fire-scripts-command';
@@ -26,6 +27,7 @@ class FireScriptsCommand extends Command
 
     /**
      * Whether the runner should abort on failure
+     *
      * @var bool
      */
     public bool $abortOnFailure;
@@ -39,12 +41,14 @@ class FireScriptsCommand extends Command
 
     /**
      * The array of script profiles
+     *
      * @var array
      */
     public array $profiles;
 
     /**
      * The default profile
+     *
      * @var string
      */
     public mixed $defaultProfile;
@@ -52,16 +56,17 @@ class FireScriptsCommand extends Command
     /**
      * This allows the user to define additional options in an array which can
      * be made available to any extension scripts extending AbstractCommand Script
+     *
      * @var array
      */
     public array $optionsArray = [];
 
     /**
      * The command name of this command
+     *
      * @var string
      */
     public string $commandName;
-
 
     public function __construct(
         protected ExecuteInterface $execute
@@ -98,6 +103,7 @@ class FireScriptsCommand extends Command
         try {
             if ($this->hasOption('script') && $this->option('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
+
                 return $this->call($this->commandName, $scriptArguments);
             }
 
@@ -155,6 +161,7 @@ class FireScriptsCommand extends Command
     /**
      * @param string $profile
      * @return array
+     *
      * @throws ProfileDoesNotExistException
      */
     protected function getProfileScripts(string $profile): array
@@ -170,6 +177,7 @@ class FireScriptsCommand extends Command
      * Returns the script's arguments
      *
      * @return array
+     *
      * @throws ScriptShortcutDoesNotExistException
      */
     protected function getScriptArgs(): array
@@ -208,12 +216,12 @@ class FireScriptsCommand extends Command
             is_numeric($question);
     }
 
-
     /**
      * Execute the command(s)
      *
      * @param string|array $commands
      * @return int
+     *
      * @throws CommandFailedException
      */
     protected function executeCommand(string|array $commands): int
@@ -237,6 +245,7 @@ class FireScriptsCommand extends Command
     /**
      * @param mixed $script
      * @return int
+     *
      * @throws CommandFailedException
      * @throws ClassMustInheritFromException
      */
@@ -259,8 +268,10 @@ class FireScriptsCommand extends Command
 
     /**
      * Executes an artisan command
+     *
      * @param mixed $script
      * @return int
+     *
      * @throws CommandFailedException
      */
     protected function executeArtisanClass(RunArtisanCommand $script): int
@@ -286,10 +297,11 @@ class FireScriptsCommand extends Command
         $options = $this->option('options');
 
         $this->optionsArray = array_reduce($options, function ($carry, $item) {
-            $parts = explode("|", $item);
+            $parts = explode('|', $item);
             $key = count($parts) > 1 ? $parts[0] : $item;
             $value = count($parts) > 1 ? $parts[1] : $item;
             $carry[$key] = $value;
+
             return $carry;
         }, []);
     }

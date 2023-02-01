@@ -25,8 +25,8 @@ abstract class BaseTransactionAction extends BaseAction
     /**
      * Execute a transaction within a closure
      *
-     * @param  Closure  $callback
-     * @param  int  $attempts
+     * @param Closure $callback
+     * @param int $attempts
      * @return mixed
      *
      * @throws Throwable

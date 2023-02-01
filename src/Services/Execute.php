@@ -9,24 +9,25 @@ use Midnite81\Core\Contracts\Services\ExecuteInterface;
 class Execute implements ExecuteInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function make(): ExecuteInterface
     {
-    	return new self();
+        return new self();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function passthru(string $command): int
     {
         passthru($command, $responseCode);
+
         return $responseCode;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function passThrough(string $command): int
     {
@@ -34,25 +35,27 @@ class Execute implements ExecuteInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function exec(string $command): array
     {
         exec($command, $response);
+
         return $response;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function system(string $command): int
     {
         system($command, $resultCode);
+
         return $resultCode;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function escape(string $argument): string
     {

@@ -32,8 +32,8 @@ class Arrays
      * for example ['one', 'two', 'three]
      * becomes one, two and three
      *
-     * @param  array  $array
-     * @param  string  $separator
+     * @param array $array
+     * @param string $separator
      * @return string
      */
     public static function implodeAnd(array $array, string $separator = ','): string
@@ -46,8 +46,8 @@ class Arrays
      * for example ['one', 'two', 'three]
      * becomes one, two or three
      *
-     * @param  array  $array
-     * @param  string  $separator
+     * @param array $array
+     * @param string $separator
      * @return string
      */
     public static function implodeOr(array $array, string $separator = ','): string
@@ -60,9 +60,9 @@ class Arrays
      * for example with an array of ['one', 'two', 'three], separator of ',' and penultimateWord 'and/or'
      * becomes one, two and/or three
      *
-     * @param  array  $array
-     * @param  string  $separator
-     * @param  string  $penultimateWord
+     * @param array $array
+     * @param string $separator
+     * @param string $penultimateWord
      * @return string
      */
     public static function implodePenultimate(
@@ -80,10 +80,10 @@ class Arrays
     /**
      * Renames a key in an array, overwriting the existing key if it exists, and removes the old key
      *
-     * @param  array  $array
-     * @param  string  $oldKey
-     * @param  string  $newKey
-     * @param  bool  $throwIfNewKeyAlreadyExists
+     * @param array $array
+     * @param string $oldKey
+     * @param string $newKey
+     * @param bool $throwIfNewKeyAlreadyExists
      * @return void
      *
      * @throws ArrayKeyAlreadyExistsException

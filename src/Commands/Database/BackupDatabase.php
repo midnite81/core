@@ -99,7 +99,7 @@ class BackupDatabase extends Command
     /**
      * Creates directory if it doesn't exist and returns a filename to write backup to
      *
-     * @param  string  $connectionName
+     * @param string $connectionName
      * @return string
      */
     public function filename(string $connectionName): string

@@ -39,7 +39,7 @@
         ],
         "stan": "vendor/bin/phpstan --memory-limit=-1",
         "pint": "vendor/bin/pint -v --config=./pint.json",
-        "docu": "php _bin/phpDocumentor.phar run -d src/ -t docs/"
+        "docu": "php _bin/phpDocumentor.phar run -d src/ -t docs/generated"
     },
     "require-dev": {
         "laravel/pint": "^1.1",

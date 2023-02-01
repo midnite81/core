@@ -8,6 +8,7 @@ class QuickFireScriptCommand extends Command
 {
     /**
      * This will be overwritten on construct
+     *
      * @var string
      */
     protected $signature = '';
@@ -16,6 +17,7 @@ class QuickFireScriptCommand extends Command
 
     /**
      * The command name of this command
+     *
      * @var string
      */
     protected string $commandName;
@@ -30,7 +32,7 @@ class QuickFireScriptCommand extends Command
     public function handle(): int
     {
         return $this->call(config('core-ignition.fire-script-command-name', 'scripts:run'), [
-            '--script' => $this->argument('scriptsName')
+            '--script' => $this->argument('scriptsName'),
         ]);
     }
 }

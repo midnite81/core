@@ -16,6 +16,7 @@ abstract class AbstractCommandScript
      * @param FireScriptsCommand $command
      * @param ExecuteInterface $execute
      * @return int
+     *
      * @throws CommandFailedException
      */
     abstract public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int;

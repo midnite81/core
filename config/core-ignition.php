@@ -58,12 +58,12 @@ return [
             'Do you wish to compile and watch the application?' => 'vite',
         ],
         'jokes' => [
-            'Shall I tell you a joke?' => 'echo "Q. How does a computer get drunk? A. It takes screenshots."'
+            'Shall I tell you a joke?' => 'echo "Q. How does a computer get drunk? A. It takes screenshots."',
         ],
         'inspire' => [
             new RunArtisanCommand('inspire'),
-        ]
-     ],
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -76,12 +76,12 @@ return [
     */
     'scripts' => [
         'default quiet' => [
-            '--profile' => "default",
+            '--profile' => 'default',
             '--silent' => '--silent',
-            '--abortOnFailure'
+            '--abortOnFailure',
         ],
         'jokes' => [
             '--profile' => 'jokes',
-        ]
-    ]
+        ],
+    ],
 ];

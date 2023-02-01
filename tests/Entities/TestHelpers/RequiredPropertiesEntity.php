@@ -26,7 +26,7 @@ class RequiredPropertiesEntity extends BaseEntity
     }
 
     /**
-     * @param  int  $age
+     * @param int $age
      * @return RequiredPropertiesEntity
      */
     public function setAge(int $age): RequiredPropertiesEntity

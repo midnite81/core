@@ -9,6 +9,9 @@
         "types_spaces": {
             "space": "none",
             "space_multiple_catch": "none"
+        },
+        "phpdoc_align": {
+            "align": "left"
         }
     }
 }

@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 class HtmlLinks
 {
     /**
-     * @param  string  $text
-     * @param  Request|null  $request
+     * @param string $text
+     * @param Request|null $request
      * @return string
      */
     public static function targetBlank(string $text, ?Request $request = null): string
@@ -31,8 +31,8 @@ class HtmlLinks
     /**
      * Add github package link to html
      *
-     * @param  string  $html
-     * @param  string  $packageUrl
+     * @param string $html
+     * @param string $packageUrl
      * @return string
      */
     public static function addPackageLink(string $html, string $packageUrl): string

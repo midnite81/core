@@ -18,7 +18,7 @@ class ClassRetriever
     }
 
     /**
-     * @param  string  $filename
+     * @param string $filename
      * @return array
      *
      * @throws Exception
@@ -29,7 +29,7 @@ class ClassRetriever
     }
 
     /**
-     * @param  SplFileInfo  $splFileInfo
+     * @param SplFileInfo $splFileInfo
      * @return array
      *
      * @throws Exception

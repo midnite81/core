@@ -27,7 +27,7 @@ class TestEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return TestEntity
      */
     public function setTitle(string $title): TestEntity
@@ -46,7 +46,7 @@ class TestEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $description
+     * @param string $description
      * @return TestEntity
      */
     public function setDescription(string $description): TestEntity
@@ -65,7 +65,7 @@ class TestEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $content
+     * @param string $content
      * @return TestEntity
      */
     public function setContent(string $content): TestEntity
@@ -84,7 +84,7 @@ class TestEntity extends BaseEntity
     }
 
     /**
-     * @param  string  $id
+     * @param string $id
      * @return TestEntity
      */
     public function setId(string $id): TestEntity
