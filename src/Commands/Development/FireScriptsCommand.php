@@ -16,12 +16,11 @@ class FireScriptsCommand extends Command
 {
     use AskYesNo;
 
-    protected $signature = 'run:scripts {args?* : This is the main argument passed to the command (used more in classes)}
-                                        {--profile= : This allows you pass the profile as an option}
-                                        {--script= : This allows you to pass a script shortcut as defined in the config}
-                                        {--silent : Forces the command to run silently}
-                                        {--abortOnFailure : Aborts on failure}
-                                        {--options=* : This allows you to pass additional options}';
+    /**
+     * This will be overwritten on construct
+     * @var string
+     */
+    protected $signature = 'fire-scripts-command';
 
     protected $description = 'Runs predefined scripts from core-ignition config';
 
@@ -57,10 +56,24 @@ class FireScriptsCommand extends Command
      */
     protected array $optionsArray = [];
 
+    /**
+     * The command name of this command
+     * @var string
+     */
+    protected string $commandName;
+
 
     public function __construct(
         protected ExecuteInterface $execute
     ) {
+        $this->commandName = config('core-ignition.fire-script-command-name', 'scripts:run');
+        $this->signature = "$this->commandName {args?* : This is the main argument passed to the command (used more in classes)}
+                                               {--profile= : This allows you pass the profile as an option}
+                                               {--script= : This allows you to pass a script shortcut as defined in the config}
+                                               {--silent : Forces the command to run silently}
+                                               {--abortOnFailure : Aborts on failure}
+                                               {--options=* : This allows you to pass additional options}";
+
         $this->profiles = config('core-ignition.profiles', []);
 
         $this->defaultProfile = config('core-ignition.default-profile', 'default');
@@ -85,7 +98,7 @@ class FireScriptsCommand extends Command
         try {
             if ($this->hasOption('script') && $this->option('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
-                return $this->call('ignite:scripts', $scriptArguments);
+                return $this->call($this->commandName, $scriptArguments);
             }
 
             $profile = $this->hasOption('profile')
@@ -181,7 +194,7 @@ class FireScriptsCommand extends Command
     protected function getScriptArgs(): array
     {
         $scripts = config('core-ignition.scripts');
-        $scriptKey = $this->argument('script');
+        $scriptKey = $this->option('script');
 
         if (!array_key_exists($scriptKey, $scripts)) {
             throw new ScriptShortcutDoesNotExistException($scriptKey);

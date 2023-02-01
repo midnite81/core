@@ -7,6 +7,17 @@ use Midnite81\Core\CommandScripts\RunArtisanCommand;
 return [
     /*
     |--------------------------------------------------------------------------
+    | Script signature names
+    |--------------------------------------------------------------------------
+    | To avoid any conflicting with other naming conventions, you can specify
+    | the name of the FireScriptsCommand and QuickFireScriptCommands.
+    |
+    */
+    'fire-script-command-name' => 'scripts:run',
+    'quick-fire-script-command-name' => 'scripts:quick',
+
+    /*
+    |--------------------------------------------------------------------------
     | Abort on failure
     |--------------------------------------------------------------------------
     | If a script in the sequence fails, should the next scripts continue?
