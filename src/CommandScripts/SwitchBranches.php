@@ -18,12 +18,14 @@ class SwitchBranches extends AbstractCommandScript
     public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int
     {
         $branchName = $this->makeBranchNameFromArguments($command);
-        $command->info("Passed branch name to {$branchName}");
+        $command->info("Parsed branch name to {$branchName}");
 
         if ($branchName !== null) {
-            $checkoutType = $command->option('new') ? "new" : "existing";
+            $checkoutType = $command->hasOption('new') && $command->option('new') ? "new" : "existing";
             $command->info("Checking out to {$checkoutType} branch {$branchName}");
-            $checkoutBranch = $command->option('new') ? "-b" : "";
+
+            $isNewBranch = $command->ask('Is this a new branch?');
+            $checkoutBranch = $isNewBranch ? "-b" : "";
             $cmd = "git checkout {$checkoutBranch} {$branchName}";
             $command->info("> {$cmd}");
             $returnCode = $execute->passthru($cmd);
@@ -44,11 +46,11 @@ class SwitchBranches extends AbstractCommandScript
      */
     protected function makeBranchNameFromArguments(Command $command): ?string
     {
-        if (count($command->arguments()) === 0) {
+        if (count($command->arguments()['args'] ?? []) === 0) {
             return null;
         }
 
-        $argsAsString = implode(' ', $command->arguments());
-        return Str::of($argsAsString)->slug('-')->toString();
+        $argsAsString = implode(' ', $command->arguments()['args']);
+        return Str::of($argsAsString)->replace(' ', '-')->toString();
     }
 }

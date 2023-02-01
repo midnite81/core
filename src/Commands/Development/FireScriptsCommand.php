@@ -44,8 +44,7 @@ class FireScriptsCommand extends Command
 
     public function __construct(
         protected ExecuteInterface $execute
-    )
-    {
+    ) {
         $this->profiles = config('core-ignition.profiles', []);
 
         $this->defaultProfile = config('core-ignition.default-profile', 'default');
@@ -64,17 +63,19 @@ class FireScriptsCommand extends Command
             ?? config('core-ignition.abort-on-failure', false);
 
         try {
-            if ($this->argument('script') !== null) {
+            if ($this->hasArgument('script') && $this->argument('script') !== null) {
                 $scriptArguments = $this->getScriptArgs();
                 return $this->call('ignite:scripts', $scriptArguments);
             }
 
-            $profile = $this->argument('profile') ?? $this->defaultProfile;
+            $profile = $this->hasArgument('profile')
+                ? $this->argument('profile')
+                : $this->defaultProfile;
             $scripts = $this->getProfileScripts($profile);
             $this->info("Running script profile [$profile]");
 
             if (!empty($scripts)) {
-                foreach($scripts as $question => $script) {
+                foreach ($scripts as $question => $script) {
                     if ($this->isScriptClass($script, $question)) {
                         $this->executeClass($script, $this->execute);
                     } else {
@@ -85,7 +86,7 @@ class FireScriptsCommand extends Command
                 }
             }
         } catch (ScriptShortcutDoesNotExistException $e) {
-          $this->error("Script Key doesn't exist: {$e->getMessage()}");
+            $this->error("Script Key doesn't exist: {$e->getMessage()}");
         } catch (ProfileDoesNotExistException $e) {
             $this->error("Profile doesn't exist: {$e->getMessage()}");
         } catch (CommandFailedException $e) {
@@ -161,7 +162,7 @@ class FireScriptsCommand extends Command
             $commands = [$commands];
         }
 
-        foreach($commands as $command) {
+        foreach ($commands as $command) {
             $this->info("> {$command}");
             $resultCode = $this->execute->passthru($command);
 
