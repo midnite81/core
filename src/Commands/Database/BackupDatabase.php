@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Midnite81\Core\Commands\Traits\FailureProcessing;
+use Midnite81\Core\Contracts\Services\ExecuteInterface;
 
 class BackupDatabase extends Command
 {
@@ -41,6 +42,11 @@ class BackupDatabase extends Command
 
     protected string $filePath;
 
+    public function __construct(protected ExecuteInterface $execute)
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      *
@@ -62,7 +68,7 @@ class BackupDatabase extends Command
         $command = $this->makeCommand($connection, $connectionName);
 
         try {
-            exec($command);
+            $this->execute->exec($command);
             $this->line("Database backed up to {$this->filePath}");
 
             return Command::SUCCESS;

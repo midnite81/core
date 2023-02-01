@@ -50,4 +50,12 @@ class Execute implements ExecuteInterface
         system($command, $resultCode);
         return $resultCode;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function escape(string $argument): string
+    {
+        return escapeshellarg($argument);
+    }
 }

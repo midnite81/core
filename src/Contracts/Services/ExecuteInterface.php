@@ -44,4 +44,11 @@ interface ExecuteInterface
      * @return int
      */
     public function system(string $command): int;
+
+    /**
+     * Escape Shell Argument
+     * @param string $argument
+     * @return string
+     */
+    public function escape(string $argument): string;
 }
