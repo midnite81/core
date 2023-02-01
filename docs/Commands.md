@@ -22,4 +22,5 @@ this package which you can register in your `config/app.php` file under the `pro
 | ChangeEnvironmentVariable    | env:set         | Changes an env value                                      |
 | CreateBlankCopyOfEnvironment | env:copy        | Creates a blank copy of the .env file                     |
 | GetEnvironmentVariable       | env:get         | Gets the value of an env key                              |                              
+
 *signature depends on configuration settings
