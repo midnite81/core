@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Midnite81\Core\CommandScripts\RunArtisanCommand;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -13,7 +15,6 @@ return [
     |
     */
     'abort-on-failure' => false,
-
 
     /*
     |--------------------------------------------------------------------------
@@ -46,8 +47,11 @@ return [
         ],
         'jokes' => [
             'Shall I tell you a joke?' => 'echo "Q. How does a computer get drunk? A. It takes screenshots."'
+        ],
+        'inspire' => [
+            new RunArtisanCommand('inspire'),
         ]
-    ],
+     ],
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +67,8 @@ return [
             '--silent' => '--silent',
             '--abortOnFailure'
         ],
-        'jokes' => []
+        'jokes' => [
+            '--profile' => 'jokes',
+        ]
     ]
 ];
