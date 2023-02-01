@@ -77,7 +77,7 @@ class FireScriptsCommand extends Command
             if (!empty($scripts)) {
                 foreach ($scripts as $question => $script) {
                     if ($this->isScriptClass($script, $question)) {
-                        $this->executeClass($script, $this->execute);
+                        $this->executeClass($script);
                     } else {
                         if ($this->askYesNo($question)) {
                             $this->executeCommand($script);
@@ -174,7 +174,7 @@ class FireScriptsCommand extends Command
         }
 
         foreach ($commands as $command) {
-            $this->info("> {$command}");
+            $this->info("> $command");
             $resultCode = $this->execute->passthru($command);
 
             if ($resultCode > 0 && $this->abortOnFailure) {
@@ -193,7 +193,7 @@ class FireScriptsCommand extends Command
      */
     protected function executeClass(mixed $script): int
     {
-        $this->info("> Executing {$script} class");
+        $this->info("> Executing $script class");
         $class = new $script($this);
         if (!$class instanceof AbstractCommandScript) {
             throw new ClassMustInheritFromException($class, AbstractCommandScript::class);
