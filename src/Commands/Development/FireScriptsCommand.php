@@ -4,6 +4,7 @@ namespace Midnite81\Core\Commands\Development;
 
 use Illuminate\Console\Command;
 use Midnite81\Core\CommandScripts\AbstractCommandScript;
+use Midnite81\Core\CommandScripts\RunArtisanCommand;
 use Midnite81\Core\Contracts\Services\ExecuteInterface;
 use Midnite81\Core\Exceptions\Commands\Development\CommandFailedException;
 use Midnite81\Core\Exceptions\Commands\Development\ProfileDoesNotExistException;
@@ -86,7 +87,9 @@ class FireScriptsCommand extends Command
             if (!empty($scripts)) {
                 foreach ($scripts as $question => $script) {
                     if ($this->isScriptClass($script, $question)) {
-                        $this->executeClass($script);
+                        $this->executeExtensionClass($script);
+                    } elseif ($this->isRunArtisanCommand($script, $question)) {
+                        $this->executeArtisanClass($script);
                     } else {
                         if ($this->silent || $this->askYesNo($question)) {
                             $this->executeCommand($script);
@@ -176,6 +179,20 @@ class FireScriptsCommand extends Command
         return !empty($script) && is_string($script) && is_numeric($question);
     }
 
+    /**
+     * Checks if script is an instance of RunArtisanCommand
+     *
+     * @param mixed $script
+     * @param int|string $question
+     * @return bool
+     */
+    protected function isRunArtisanCommand(mixed $script, int|string $question): bool
+    {
+        return !empty($script) &&
+            $script instanceof RunArtisanCommand &&
+            is_numeric($question);
+    }
+
 
     /**
      * Execute the command(s)
@@ -208,18 +225,39 @@ class FireScriptsCommand extends Command
      * @throws CommandFailedException
      * @throws ClassMustInheritFromException
      */
-    protected function executeClass(mixed $script): int
+    protected function executeExtensionClass(mixed $script): int
     {
         $this->info("> Executing $script class");
         $class = new $script($this);
         if (!$class instanceof AbstractCommandScript) {
             throw new ClassMustInheritFromException($class, AbstractCommandScript::class);
         }
+
         $resultCode = $class->handle($this, $this->execute);
 
         if ($resultCode > 0 && $this->abortOnFailure) {
             throw new CommandFailedException($script);
         }
+
+        return $resultCode;
+    }
+
+    /**
+     * Executes an artisan command
+     * @param mixed $script
+     * @return int
+     * @throws CommandFailedException
+     */
+    protected function executeArtisanClass(RunArtisanCommand $script): int
+    {
+        $this->info("> Executing {$script->commandSignature} artisan command");
+
+        $resultCode = $this->call($script->commandSignature, $script->argumentsAndOptions);
+
+        if ($resultCode > 0 && $this->abortOnFailure) {
+            throw new CommandFailedException($script->commandSignature);
+        }
+
         return $resultCode;
     }
 }
