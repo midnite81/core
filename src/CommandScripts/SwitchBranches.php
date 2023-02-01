@@ -18,9 +18,9 @@ class SwitchBranches extends AbstractCommandScript
     public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int
     {
         $branchName = $this->makeBranchNameFromArguments($command);
-        $command->info("Parsed branch name to {$branchName}");
 
         if ($branchName !== null) {
+            $command->info("Parsed branch name to {$branchName}");
             $isNewBranch = $command->askYesNoQuestion("Is {$branchName} a new branch?");
             $checkoutType = $isNewBranch ? "new" : "existing";
             $command->info("Checking out to {$checkoutType} branch {$branchName}");
