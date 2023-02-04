@@ -362,6 +362,5 @@ class FireScriptsCommand extends Command
             $index = (int)$matches[1] - 1;
             return $this->arguments()['args'][$index] ?? '';
         }, $command);
-
     }
 }
