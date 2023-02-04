@@ -67,6 +67,26 @@ you can abort when the first failure occurs.
 php artisan scripts:run --profile=install --silent --abortOnFailure
 ```
 
+## Arguments to simple commands
+
+Say we needed to pass an argument to one of the commands, we can use $*, $1, $2, etc.  
+
+```php
+'profiles' => [
+    'greet' => [
+        'Say Hello' => 'echo "Hello $1"',
+        'Say Goodbye' => 'echo "Goodbye $*"'
+    ]
+],
+```
+```bash
+php artisan scripts:run Kyle and George --profile=greet --silent
+
+# This would output:
+# Hello Kyle
+# Goodbye Kyle and George
+```
+
 ## More advanced profiles
 
 There are times when you want to be able to create more advanced scripts but to run as part of a series of scripts. 
