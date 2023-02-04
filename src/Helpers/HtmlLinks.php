@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 class HtmlLinks
 {
     /**
+     * Adds target blank to external urls
+     *
      * @param string $text
      * @param Request|null $request
      * @return string
@@ -53,6 +55,15 @@ class HtmlLinks
         }, $html);
     }
 
+    /**
+     * Adds github icon and link
+     *
+     * @param string $url
+     * @param string|null $text
+     * @param string|null $svgClass
+     * @param string|null $linkCss
+     * @return string
+     */
     public static function githubIconAndLink(string $url, ?string $text = null, string $svgClass = null, ?string $linkCss = null): string
     {
         $svg = <<<'SVG'
