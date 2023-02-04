@@ -63,7 +63,7 @@ $array = [
 ];
 ```
 
-#### implodeOr
+#### implodePenultimate
 ```php
 use Midnite81\Core\Helpers\Arrays;
 
