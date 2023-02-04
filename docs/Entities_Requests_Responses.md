@@ -10,7 +10,7 @@ from BaseEntity to provide a more normal naming convention.
 
 Entities, Requests and Responses allow you to have strongly typed properties which provide a better experience when 
 you want type safety. To get a better sense of entities, it maybe worth looking at the 
-[Entity Test Fixture classes](../../tests/Entities/TestHelpers)
+[Entity Test Fixture classes](../tests/Entities/TestHelpers/)
 
 ## Methods
 
