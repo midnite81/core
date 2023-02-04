@@ -61,4 +61,44 @@ abstract class AbstractCommandScript
 
         return $this;
     }
+
+    /**
+     * Serialise Magic Method
+     *
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            'shouldAnnounce' => $this->shouldAnnounce,
+            'message' => $this->message
+        ];
+    }
+
+    /**
+     * Unserialise Magic Method
+     *
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->shouldAnnounce = $data['shouldAnnounce'];
+        $this->message = $data['message'];
+    }
+
+    /**
+     * Set State Magic Method
+     *
+     * @param array $data
+     * @return object
+     */
+    public static function __set_state(array $data): object
+    {
+        $class = new static();
+        $class->shouldAnnounce = $data['shouldAnnounce'];
+        $class->message = $data['message'];
+
+        return $class;
+    }
 }

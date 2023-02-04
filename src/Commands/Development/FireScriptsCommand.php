@@ -263,7 +263,7 @@ class FireScriptsCommand extends Command
             throw new ClassMustInheritFromException($class, AbstractCommandScript::class);
         }
 
-        if ($class->shouldAnnounce) {
+        if (!$this->silent && $class->shouldAnnounce) {
             $shouldRun = $this->askYesNo($class->message ?? "Do you want to run {$className}");
 
             if (!$shouldRun) {
@@ -292,9 +292,9 @@ class FireScriptsCommand extends Command
     {
         $this->info("> Executing {$script->commandSignature} artisan command");
 
-        if ($script->shouldAnnounce) {
+        if (!$this->silent && $script->shouldAnnounce) {
             $shouldRun = $this->askYesNo(
-                $script->message ?? "Do you wish to run artisan command $script->commandSignature]?"
+                $script->message ?? "Do you wish to run artisan command $script->commandSignature?"
             );
 
             if (!$shouldRun) {

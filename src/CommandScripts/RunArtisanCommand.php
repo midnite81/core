@@ -54,4 +54,48 @@ class RunArtisanCommand
 
         return $this;
     }
+
+    /**
+     * Serialise Magic Method
+     *
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            'shouldAnnounce' => $this->shouldAnnounce,
+            'message' => $this->message,
+            'commandSignature' => $this->commandSignature,
+            'argumentsAndOptions' => $this->argumentsAndOptions
+        ];
+    }
+
+    /**
+     * Unserialise Magic Method
+     *
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->shouldAnnounce = $data['shouldAnnounce'];
+        $this->message = $data['message'];
+        $this->commandSignature = $data['commandSignature'];
+        $this->argumentsAndOptions = $data['argumentsAndOptions'];
+    }
+
+    /**
+     * Set State Magic Method
+     *
+     * @param $data
+     * @return static
+     */
+    public static function __set_state($data)
+    {
+        $class = new static($data['commandSignature'], $data['argumentsAndOptions']);
+        $class->shouldAnnounce = $data['shouldAnnounce'];
+        $class->message = $data['message'];
+
+        return $class;
+    }
 }
