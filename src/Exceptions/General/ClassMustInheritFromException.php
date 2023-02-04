@@ -10,14 +10,14 @@ class ClassMustInheritFromException extends Exception
 {
     /**
      * @param mixed $class
-     * @param mixed $extendClass
+     * @param mixed $inheritFromClass
      */
-    public function __construct(mixed $class, mixed $extendClass)
+    public function __construct(mixed $class, mixed $inheritFromClass)
     {
         $className = is_object($class) ? get_class($class) : $class;
-        $extendClassName = is_object($extendClass) ? get_class($extendClass) : $extendClass;
+        $extendClassName = is_object($inheritFromClass) ? get_class($inheritFromClass) : $inheritFromClass;
 
-        $message = "{$class} must inherit from {$extendClass}";
+        $message = "{$class} must implement from {$inheritFromClass}";
 
         parent::__construct($message, 0, null);
     }
