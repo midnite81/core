@@ -13,7 +13,7 @@ use Midnite81\Core\Exceptions\Commands\Development\CommandFailedException;
 class SwitchBranches extends AbstractCommandScript
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int
     {

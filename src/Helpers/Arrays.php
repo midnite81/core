@@ -12,6 +12,7 @@ class Arrays
      * Sorts an array by a specified order
      * Example:
      * Arrays::arrayOrderBy($array, 'name', SORT_ASC);
+     *
      * @return mixed|null
      */
     public static function arrayOrderBy(): mixed

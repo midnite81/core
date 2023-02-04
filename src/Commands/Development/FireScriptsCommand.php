@@ -199,7 +199,6 @@ class FireScriptsCommand extends Command
      */
     protected function isScriptClass(mixed $script, int|string $question): bool
     {
-
         return !empty($script) &&
             (is_string($script) || $script instanceof AbstractCommandScript) &&
             is_numeric($question);

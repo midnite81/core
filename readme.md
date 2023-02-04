@@ -17,7 +17,7 @@ This package contains;
 - [Helper Functions](docs/HelperFunctions.md)
   - [first](docs/HelperFunctions.md#first-value)
   - [uuid](docs/HelperFunctions.md#uuid)
-- [Helper Classes ](docs/HelperClasses.md)
+- [Helper Classes](docs/HelperClasses.md)
   - [Arrays](docs/HelperClasses/Arrays.md)
   - [Attempts](docs/HelperClasses/Attempt.md)
   - [ClassRetriever](docs/HelperClasses.md)
@@ -27,6 +27,9 @@ This package contains;
   - [UserAgent](docs/HelperClasses/UserAgent.md)
 - [Middleware](docs/Middleware.md)
 - [Uuid Generator](docs/UuidGenerator.md)
+- Transformers
+  - [FileLimiter](docs/Transformers/FileLimiter.md)
+  - [HumanReadableNumber](docs/Transformers/HumanReadableNumber.md)
 
 ## Installation
 

@@ -29,6 +29,6 @@ you want type safety. To get a better sense of entities, it maybe worth looking 
 
 ## Exceptions
 
-- DuplicatePropertyNameException: Thrown when two properties have the same PropertyName attribute name.
-- PropertiesMustBeInitialisedException: Thrown when all public properties are not initialised and the entity has the PropertiesMustBeInitialised attribute.
-- PropertyIsRequiredException: Thrown when a required property is not filled.
+- `DuplicatePropertyNameException`: Thrown when two properties have the same PropertyName attribute name.
+- `PropertiesMustBeInitialisedException`: Thrown when all public properties are not initialised and the entity has the PropertiesMustBeInitialised attribute.
+- `PropertyIsRequiredException`: Thrown when a required property is not filled.
