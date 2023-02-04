@@ -199,7 +199,10 @@ class FireScriptsCommand extends Command
      */
     protected function isScriptClass(mixed $script, int|string $question): bool
     {
-        return !empty($script) && is_string($script) && is_numeric($question);
+
+        return !empty($script) &&
+            (is_string($script) || $script instanceof AbstractCommandScript) &&
+            is_numeric($question);
     }
 
     /**
@@ -243,22 +246,24 @@ class FireScriptsCommand extends Command
     }
 
     /**
-     * @param mixed $script
+     * @param mixed $class
      * @return int
      *
-     * @throws CommandFailedException
      * @throws ClassMustInheritFromException
+     * @throws CommandFailedException
      */
-    protected function executeExtensionClass(mixed $script): int
+    protected function executeExtensionClass(mixed $class): int
     {
-        $this->info("> Executing $script class");
-        $class = new $script($this);
+        $class = is_string($class) ? new $class() : $class;
+        $className = $class::class;
+
+        $this->info("> Executing $className class");
+
         if (!$class instanceof AbstractCommandScript) {
             throw new ClassMustInheritFromException($class, AbstractCommandScript::class);
         }
 
         if ($class->shouldAnnounce) {
-            $className = get_class($class);
             $shouldRun = $this->askYesNo($class->message ?? "Do you want to run {$className}");
 
             if (!$shouldRun) {
@@ -269,7 +274,7 @@ class FireScriptsCommand extends Command
         $resultCode = $class->handle($this, $this->execute);
 
         if ($resultCode > 0 && $this->abortOnFailure) {
-            throw new CommandFailedException($script);
+            throw new CommandFailedException($className);
         }
 
         return $resultCode;
@@ -307,6 +312,22 @@ class FireScriptsCommand extends Command
     }
 
     /**
+     * Get extended option value
+     *
+     * @param string $key
+     * @param mixed $defaultValue
+     * @return mixed
+     */
+    public function getExtendedOption(string $key, mixed $defaultValue = null): mixed
+    {
+        if (array_key_exists($key, $this->optionsArray)) {
+            return $this->optionsArray[$key];
+        }
+
+        return $defaultValue;
+    }
+
+    /**
      * Parses extended options
      *
      * @return void
@@ -318,7 +339,7 @@ class FireScriptsCommand extends Command
         $this->optionsArray = array_reduce($options, function ($carry, $item) {
             $parts = explode('|', $item);
             $key = count($parts) > 1 ? $parts[0] : $item;
-            $value = count($parts) > 1 ? $parts[1] : $item;
+            $value = count($parts) > 1 ? $parts[1] : true;
             $carry[$key] = $value;
 
             return $carry;

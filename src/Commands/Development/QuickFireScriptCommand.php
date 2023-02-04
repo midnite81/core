@@ -25,13 +25,14 @@ class QuickFireScriptCommand extends Command
     public function __construct()
     {
         $this->commandName = config('core-ignition.quick-fire-script-command-name', 'scripts:quick');
-        $this->signature = "{$this->commandName} {scriptsName}";
+        $this->signature = "{$this->commandName} {scriptsName} {args?* : This is the main argument passed to the command (used more in classes)}";
         parent::__construct();
     }
 
     public function handle(): int
     {
         return $this->call(config('core-ignition.fire-script-command-name', 'scripts:run'), [
+            'args' => $this->argument('args'),
             '--script' => $this->argument('scriptsName'),
         ]);
     }

@@ -7,25 +7,26 @@ sparse, however in the coming weeks and months (and hopefully not years!), I hop
 
 This package contains;
 
+- [Base Action](docs/BaseAction.md)
+- [Base Repository](docs/BaseRepository.md)
 - [Artisan Commands](docs/Commands.md)
-- Attributes
-- Eloquent Helpers
-- Entities, Responses and Requests
-- Exceptions
-- Helper Functions
-  - first
-  - uuid
-- Helper Classes 
-  - Arrays
-  - Attempts
-  - ClassRetriever
-  - HtmlLinks
-  - Matches
-  - Strings
-  - UserAgent
-- Middleware
-- Base Actions and Repositories
-- Uuid Generator
+- [Attributes](docs/Attributes.md)
+- [Eloquent Helpers](docs/EloquentHelpers.md)
+- [Entities, Responses and Requests](docs/Entities_Requests_Responses.md)
+- [Exceptions](docs/Exceptions.md)
+- [Helper Functions](docs/HelperFunctions.md)
+  - [first](docs/HelperFunctions.md#first)
+  - [uuid](docs/HelperFunctions.md#uuid)
+- [Helper Classes ](docs/HelperClasses.md)
+  - [Arrays](docs/HelperClasses.md#arrays)
+  - [Attempts](docs/HelperClasses.md#attempts)
+  - [ClassRetriever](docs/HelperClasses.md)
+  - [HtmlLinks](docs/HelperClasses.md)
+  - [Matches](docs/HelperClasses.md)
+  - [Strings](docs/HelperClasses.md)
+  - [UserAgent](docs/HelperClasses.md)
+- [Middleware](docs/Middleware.md)
+- [Uuid Generator](docs/UuidGenerator.md)
 
 ## Installation
 
@@ -64,7 +65,11 @@ You may wish to publish the configuration file if you're planning on using the
 [FireScriptCommand](docs/Commands/FireScriptsCommand.md) or 
 [QuickFireScriptCommand](docs/Commands/QuickFireScriptsCommand.md)
 
-
 ```bash
 php artisan vendor:publish --provider="Midnite81\Core\CoreServiceProvider"
 ```
+
+### You're all set!
+
+You're now all set to use midnite81/core. If you have any suggestions please me know or log any issues in the 
+[issue section](https://github.com/midnite81/core/issues). 

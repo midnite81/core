@@ -10,7 +10,7 @@ _To understand the QuickFireScriptCommand better, it is worth reading through
 ## Usage
 
 ```php
-php artisan scripts:quick {script_name}
+php artisan scripts:quick {script_name} {arguments}
 ```
 _replace {script_name} with the actual script name_
 
@@ -35,8 +35,9 @@ composer install and npm install
 ```
 
 As we'll run this command a lot we will make a shortcut so we don't have to specify all the arguments and options that 
-will be necessary. In this example we'll be setting up a shortcut to run the profile adding in the silent option so we
-don't even have to confirm each stage and we also want it to abort on failure. 
+will be necessary, however if you need to you can pass arguments on the command line, but no options. In this example 
+we'll be setting up a shortcut to run the profile adding in the silent option so we don't even have to confirm each 
+stage and we also want it to abort on failure. 
 
 Under the shortcuts key in [config/core-ignition.php](../../config/core-ignition.php) we'll create a new shortcut with
 the key of `composer-npm`, which we'll later use to do `php artisan run:quick composer-npm`. The value of 

@@ -21,7 +21,8 @@ class SwitchBranches extends AbstractCommandScript
 
         if ($branchName !== null) {
             $command->info("Parsed branch name to {$branchName}");
-            $isNewBranch = $command->askYesNoQuestion("Is {$branchName} a new branch?");
+
+            $isNewBranch = $command->getExtendedOption('new');
             $checkoutType = $isNewBranch ? 'new' : 'existing';
             $command->info("Checking out to {$checkoutType} branch {$branchName}");
 
