@@ -8,7 +8,7 @@ use Midnite81\Core\CommandScripts\RunArtisanCommand;
 use Midnite81\Core\Contracts\Services\ExecuteInterface;
 use Midnite81\Core\Exceptions\Commands\Development\CommandFailedException;
 use Midnite81\Core\Exceptions\Commands\Development\ProfileDoesNotExistException;
-use Midnite81\Core\Exceptions\Commands\Development\ScriptShortcutDoesNotExistException;
+use Midnite81\Core\Exceptions\Commands\Development\ShortcutDoesNotExistException;
 use Midnite81\Core\Exceptions\General\ClassMustInheritFromException;
 use Midnite81\Core\Traits\AskYesNo;
 
@@ -74,7 +74,7 @@ class FireScriptsCommand extends Command
         $this->commandName = config('core-ignition.fire-script-command-name', 'scripts:run');
         $this->signature = "$this->commandName {args?* : This is the main argument passed to the command (used more in classes)}
                                                {--profile= : This allows you pass the profile as an option}
-                                               {--script= : This allows you to pass a script shortcut as defined in the config}
+                                               {--shortcut= : This allows you to pass a shortcut as defined in the config}
                                                {--silent : Forces the command to run silently}
                                                {--abortOnFailure : Aborts on failure}
                                                {--options=* : This allows you to pass additional options}";
@@ -102,7 +102,7 @@ class FireScriptsCommand extends Command
 
         try {
             if ($this->hasOption('script') && $this->option('script') !== null) {
-                $scriptArguments = $this->getScriptArgs();
+                $scriptArguments = $this->getShortcutArgs();
 
                 return $this->call($this->commandName, $scriptArguments);
             }
@@ -126,7 +126,7 @@ class FireScriptsCommand extends Command
                     }
                 }
             }
-        } catch (ScriptShortcutDoesNotExistException $e) {
+        } catch (ShortcutDoesNotExistException $e) {
             $this->error("Script Key doesn't exist: {$e->getMessage()}");
         } catch (ProfileDoesNotExistException $e) {
             $this->error("Profile doesn't exist: {$e->getMessage()}");
@@ -178,18 +178,18 @@ class FireScriptsCommand extends Command
      *
      * @return array
      *
-     * @throws ScriptShortcutDoesNotExistException
+     * @throws ShortcutDoesNotExistException
      */
-    protected function getScriptArgs(): array
+    protected function getShortcutArgs(): array
     {
-        $scripts = config('core-ignition.scripts');
-        $scriptKey = $this->option('script');
+        $shortcuts = config('core-ignition.shortcuts');
+        $shortcutKey = $this->option('shortcut');
 
-        if (!array_key_exists($scriptKey, $scripts)) {
-            throw new ScriptShortcutDoesNotExistException($scriptKey);
+        if (!array_key_exists($shortcutKey, $shortcuts)) {
+            throw new ShortcutDoesNotExistException($shortcutKey);
         }
 
-        return $scripts[$scriptKey];
+        return $shortcuts[$shortcutKey];
     }
 
     /**
@@ -257,6 +257,15 @@ class FireScriptsCommand extends Command
             throw new ClassMustInheritFromException($class, AbstractCommandScript::class);
         }
 
+        if ($class->shouldAnnounce) {
+            $className = get_class($class);
+            $shouldRun = $this->askYesNo($class->message ?? "Do you want to run {$className}");
+
+            if (!$shouldRun) {
+                return Command::SUCCESS;
+            }
+        }
+
         $resultCode = $class->handle($this, $this->execute);
 
         if ($resultCode > 0 && $this->abortOnFailure) {
@@ -277,6 +286,16 @@ class FireScriptsCommand extends Command
     protected function executeArtisanClass(RunArtisanCommand $script): int
     {
         $this->info("> Executing {$script->commandSignature} artisan command");
+
+        if ($script->shouldAnnounce) {
+            $shouldRun = $this->askYesNo(
+                $script->message ?? "Do you wish to run artisan command $script->commandSignature]?"
+            );
+
+            if (!$shouldRun) {
+                return Command::SUCCESS;
+            }
+        }
 
         $resultCode = $this->call($script->commandSignature, $script->argumentsAndOptions);
 

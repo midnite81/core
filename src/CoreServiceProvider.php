@@ -21,7 +21,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/core-ignition.php' => config_path('core-ignition.php'),
-        ]);
+        ], 'config');
     }
 
     /**
