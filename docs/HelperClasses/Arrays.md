@@ -68,7 +68,7 @@ $array = [
 use Midnite81\Core\Helpers\Arrays;
 
 $names = ['John', 'Jane', 'Jim'];
-$implodedNames = Arrays::implodePenultimate($names, ' &');
+$implodedNames = Arrays::implodePenultimate($names, '&');
 // returns 'John, Jane & Jim'
 
 $array = [
