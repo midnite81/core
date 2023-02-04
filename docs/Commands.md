@@ -14,13 +14,13 @@ this package which you can register in your `config/app.php` file under the `pro
 
 ## Available Artisan Commands
 
-| Command                      | Signature       | Description                                               |
-|------------------------------|-----------------|-----------------------------------------------------------|
-| BackupDatabase               | database:backup | Backups the a mysql database                              |
-| FireScriptsCommand           | run:scripts*    | Runs sequential command line, artisan and bespoke scripts |
-| QuickFireScriptCommand       | run:quick*      | Offers a quick way to run the run:scripts command         |
-| ChangeEnvironmentVariable    | env:set         | Changes an env value                                      |
-| CreateBlankCopyOfEnvironment | env:copy        | Creates a blank copy of the .env file                     |
-| GetEnvironmentVariable       | env:get         | Gets the value of an env key                              |                              
+| Command                                                                  | Signature       | Description                                               |
+|--------------------------------------------------------------------------|-----------------|-----------------------------------------------------------|
+| [BackupDatabase](Commands/BackupDatabase.md)                             | database:backup | Backups the a mysql database                              |
+| [FireScriptsCommand](Commands/FireScriptsCommand.md)                     | run:scripts*    | Runs sequential command line, artisan and bespoke scripts |
+| [QuickFireScriptCommand](Commands/QuickFireScriptsCommand.md)            | run:quick*      | Offers a quick way to run the run:scripts command         |
+| [ChangeEnvironmentVariable](Commands/ChangeEnvironmentVariable.md)       | env:set         | Changes an env value                                      |
+| [CreateBlankCopyOfEnvironment](Commands/CreateBlankCopyOfEnvironment.md) | env:copy        | Creates a blank copy of the .env file                     |
+| [GetEnvironmentVariable](Commands/GetEnvironmentVariable.md)             | env:get         | Gets the value of an env key                              |                              
 
 *signature depends on configuration settings

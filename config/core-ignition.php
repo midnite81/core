@@ -12,6 +12,9 @@ return [
     | To avoid any conflicting with other naming conventions, you can specify
     | the name of the FireScriptsCommand and QuickFireScriptCommands.
     |
+    | NB: If you change the command names here - you will need to run either
+    | php artisan optimize or php artisan optimize:clear
+    |
     */
     'fire-script-command-name' => 'scripts:run',
     'quick-fire-script-command-name' => 'scripts:quick',
@@ -67,14 +70,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Scripts
+    | Shortcuts
     |--------------------------------------------------------------------------
     | These are shortcuts to running profiles. The key is the name of the
     | shortcut the array value is the arguments and options sent to the
     | fire scripts command
     |
     */
-    'scripts' => [
+    'shortcuts' => [
         'default quiet' => [
             '--profile' => 'default',
             '--silent' => '--silent',
