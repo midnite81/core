@@ -19,9 +19,9 @@ class BackupDatabase extends Command
      */
     protected $signature = 'database:backup
                            {connection? : The connection you want to backup}
-                           {chmod? : The chmod for any directories created e.g 0777}
-                           {directory? : The directory in the storage folder you want to save to}
-                           {--abs : This option allows you to specific any directory}';
+                           {--directory= : The directory in the storage folder you want to save to}
+                           {--chmod= : The chmod for any directories created e.g 0777, defaults to 0777}
+                           {--abs : This option allows you to specify any directory}';
 
     /**
      * The console command description.
@@ -105,11 +105,11 @@ class BackupDatabase extends Command
     public function filename(string $connectionName): string
     {
         $directory = $this->option('abs')
-            ? realpath($this->argument('directory'))
-            : realpath(storage_path($this->argument('directory')));
+            ? realpath($this->option('directory') ?? '')
+            : realpath(storage_path($this->option('directory') ?? ''));
 
         if (!empty($directory) && !is_dir($directory)) {
-            mkdir($directory, $this->argument('chmod', '0777'), true);
+            mkdir($directory, $this->option('chmod', '0777'), true);
         }
 
         $this->directory = is_string($directory) ? $directory : null;
