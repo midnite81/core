@@ -8,7 +8,13 @@ use Midnite81\Core\Exceptions\Arrays\ArrayKeyAlreadyExistsException;
 
 class Arrays
 {
-    public static function arrayOrderBy()
+    /**
+     * Sorts an array by a specified order
+     * Example:
+     * Arrays::arrayOrderBy($array, 'name', SORT_ASC);
+     * @return mixed|null
+     */
+    public static function arrayOrderBy(): mixed
     {
         $args = func_get_args();
         $data = array_shift($args);
