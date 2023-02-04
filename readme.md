@@ -15,7 +15,7 @@ This package contains;
 - [Entities, Responses and Requests](docs/Entities_Requests_Responses.md)
 - [Exceptions](docs/Exceptions.md)
 - [Helper Functions](docs/HelperFunctions.md)
-  - [first](docs/HelperFunctions.md#first)
+  - [first](docs/HelperFunctions.md#first-value)
   - [uuid](docs/HelperFunctions.md#uuid)
 - [Helper Classes ](docs/HelperClasses.md)
   - [Arrays](docs/HelperClasses/Arrays.md)
