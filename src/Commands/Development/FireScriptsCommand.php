@@ -233,11 +233,12 @@ class FireScriptsCommand extends Command
         }
 
         foreach ($commands as $command) {
-            $this->info("> $command");
-            $resultCode = $this->execute->passthru($command);
+            $parsedCommand = $this->parseCommand($command);
+            $this->info("> $parsedCommand");
+            $resultCode = $this->execute->passthru($parsedCommand);
 
             if ($resultCode > 0 && $this->abortOnFailure) {
-                throw new CommandFailedException($command);
+                throw new CommandFailedException($parsedCommand);
             }
         }
 
@@ -343,5 +344,24 @@ class FireScriptsCommand extends Command
 
             return $carry;
         }, []);
+    }
+
+    /**
+     * Parse the command to add arguments to numbered $ variables
+     *
+     * @param mixed $command
+     * @return string
+     */
+    protected function parseCommand(mixed $command): string
+    {
+        return preg_replace_callback('/\$(\d+|\*)/', function($matches) {
+            if ($matches[1] === '*') {
+                return implode(' ', $this->arguments()['args']);
+            }
+
+            $index = (int)$matches[1] - 1;
+            return $this->arguments()['args'][$index] ?? '';
+        }, $command);
+
     }
 }
