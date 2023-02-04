@@ -8,6 +8,10 @@ The BaseEntity is an abstract class that provides common methods for processing 
 intended to be used as a base for creating concrete entities in an application. BaseRequest and BaseResponse inherit
 from BaseEntity to provide a more normal naming convention.
 
+Entities, Requests and Responses allow you to have strongly typed properties which provide a better experience when 
+you want type safety. To get a better sense of entities, it maybe worth looking at the 
+[Entity Test Fixture classes](../../tests/Entities/TestHelpers)
+
 ## Methods
 
 - `__construct`: Constructs the entity and performs initial checks.
