@@ -12,7 +12,7 @@ This package contains;
 - [Artisan Commands](docs/Commands.md)
 - [Attributes](docs/Attributes.md)
 - [Eloquent Helpers](docs/EloquentHelpers.md)
-- [Entities, Responses and Requests](docs/Entities_Requests_Responses.md)
+- [Entities, Requests and Responses](docs/Entities_Requests_Responses.md)
 - [Exceptions](docs/Exceptions.md)
 - [Helper Functions](docs/HelperFunctions.md)
   - [first](docs/HelperFunctions.md#first-value)
