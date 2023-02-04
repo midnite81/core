@@ -1,7 +1,7 @@
 # Entities, Requests, Responses
 
-**Class:** Midnite81\Core\Entities\BaseEntity
-**Class:** Midnite81\Core\Requests\BaseRequest
+**Class:** Midnite81\Core\Entities\BaseEntity   
+**Class:** Midnite81\Core\Requests\BaseRequest   
 **Class:** Midnite81\Core\Responses\BaseResponse
 
 The BaseEntity is an abstract class that provides common methods for processing and converting data. This class is
