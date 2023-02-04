@@ -142,7 +142,7 @@ class ChangeEnvironmentVariable extends Command
     /**
      * Saves the env file
      *
-     * @param  string  $contents
+     * @param string $contents
      * @return bool|int
      */
     protected function save(string $contents): bool|int
@@ -189,7 +189,7 @@ class ChangeEnvironmentVariable extends Command
      */
     protected function proceedWhenInProduction(): bool
     {
-        if (env('APP_ENV', 'production') === 'production' && !$this->option('silent')) {
+        if (config('app.environment', 'production') === 'production' && !$this->option('silent')) {
             $this->warn('Application is in production!');
             $confirmation = $this->ask('Are you sure you want to continue? (y/n)', 'n');
 
@@ -210,6 +210,7 @@ class ChangeEnvironmentVariable extends Command
      */
     protected function getEnvKey(): mixed
     {
+        /** @noinspection LaravelFunctionsInspection */
         $envKey = env($this->getKey());
 
         if (is_bool($envKey)) {
@@ -240,7 +241,7 @@ class ChangeEnvironmentVariable extends Command
     }
 
     /**
-     * @param  string  $path
+     * @param string $path
      * @return string
      *
      * @throws FileNotFoundException

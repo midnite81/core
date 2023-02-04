@@ -4,32 +4,40 @@ declare(strict_types=1);
 
 namespace Midnite81\Core;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Finder\SplFileInfo;
 
 class CoreCommandServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $commandFiles = collect((new Filesystem())->allFiles(__DIR__ . '/Commands'));
+            $this->registerCommands();
+        }
+    }
 
-            $commands = $commandFiles
-                ->filter(function (SplFileInfo $fileInfo) {
-                    return !str_contains($fileInfo->getRelativePathname(), 'Traits');
-                })
-                ->map(function (SplFileInfo $fileInfo) {
-                    $file = $fileInfo->getRelativePathname();
-                    $namespace = '\\Midnite81\\Core\\Commands';
-                    if (dirname($file) !== '.') {
-                        $namespace .= '\\' . str_replace('/', '\\', dirname($file));
-                    }
+    /**
+     * Registers commands
+     *
+     * @return void
+     */
+    protected function registerCommands(): void
+    {
+        $commands = array_merge(
+            glob(__DIR__ . '/Commands/*.php'),
+            glob(__DIR__ . '/Commands/**/*.php')
+        );
 
-                    return $namespace . '\\' . basename($file, '.php');
-                });
-
-            $this->commands($commands);
+        foreach ($commands as $command) {
+            $commandClass = str_replace(
+                [__DIR__ . '/', '/', '.php'],
+                ['', '\\', ''],
+                $command
+            );
+            $commandClass = 'Midnite81\\Core\\' . $commandClass;
+            if (class_exists($commandClass)) {
+                $command = app($commandClass);
+                $this->commands($command);
+            }
         }
     }
 }

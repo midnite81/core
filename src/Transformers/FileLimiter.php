@@ -32,7 +32,7 @@ class FileLimiter
     /**
      * Construct the class
      *
-     * @param  string  $filename
+     * @param string $filename
      */
     public function __construct(
         public string $filename
@@ -49,7 +49,7 @@ class FileLimiter
     /**
      * Factory create
      *
-     * @param  string  $filename
+     * @param string $filename
      * @return static
      */
     public static function make(string $filename): static
@@ -60,7 +60,7 @@ class FileLimiter
     /**
      * Read the first n lines from the file
      *
-     * @param  int  $numberOfLines
+     * @param int $numberOfLines
      * @return $this
      */
     public function readFirstLines(int $numberOfLines = 5): self
@@ -83,7 +83,7 @@ class FileLimiter
     /**
      * Read the last n lines from the file
      *
-     * @param  int  $numberOfLines
+     * @param int $numberOfLines
      * @return $this
      */
     public function readLastLines(int $numberOfLines = 5): self
@@ -105,7 +105,7 @@ class FileLimiter
     }
 
     /**
-     * @param  array  $lineNumbers
+     * @param array $lineNumbers
      * @return $this
      */
     public function readSpecificLines(array $lineNumbers): static
@@ -190,7 +190,7 @@ class FileLimiter
     }
 
     /**
-     * @param  string  $filename
+     * @param string $filename
      * @return bool|int
      */
     public function toFile(string $filename): bool|int

@@ -19,3 +19,7 @@ it('returns the second value after first value is null', function () {
 it('returns the second value after first value is empty', function () {
     expect(first_value('', ['b' => 'b'], ['c' => 'c']))->toBe(['b' => 'b']);
 });
+
+it('returns zero from the second value', function () {
+    expect(first_value('', 0, ['c' => 'c']))->toBe(0);
+});

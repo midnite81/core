@@ -15,12 +15,13 @@ abstract class BaseRepository
     /**
      * Sort by order
      * example [['column' => 'asc/desc']]
+     *
      * @var array<array<string, string>>
      */
     protected array $orderBy = [];
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return Model|null
      */
     protected function internalTryGetById(int $id): ?Model
@@ -32,7 +33,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return Model
      *
      * @throws RecordNotFoundException
@@ -49,8 +50,8 @@ abstract class BaseRepository
     }
 
     /**
-     * @param  string  $column
-     * @param  string|int  $identifier
+     * @param string $column
+     * @param string|int $identifier
      * @return Model|null
      */
     protected function internalTryGetByColumn(string $column, string|int $identifier): ?Model
@@ -62,8 +63,8 @@ abstract class BaseRepository
     }
 
     /**
-     * @param  string  $column
-     * @param  string|int  $identifier
+     * @param string $column
+     * @param string|int $identifier
      * @return Model
      *
      * @throws RecordNotFoundException
@@ -87,7 +88,7 @@ abstract class BaseRepository
         $build = $this->model->newQuery();
 
         if (!empty($this->orderBy)) {
-            foreach($this->orderBy as $column => $direction) {
+            foreach ($this->orderBy as $column => $direction) {
                 $build->orderBy($column, $direction);
             }
         }
@@ -97,7 +98,7 @@ abstract class BaseRepository
 
     /**
      * @param $column
-     * @param  int|string|array  $value
+     * @param int|string|array $value
      * @return Collection<int, Model>
      */
     protected function internalListByColumn($column, int|string|array $value): Collection
@@ -105,7 +106,7 @@ abstract class BaseRepository
         $build = $this->model->newQuery();
 
         if (!empty($this->orderBy)) {
-            foreach($this->orderBy as $column => $direction) {
+            foreach ($this->orderBy as $column => $direction) {
                 $build->orderBy($column, $direction);
             }
         }
@@ -119,16 +120,17 @@ abstract class BaseRepository
         return $build->get();
     }
 
-
     /**
      * Sort by order
      * example [['column' => 'asc/desc']]
+     *
      * @param array $orderBy
      * @return BaseRepository
      */
     protected function setOrderBy(array $orderBy): BaseRepository
     {
         $this->orderBy = $orderBy;
+
         return $this;
     }
 }

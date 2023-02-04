@@ -9,7 +9,11 @@ function first_value(): mixed
     $args = func_get_args();
 
     foreach ($args as $arg) {
-        if (!empty($arg)) {
+        if (is_string($arg)) {
+            $arg = trim($arg);
+        }
+
+        if ($arg !== null && $arg !== '') {
             return $arg;
         }
     }

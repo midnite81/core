@@ -52,7 +52,7 @@ abstract class BaseEntity
     /**
      * Returns a limited array with the keys passed
      *
-     * @param  array  $limitToKeys
+     * @param array $limitToKeys
      * @return array
      *
      * @throws PropertyIsRequiredException
@@ -93,7 +93,7 @@ abstract class BaseEntity
     /**
      * Maps data to the entity
      *
-     * @param  array  $data
+     * @param array $data
      * @return $this
      */
     public function map(array $data = []): self
@@ -239,9 +239,9 @@ abstract class BaseEntity
      * Loops over the data array and calls the callback on each item
      * and returns it to the original array
      *
-     * @param  array  $originalArray
-     * @param  array  $data
-     * @param  Closure  $callback
+     * @param array $originalArray
+     * @param array $data
+     * @param Closure $callback
      * @return void
      */
     public function mapArray(array &$originalArray, array $data, Closure $callback): void
@@ -255,9 +255,9 @@ abstract class BaseEntity
      * Loops over the data array and calls the callback on each item
      * and returns it to the original collection
      *
-     * @param  Collection  $collection
-     * @param  array  $data
-     * @param  Closure  $callback
+     * @param Collection $collection
+     * @param array $data
+     * @param Closure $callback
      * @return void
      */
     public function mapCollection(Collection $collection, array $data, Closure $callback): void
@@ -270,8 +270,8 @@ abstract class BaseEntity
     /**
      * Returns entity properties which have a key which is passed in $limitToKeys
      *
-     * @param  array  $entityProperties
-     * @param  array  $limitToKeys
+     * @param array $entityProperties
+     * @param array $limitToKeys
      * @return array
      */
     protected function filterKeys(array $entityProperties, array $limitToKeys): array
@@ -316,7 +316,7 @@ abstract class BaseEntity
     /**
      * Determines if a property has been initialised
      *
-     * @param  string  $propertyName
+     * @param string $propertyName
      * @return bool
      */
     protected function isPropertyInitialised(string $propertyName): bool

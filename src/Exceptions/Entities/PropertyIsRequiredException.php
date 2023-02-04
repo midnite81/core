@@ -9,7 +9,7 @@ use Exception;
 class PropertyIsRequiredException extends Exception
 {
     /**
-     * @param  string  $propertyName
+     * @param string $propertyName
      */
     public function __construct(string $propertyName)
     {

@@ -19,7 +19,7 @@ abstract class BaseAction
     /**
      * Store data to the model
      *
-     * @param  array  $data
+     * @param array $data
      * @return Model
      */
     protected function internalStore(array $data): Model
@@ -30,8 +30,8 @@ abstract class BaseAction
     /**
      * Update data to the passed model
      *
-     * @param  Model  $model
-     * @param  array  $data
+     * @param Model $model
+     * @param array $data
      * @return bool
      */
     protected function internalUpdate(Model $model, array $data): bool
@@ -42,8 +42,8 @@ abstract class BaseAction
     /**
      * Updates or creates a record
      *
-     * @param  array  $attributes
-     * @param  array  $data
+     * @param array $attributes
+     * @param array $data
      * @return Model
      */
     protected function internalUpdateOrCreate(array $attributes, array $data): Model

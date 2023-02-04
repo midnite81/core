@@ -31,8 +31,8 @@ class CreateBlankCopyOfEnvironmentFile extends Command
     /**
      * Create a new command instance.
      *
-     * @param  Application  $app
-     * @param  Filesystem  $files
+     * @param Application $app
+     * @param Filesystem $files
      */
     public function __construct(
         protected Application $app,

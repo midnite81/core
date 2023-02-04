@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Midnite81\Core\Commands\Traits\FailureProcessing;
+use Midnite81\Core\Contracts\Services\ExecuteInterface;
 
 class BackupDatabase extends Command
 {
@@ -18,9 +19,9 @@ class BackupDatabase extends Command
      */
     protected $signature = 'database:backup
                            {connection? : The connection you want to backup}
-                           {chmod? : The chmod for any directories created e.g 0777}
-                           {directory? : The directory in the storage folder you want to save to}
-                           {--abs : This option allows you to specific any directory}';
+                           {--directory= : The directory in the storage folder you want to save to}
+                           {--chmod= : The chmod for any directories created e.g 0777, defaults to 0777}
+                           {--abs : This option allows you to specify any directory}';
 
     /**
      * The console command description.
@@ -40,6 +41,11 @@ class BackupDatabase extends Command
     protected string $filename;
 
     protected string $filePath;
+
+    public function __construct(protected ExecuteInterface $execute)
+    {
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
@@ -62,7 +68,7 @@ class BackupDatabase extends Command
         $command = $this->makeCommand($connection, $connectionName);
 
         try {
-            exec($command);
+            $this->execute->exec($command);
             $this->line("Database backed up to {$this->filePath}");
 
             return Command::SUCCESS;
@@ -93,17 +99,17 @@ class BackupDatabase extends Command
     /**
      * Creates directory if it doesn't exist and returns a filename to write backup to
      *
-     * @param  string  $connectionName
+     * @param string $connectionName
      * @return string
      */
     public function filename(string $connectionName): string
     {
         $directory = $this->option('abs')
-            ? realpath($this->argument('directory'))
-            : realpath(storage_path($this->argument('directory')));
+            ? realpath($this->option('directory') ?? '')
+            : realpath(storage_path($this->option('directory') ?? ''));
 
         if (!empty($directory) && !is_dir($directory)) {
-            mkdir($directory, $this->argument('chmod', '0777'), true);
+            mkdir($directory, $this->option('chmod', '0777'), true);
         }
 
         $this->directory = is_string($directory) ? $directory : null;
