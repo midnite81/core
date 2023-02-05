@@ -101,7 +101,7 @@ class FireScriptsCommand extends Command
         $this->parseExtendedOptions();
 
         try {
-            if ($this->hasOption('script') && $this->option('script') !== null) {
+            if ($this->hasOption('shortcut') && $this->option('shortcut') !== null) {
                 $scriptArguments = $this->getShortcutArgs();
 
                 return $this->call($this->commandName, $scriptArguments);
