@@ -41,15 +41,6 @@ class ChangeEnvironmentVariable extends Command
     public function __construct()
     {
         parent::__construct();
-
-        try {
-            $this->environmentPath = $this->getEnvironmentalFilePath();
-        } catch (FileNotFoundException $e) {
-            $this->failure(
-                $e,
-                'As the environmental file could not be found, use the file argument to specify the path to the file'
-            );
-        }
     }
 
     /**
@@ -59,6 +50,15 @@ class ChangeEnvironmentVariable extends Command
      */
     public function handle(): int
     {
+        try {
+            $this->environmentPath = $this->getEnvironmentalFilePath();
+        } catch (FileNotFoundException $e) {
+            $this->failure(
+                $e,
+                'As the environmental file could not be found, use the file argument to specify the path to the file'
+            );
+        }
+
         if (!$this->proceedWhenInProduction()) {
             $this->info('The command has been cancelled as you are in production');
 
