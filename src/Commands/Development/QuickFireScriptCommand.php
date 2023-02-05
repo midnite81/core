@@ -33,7 +33,7 @@ class QuickFireScriptCommand extends Command
     {
         return $this->call(config('core-ignition.fire-script-command-name', 'scripts:run'), [
             'args' => $this->argument('args'),
-            '--script' => $this->argument('scriptsName'),
+            '--shortcut' => $this->argument('scriptsName'),
         ]);
     }
 }
