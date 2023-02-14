@@ -16,17 +16,32 @@
         },
         "files": [
             "src/Functions/uuid.php",
-            "src/Functions/first.php"
+            "src/Functions/first.php",
+            "src/Functions/enum.php",
+            "helper.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-        }
+        },
+        "files": [
+            "src/Functions/uuid.php",
+            "src/Functions/first.php",
+            "src/Functions/enum.php",
+            "helper.php"
+        ]
     },
     "minimum-stability": "stable",
     "require": {
         "php": "^8.1",
         "ramsey/uuid": "^4.7"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.1",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "orchestra/testbench": "^7.6",
+        "phpstan/phpstan": "^1.8"
     },
     "scripts": {
         "test": [
@@ -40,13 +55,6 @@
         "stan": "vendor/bin/phpstan --memory-limit=-1",
         "pint": "vendor/bin/pint -v --config=./pint.json",
         "docu": "php _bin/phpDocumentor.phar run -d src/ -t docs/generated"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.1",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-parallel": "^1.2",
-        "orchestra/testbench": "^7.6",
-        "phpstan/phpstan": "^1.8"
     },
     "config": {
         "allow-plugins": {

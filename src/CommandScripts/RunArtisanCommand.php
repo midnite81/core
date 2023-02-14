@@ -66,7 +66,7 @@ class RunArtisanCommand
             'shouldAnnounce' => $this->shouldAnnounce,
             'message' => $this->message,
             'commandSignature' => $this->commandSignature,
-            'argumentsAndOptions' => $this->argumentsAndOptions
+            'argumentsAndOptions' => $this->argumentsAndOptions,
         ];
     }
 

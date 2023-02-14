@@ -71,7 +71,7 @@ abstract class AbstractCommandScript
     {
         return [
             'shouldAnnounce' => $this->shouldAnnounce,
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 
