@@ -354,12 +354,13 @@ class FireScriptsCommand extends Command
      */
     protected function parseCommand(mixed $command): string
     {
-        return preg_replace_callback('/\$(\d+|\*)/', function($matches) {
+        return preg_replace_callback('/\$(\d+|\*)/', function ($matches) {
             if ($matches[1] === '*') {
                 return implode(' ', $this->arguments()['args']);
             }
 
-            $index = (int)$matches[1] - 1;
+            $index = (int) $matches[1] - 1;
+
             return $this->arguments()['args'][$index] ?? '';
         }, $command);
     }
