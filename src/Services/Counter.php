@@ -22,6 +22,7 @@ class Counter implements CounterInterface
     public function startingPoint(int $value): static
     {
         $this->count = $value;
+
         return $this;
     }
 
@@ -107,6 +108,7 @@ class Counter implements CounterInterface
     protected function increase(int $value): static
     {
         $this->count = $this->count + $value;
+
         return $this;
     }
 
@@ -119,6 +121,7 @@ class Counter implements CounterInterface
     protected function decrease(int $value): static
     {
         $this->count = $this->count - $value;
+
         return $this;
     }
 }

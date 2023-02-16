@@ -35,11 +35,9 @@ it('can return current position with a starting point', function () {
         ->and($sut->getCurrent())->toBe(12);
 });
 
-
 it('can increment with next', function () {
     $sut = new Counter();
     $sut->startingPoint(1)->next();
-
 
     expect($sut->get())
         ->toBe(2)
@@ -50,7 +48,6 @@ it('can decrement with previous', function () {
     $sut = new Counter();
     $sut->startingPoint(2)->previous();
 
-
     expect($sut->get())
         ->toBe(1)
         ->and($sut->getCurrent())->toBe(1);
@@ -60,7 +57,6 @@ it('can increment with value', function () {
     $sut = new Counter();
     $sut->startingPoint(12)->incrementBy(4);
 
-
     expect($sut->get())
         ->toBe(16)
         ->and($sut->getCurrent())->toBe(16);
@@ -69,7 +65,6 @@ it('can increment with value', function () {
 it('can decrement with value', function () {
     $sut = new Counter();
     $sut->startingPoint(12)->decrementBy(4);
-
 
     expect($sut->get())
         ->toBe(8)

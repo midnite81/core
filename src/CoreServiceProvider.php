@@ -50,7 +50,7 @@ class CoreServiceProvider extends ServiceProvider
             UuidGeneratorInterface::class,
             ExecuteInterface::class,
             'm81-uuid',
-            CounterInterface::class
+            CounterInterface::class,
         ];
     }
 }
