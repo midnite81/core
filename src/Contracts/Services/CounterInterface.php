@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Contracts\Services;
 
-use Midnite81\Core\Services\Counter;
-
 interface CounterInterface
 {
     /**
