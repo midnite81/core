@@ -91,7 +91,7 @@ abstract class BaseEntity
     public function toQueryString(?array $limitToKeys = null): string
     {
         if (!empty($limitToKeys)) {
-            return '?' . http_build_query($this->toArray($limitToKeys));
+            return '?' . http_build_query($this->toLimitedArray($limitToKeys));
         }
 
         return '?' . http_build_query($this->toArray());
