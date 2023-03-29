@@ -49,6 +49,20 @@ listed as start_date.
 protected Carbon $startDate;
 ```
 
+## CarbonFormat Attribute
+
+**Usage:** Used with `BaseEntity`  
+**Target:** Properties
+
+This attribute allows you to assign a format to Carbon property which will be using when using a method such as
+toArray(). For example, you may have a property named $startDate but when returning it as an array, you need it to be 
+in d/m/Y format.
+
+```php
+#[\Midnite81\Core\Attributes\CarbonFormat('d/m/Y')]
+protected Carbon $startDate;
+```
+
 ## RequiredProperty Attribute
 
 **Usage:** Used with `BaseEntity`  

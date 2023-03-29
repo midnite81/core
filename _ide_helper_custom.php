@@ -3,7 +3,6 @@
 namespace Spatie\Ray
 {
     use Spatie\LaravelRay\Ray as LaravelRay;
-    use function ray;
 
     class Ray
     {

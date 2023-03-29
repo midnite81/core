@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Entities;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Collection;
+use Midnite81\Core\Attributes\CarbonFormat;
 use Midnite81\Core\Attributes\IgnoreProperty;
 use Midnite81\Core\Attributes\PropertiesMustBeInitialised;
 use Midnite81\Core\Attributes\PropertyName;
@@ -81,12 +83,17 @@ abstract class BaseEntity
     }
 
     /**
+     * @param array|null $limitToKeys
      * @return string
      *
      * @throws PropertyIsRequiredException
      */
-    public function toQueryString(): string
+    public function toQueryString(?array $limitToKeys = null): string
     {
+        if (!empty($limitToKeys)) {
+            return '?' . http_build_query($this->toArray($limitToKeys));
+        }
+
         return '?' . http_build_query($this->toArray());
     }
 
@@ -142,15 +149,18 @@ abstract class BaseEntity
 
         foreach ($properties as $property) {
             $attr = $property->getAttributes(PropertyName::class);
+            $carbonAttr = $property->getAttributes(CarbonFormat::class);
             $ignore = !empty($property->getAttributes(IgnoreProperty::class));
 
             if ($property->isInitialized($this) && !$ignore) {
-                if (!empty($attr)) {
-                    $array[$attr[0]->getArguments()[0]] = $property->getValue($this);
+                $propertyValue = $property->getValue($this);
+                $propertyKey = !empty($attr) ? $attr[0]->getArguments()[0] : $property->getName();
 
-                    continue;
+                if ($propertyValue instanceof Carbon && !empty($carbonAttr)) {
+                    $propertyValue = $propertyValue->format($carbonAttr[0]->getArguments()[0]);
                 }
-                $array[$property->getName()] = $property->getValue($this);
+
+                $array[$propertyKey] = $propertyValue;
             }
         }
 

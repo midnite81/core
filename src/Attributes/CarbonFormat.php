@@ -7,13 +7,16 @@ namespace Midnite81\Core\Attributes;
 use Attribute;
 
 /**
- * This attribute is used to define a property as required
+ * This attribute is used to define the format of a Carbon instance on a class property
  *
  * @Annotation
  *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class RequiredProperty
+class CarbonFormat
 {
+    public function __construct(public string $format)
+    {
+    }
 }
