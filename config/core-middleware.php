@@ -7,6 +7,7 @@ return [
     |--------------------------------------------------------------------------
     | Core Middleware
     |--------------------------------------------------------------------------
+    | This specifies whether the middleware is enabled or not.
     |
     */
     'enabled' => env('CORE_MIDDLEWARE_ENABLED', true),
@@ -16,6 +17,7 @@ return [
     | Allowable Environments
     |--------------------------------------------------------------------------
     | This specifies what environments the middleware will be enabled on.
+    |
     */
     'allowable-environments' => [
         'local',
@@ -26,8 +28,8 @@ return [
     |--------------------------------------------------------------------------
     | Loggers
     |--------------------------------------------------------------------------
-    |
-    |
+    | This specifies what loggers are enabled, at the current time only Ray and
+    | Log are supported.
     |
     */
     'loggers' => [
