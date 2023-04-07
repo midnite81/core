@@ -8,9 +8,6 @@ use Exception;
 
 class PropertyIsRequiredException extends Exception
 {
-    /**
-     * @param string $propertyName
-     */
     public function __construct(string $propertyName)
     {
         $message = sprintf('The property [%s] is required', $propertyName);

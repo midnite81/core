@@ -17,9 +17,6 @@ abstract class AbstractCommandScript
     /**
      * Handles the custom script
      *
-     * @param FireScriptsCommand $command
-     * @param ExecuteInterface $execute
-     * @return int
      *
      * @throws CommandFailedException
      */
@@ -64,8 +61,6 @@ abstract class AbstractCommandScript
 
     /**
      * Serialise Magic Method
-     *
-     * @return array
      */
     public function __serialize(): array
     {
@@ -77,9 +72,6 @@ abstract class AbstractCommandScript
 
     /**
      * Unserialise Magic Method
-     *
-     * @param array $data
-     * @return void
      */
     public function __unserialize(array $data): void
     {
@@ -89,9 +81,6 @@ abstract class AbstractCommandScript
 
     /**
      * Set State Magic Method
-     *
-     * @param array $data
-     * @return object
      */
     public static function __set_state(array $data): object
     {

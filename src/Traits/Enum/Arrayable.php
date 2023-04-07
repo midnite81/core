@@ -11,9 +11,6 @@ trait Arrayable
 {
     /**
      * Returns an array of all cases and their value
-     *
-     * @param Closure|null $callback
-     * @return array
      */
     public static function toArray(Closure $callback = null): array
     {

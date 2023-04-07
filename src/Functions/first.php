@@ -9,8 +9,6 @@ namespace Midnite81\Core\Functions;
  *
  * Example: \Midnite81\Core\Functions\first_value(null, '', 'Dave');
  * Result: Dave
- *
- * @return mixed
  */
 function first_value(): mixed
 {

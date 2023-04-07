@@ -20,18 +20,11 @@ class TestAllPropsEntity extends BaseEntity
 
     protected string $id;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return TestAllPropsEntity
-     */
     public function setTitle(string $title): TestAllPropsEntity
     {
         $this->title = $title;
@@ -39,18 +32,11 @@ class TestAllPropsEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return TestAllPropsEntity
-     */
     public function setDescription(string $description): TestAllPropsEntity
     {
         $this->description = $description;
@@ -58,18 +44,11 @@ class TestAllPropsEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     * @return TestAllPropsEntity
-     */
     public function setContent(string $content): TestAllPropsEntity
     {
         $this->content = $content;

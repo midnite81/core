@@ -17,8 +17,6 @@ class QuickFireScriptCommand extends Command
 
     /**
      * The command name of this command
-     *
-     * @var string
      */
     protected string $commandName;
 

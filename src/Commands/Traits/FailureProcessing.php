@@ -10,10 +10,6 @@ trait FailureProcessing
 {
     /**
      * Displays a message and ends the script with a failure status
-     *
-     * @param \Exception|string $error
-     * @param string $resolution
-     * @return int
      */
     protected function failure(
         \Exception|string $error = 'Something went wrong',

@@ -32,8 +32,6 @@ abstract class BaseEntity
      * This method should be overridden in child classes.
      * It is not abstract because it does not necessarily need to be
      * implemented in each child class.
-     *
-     * @return void
      */
     public function process(): void
     {
@@ -54,8 +52,6 @@ abstract class BaseEntity
     /**
      * Returns a limited array with the keys passed
      *
-     * @param array $limitToKeys
-     * @return array
      *
      * @throws PropertyIsRequiredException
      */
@@ -73,7 +69,6 @@ abstract class BaseEntity
     /**
      * Returns the initialised properties of the entity as a Json String
      *
-     * @return string
      *
      * @throws PropertyIsRequiredException
      */
@@ -83,9 +78,6 @@ abstract class BaseEntity
     }
 
     /**
-     * @param array|null $limitToKeys
-     * @return string
-     *
      * @throws PropertyIsRequiredException
      */
     public function toQueryString(?array $limitToKeys = null): string
@@ -100,7 +92,6 @@ abstract class BaseEntity
     /**
      * Maps data to the entity
      *
-     * @param array $data
      * @return $this
      */
     public function map(array $data = []): self
@@ -169,8 +160,6 @@ abstract class BaseEntity
 
     /**
      * Checks that all public properties have been initialised
-     *
-     * @return bool
      */
     public function allPropertiesInitialised(): bool
     {
@@ -248,11 +237,6 @@ abstract class BaseEntity
     /**
      * Loops over the data array and calls the callback on each item
      * and returns it to the original array
-     *
-     * @param array $originalArray
-     * @param array $data
-     * @param Closure $callback
-     * @return void
      */
     public function mapArray(array &$originalArray, array $data, Closure $callback): void
     {
@@ -264,11 +248,6 @@ abstract class BaseEntity
     /**
      * Loops over the data array and calls the callback on each item
      * and returns it to the original collection
-     *
-     * @param Collection $collection
-     * @param array $data
-     * @param Closure $callback
-     * @return void
      */
     public function mapCollection(Collection $collection, array $data, Closure $callback): void
     {
@@ -279,10 +258,6 @@ abstract class BaseEntity
 
     /**
      * Returns entity properties which have a key which is passed in $limitToKeys
-     *
-     * @param array $entityProperties
-     * @param array $limitToKeys
-     * @return array
      */
     protected function filterKeys(array $entityProperties, array $limitToKeys): array
     {
@@ -294,7 +269,6 @@ abstract class BaseEntity
     /**
      * Checks to see if all required properties are initialised and not empty
      *
-     * @return void
      *
      * @throws PropertyIsRequiredException
      */
@@ -315,8 +289,6 @@ abstract class BaseEntity
 
     /**
      * Get reflection class
-     *
-     * @return ReflectionClass
      */
     protected function getReflection(): ReflectionClass
     {
@@ -325,9 +297,6 @@ abstract class BaseEntity
 
     /**
      * Determines if a property has been initialised
-     *
-     * @param string $propertyName
-     * @return bool
      */
     protected function isPropertyInitialised(string $propertyName): bool
     {

@@ -11,9 +11,6 @@ class Builder
 {
     /**
      * Returns the sql query with its bindings
-     *
-     * @param EloquentBuilder|QueryBuilder $builder
-     * @return string
      */
     public static function getQueries(EloquentBuilder|QueryBuilder $builder): string
     {

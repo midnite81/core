@@ -27,22 +27,16 @@ class FireScriptsCommand extends Command
 
     /**
      * Whether the runner should abort on failure
-     *
-     * @var bool
      */
     public bool $abortOnFailure;
 
     /**
      * If this should be run silently
-     *
-     * @var bool
      */
     public bool $silent;
 
     /**
      * The array of script profiles
-     *
-     * @var array
      */
     public array $profiles;
 
@@ -56,15 +50,11 @@ class FireScriptsCommand extends Command
     /**
      * This allows the user to define additional options in an array which can
      * be made available to any extension scripts extending AbstractCommand Script
-     *
-     * @var array
      */
     public array $optionsArray = [];
 
     /**
      * The command name of this command
-     *
-     * @var string
      */
     public string $commandName;
 
@@ -88,8 +78,6 @@ class FireScriptsCommand extends Command
 
     /**
      * Handle the command
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -139,9 +127,6 @@ class FireScriptsCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @return bool
-     */
     public function abortOnFailure(): bool
     {
         return $this->abortOnFailure;
@@ -149,9 +134,6 @@ class FireScriptsCommand extends Command
 
     /**
      * Allowed use of the yes/no asking in extended classes
-     *
-     * @param string $question
-     * @return bool
      */
     public function askYesNoQuestion(string $question): bool
     {
@@ -159,9 +141,6 @@ class FireScriptsCommand extends Command
     }
 
     /**
-     * @param string $profile
-     * @return array
-     *
      * @throws ProfileDoesNotExistException
      */
     protected function getProfileScripts(string $profile): array
@@ -176,7 +155,6 @@ class FireScriptsCommand extends Command
     /**
      * Returns the script's arguments
      *
-     * @return array
      *
      * @throws ShortcutDoesNotExistException
      */
@@ -192,11 +170,6 @@ class FireScriptsCommand extends Command
         return $shortcuts[$shortcutKey];
     }
 
-    /**
-     * @param mixed $script
-     * @param int|string $question
-     * @return bool
-     */
     protected function isScriptClass(mixed $script, int|string $question): bool
     {
         return !empty($script) &&
@@ -206,10 +179,6 @@ class FireScriptsCommand extends Command
 
     /**
      * Checks if script is an instance of RunArtisanCommand
-     *
-     * @param mixed $script
-     * @param int|string $question
-     * @return bool
      */
     protected function isRunArtisanCommand(mixed $script, int|string $question): bool
     {
@@ -221,8 +190,6 @@ class FireScriptsCommand extends Command
     /**
      * Execute the command(s)
      *
-     * @param string|array $commands
-     * @return int
      *
      * @throws CommandFailedException
      */
@@ -246,9 +213,6 @@ class FireScriptsCommand extends Command
     }
 
     /**
-     * @param mixed $class
-     * @return int
-     *
      * @throws ClassMustInheritFromException
      * @throws CommandFailedException
      */
@@ -284,7 +248,6 @@ class FireScriptsCommand extends Command
      * Executes an artisan command
      *
      * @param mixed $script
-     * @return int
      *
      * @throws CommandFailedException
      */
@@ -314,9 +277,7 @@ class FireScriptsCommand extends Command
     /**
      * Get extended option value
      *
-     * @param string $key
      * @param mixed $defaultValue
-     * @return mixed
      */
     public function getExtendedOption(string $key, mixed $defaultValue = null): mixed
     {
@@ -329,8 +290,6 @@ class FireScriptsCommand extends Command
 
     /**
      * Parses extended options
-     *
-     * @return void
      */
     protected function parseExtendedOptions(): void
     {
@@ -348,9 +307,6 @@ class FireScriptsCommand extends Command
 
     /**
      * Parse the command to add arguments to numbered $ variables
-     *
-     * @param mixed $command
-     * @return string
      */
     protected function parseCommand(mixed $command): string
     {

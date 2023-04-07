@@ -8,8 +8,6 @@ if (!function_exists('uuid')) {
      *
      * Example Usage: uuid()
      * Example Return: 90517cea-8a9e-46c1-8c44-1a3c03611786
-     *
-     * @return string
      */
     function uuid(): string
     {
@@ -23,8 +21,6 @@ if (!function_exists('first_value')) {
      *
      * Example: first_value(null, '', 'Dave');
      * Result: Dave
-     *
-     * @return mixed
      */
     function first_value(): mixed
     {
@@ -39,9 +35,6 @@ if (!function_exists('enum')) {
      *
      * Example usage: enum(\Midnite81\Core\Enums\ExpectedType::String)
      * Result: string
-     *
-     * @param mixed $value
-     * @return mixed
      */
     function enum(mixed $value): mixed
     {
