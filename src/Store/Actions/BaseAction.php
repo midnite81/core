@@ -11,16 +11,11 @@ abstract class BaseAction
     /**
      * The model which the action is based upon.
      * To be set at extended class level
-     *
-     * @var Model
      */
     protected Model $model;
 
     /**
      * Store data to the model
-     *
-     * @param array $data
-     * @return Model
      */
     protected function internalStore(array $data): Model
     {
@@ -29,10 +24,6 @@ abstract class BaseAction
 
     /**
      * Update data to the passed model
-     *
-     * @param Model $model
-     * @param array $data
-     * @return bool
      */
     protected function internalUpdate(Model $model, array $data): bool
     {
@@ -41,10 +32,6 @@ abstract class BaseAction
 
     /**
      * Updates or creates a record
-     *
-     * @param array $attributes
-     * @param array $data
-     * @return Model
      */
     protected function internalUpdateOrCreate(array $attributes, array $data): Model
     {

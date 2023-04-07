@@ -23,8 +23,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * The path to the env file
-     *
-     * @var string
      */
     protected string $environmentPath;
 
@@ -45,8 +43,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -86,8 +82,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Gets and returns the env file
-     *
-     * @return bool|string
      */
     protected function loadEnvironmentalFile(): bool|string
     {
@@ -102,10 +96,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Checks to see if the key exists in the passed data
-     *
-     * @param $argument
-     * @param $envFile
-     * @return int
      */
     protected function keyExists($argument, $envFile): int
     {
@@ -114,9 +104,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Updates an Environmental Key Pair
-     *
-     * @param $envFile
-     * @return string
      */
     protected function updateEnvKeyPair($envFile): string
     {
@@ -128,9 +115,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Creates an Environmental Key Pair
-     *
-     * @param $envFile
-     * @return string
      */
     protected function createEnvKeyPair($envFile): string
     {
@@ -141,9 +125,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Saves the env file
-     *
-     * @param string $contents
-     * @return bool|int
      */
     protected function save(string $contents): bool|int
     {
@@ -158,8 +139,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Get the key
-     *
-     * @return string
      */
     protected function getKey(): string
     {
@@ -168,8 +147,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Get the value
-     *
-     * @return array|string
      */
     protected function getValue(): array|string
     {
@@ -184,8 +161,6 @@ class ChangeEnvironmentVariable extends Command
 
     /**
      * Check to see if the application should proceed
-     *
-     * @return bool
      */
     protected function proceedWhenInProduction(): bool
     {
@@ -223,7 +198,6 @@ class ChangeEnvironmentVariable extends Command
     /**
      * Finds the environmental file path
      *
-     * @return string
      *
      * @throws FileNotFoundException
      */
@@ -241,9 +215,6 @@ class ChangeEnvironmentVariable extends Command
     }
 
     /**
-     * @param string $path
-     * @return string
-     *
      * @throws FileNotFoundException
      */
     protected function find(string $path): string

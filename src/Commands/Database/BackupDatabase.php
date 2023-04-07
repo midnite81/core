@@ -49,8 +49,6 @@ class BackupDatabase extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -79,10 +77,6 @@ class BackupDatabase extends Command
 
     /**
      * Make the database command
-     *
-     * @param $connection
-     * @param $connectionName
-     * @return string
      */
     protected function makeCommand($connection, $connectionName): string
     {
@@ -98,9 +92,6 @@ class BackupDatabase extends Command
 
     /**
      * Creates directory if it doesn't exist and returns a filename to write backup to
-     *
-     * @param string $connectionName
-     * @return string
      */
     public function filename(string $connectionName): string
     {
@@ -124,8 +115,6 @@ class BackupDatabase extends Command
 
     /**
      * Get the connection name
-     *
-     * @return string
      */
     protected function getConnectionName(): string
     {

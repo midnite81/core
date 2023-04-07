@@ -20,10 +20,6 @@ abstract class BaseRepository
      */
     protected array $orderBy = [];
 
-    /**
-     * @param int $id
-     * @return Model|null
-     */
     protected function internalTryGetById(int $id): ?Model
     {
         /** @var ?Model $record */
@@ -33,9 +29,6 @@ abstract class BaseRepository
     }
 
     /**
-     * @param int $id
-     * @return Model
-     *
      * @throws RecordNotFoundException
      */
     protected function internalGetById(int $id): Model
@@ -49,11 +42,6 @@ abstract class BaseRepository
         return $record;
     }
 
-    /**
-     * @param string $column
-     * @param string|int $identifier
-     * @return Model|null
-     */
     protected function internalTryGetByColumn(string $column, string|int $identifier): ?Model
     {
         /** @var ?Model $record */
@@ -63,10 +51,6 @@ abstract class BaseRepository
     }
 
     /**
-     * @param string $column
-     * @param string|int $identifier
-     * @return Model
-     *
      * @throws RecordNotFoundException
      */
     protected function internalGetByColumn(string $column, string|int $identifier): Model
@@ -97,8 +81,6 @@ abstract class BaseRepository
     }
 
     /**
-     * @param $column
-     * @param int|string|array $value
      * @return Collection<int, Model>
      */
     protected function internalListByColumn($column, int|string|array $value): Collection
@@ -123,9 +105,6 @@ abstract class BaseRepository
     /**
      * Sort by order
      * example [['column' => 'asc/desc']]
-     *
-     * @param array $orderBy
-     * @return BaseRepository
      */
     protected function setOrderBy(array $orderBy): BaseRepository
     {

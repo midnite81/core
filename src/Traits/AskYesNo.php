@@ -6,10 +6,6 @@ namespace Midnite81\Core\Traits;
 
 trait AskYesNo
 {
-    /**
-     * @param string $question
-     * @return bool
-     */
     protected function askYesNo(string $question): bool
     {
         $response = '';

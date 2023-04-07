@@ -17,18 +17,11 @@ class RequiredPropertiesEntity extends BaseEntity
     #[RequiredProperty]
     private int $age;
 
-    /**
-     * @return int
-     */
     public function getAge(): int
     {
         return $this->age;
     }
 
-    /**
-     * @param int $age
-     * @return RequiredPropertiesEntity
-     */
     public function setAge(int $age): RequiredPropertiesEntity
     {
         $this->age = $age;

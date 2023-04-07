@@ -18,18 +18,11 @@ class TestEntity extends BaseEntity
 
     protected string $id;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return TestEntity
-     */
     public function setTitle(string $title): TestEntity
     {
         $this->title = $title;
@@ -37,18 +30,11 @@ class TestEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return TestEntity
-     */
     public function setDescription(string $description): TestEntity
     {
         $this->description = $description;
@@ -56,18 +42,11 @@ class TestEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     * @return TestEntity
-     */
     public function setContent(string $content): TestEntity
     {
         $this->content = $content;
@@ -75,18 +54,11 @@ class TestEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     * @return TestEntity
-     */
     public function setId(string $id): TestEntity
     {
         $this->id = $id;

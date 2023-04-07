@@ -24,15 +24,11 @@ class FileLimiter
 
     /**
      * The current reading index
-     *
-     * @var int
      */
     protected int $index = 0;
 
     /**
      * Construct the class
-     *
-     * @param string $filename
      */
     public function __construct(
         public string $filename
@@ -48,9 +44,6 @@ class FileLimiter
 
     /**
      * Factory create
-     *
-     * @param string $filename
-     * @return static
      */
     public static function make(string $filename): static
     {
@@ -60,7 +53,6 @@ class FileLimiter
     /**
      * Read the first n lines from the file
      *
-     * @param int $numberOfLines
      * @return $this
      */
     public function readFirstLines(int $numberOfLines = 5): self
@@ -83,7 +75,6 @@ class FileLimiter
     /**
      * Read the last n lines from the file
      *
-     * @param int $numberOfLines
      * @return $this
      */
     public function readLastLines(int $numberOfLines = 5): self
@@ -105,7 +96,6 @@ class FileLimiter
     }
 
     /**
-     * @param array $lineNumbers
      * @return $this
      */
     public function readSpecificLines(array $lineNumbers): static
@@ -127,9 +117,6 @@ class FileLimiter
         return $this;
     }
 
-    /**
-     * @return void
-     */
     protected function createLineIndex(): void
     {
         $this->lines[$this->index] = [];
@@ -147,8 +134,6 @@ class FileLimiter
 
     /**
      * Returns the class to a string
-     *
-     * @return string
      */
     public function toString(): string
     {
@@ -164,8 +149,6 @@ class FileLimiter
 
     /**
      * Output the class to an array
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -181,18 +164,12 @@ class FileLimiter
 
     /**
      * Return class to json object
-     *
-     * @return string
      */
     public function toJson(): string
     {
         return json_encode($this->toArray());
     }
 
-    /**
-     * @param string $filename
-     * @return bool|int
-     */
     public function toFile(string $filename): bool|int
     {
         return file_put_contents($filename, $this->toString());
@@ -200,8 +177,6 @@ class FileLimiter
 
     /**
      * To string magic method
-     *
-     * @return string
      */
     public function __toString(): string
     {

@@ -41,9 +41,6 @@ class SwitchBranches extends AbstractCommandScript
 
     /**
      * Make branch from arguments.
-     *
-     * @param Command $command
-     * @return string|null
      */
     protected function makeBranchNameFromArguments(Command $command): ?string
     {
