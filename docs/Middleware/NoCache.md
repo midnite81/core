@@ -1,43 +1,26 @@
-# NoCache Middleware
+## NoCache
+**Class:** \Midnite81\Core\Http\Middleware\NoCache
 
-The NoCache middleware adds headers to disable caching of responses. It adds three headers
-to the response:
+This middleware adds cache busting headers to the request. This is useful for ensuring that the latest version of the
+route is being used.
 
-- Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-- Cache-Control: post-check=0, pre-check=0
-- Pragma: no-cache
+### Usage
 
-This prevents the browser from caching any responses returned by the server. This is useful in scenarios where you want
-to ensure that the content being served is always the most up-to-date version.
-
-## Implementation
-
-Either:     
-Register the middleware in your app/Http/Kernel.php file:
-
+You can use it directly on the route as follows;
 ```php
-protected $middleware = [
-    // ...
-    \Midnite81\Core\Http\Middleware\NoCache::class,
-];
+Route::get('/', function () {
+    return view('welcome');
+})->middleware(\Midnite81\Core\Http\Middleware\NoCache::class);
 ```
 
-Or:   
-Add it to a route or route group:
-
+If you add it to the `app/Http/Kernel.php` file, under the $routeMiddleware property, you can use it by its alias.
 ```php
 protected $routeMiddleware = [
-    // ...
     'no-cache' => \Midnite81\Core\Http\Middleware\NoCache::class,
 ];
 ```
-
-Then, you can apply the middleware to any route by using the middleware key in your route definition:
-
 ```php
-Route::get('/example', function () {
-    return view('example');
+Route::get('/', function () {
+    return view('welcome');
 })->middleware('no-cache');
 ```
-
-
