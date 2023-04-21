@@ -22,8 +22,8 @@ it('attempts fails gracefully', function () {
     });
 
     expect($sut)->toBeInstanceOf(\Midnite81\Core\Entities\AttemptEntity::class)
-                ->and($sut->successful)->toBeFalse()
-                ->and($sut->result)->toBeNull()
-                ->and($sut->hasErrored)->toBeTrue()
-                ->and($sut->throwable)->toBeInstanceOf(Throwable::class);
+        ->and($sut->successful)->toBeFalse()
+        ->and($sut->result)->toBeNull()
+        ->and($sut->hasErrored)->toBeTrue()
+        ->and($sut->throwable)->toBeInstanceOf(Throwable::class);
 });

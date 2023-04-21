@@ -59,7 +59,7 @@ trait HasConversions
 
     public function toMinutes(int $roundTo = 0): float|int
     {
-        $totalMinutes =  ($this->microseconds / (1000000 * 60) +
+        $totalMinutes = ($this->microseconds / (1000000 * 60) +
             $this->milliseconds / (1000 * 60) +
             $this->seconds / 60 +
             $this->minutes +
@@ -76,9 +76,6 @@ trait HasConversions
 
     /**
      * Convert to hours
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toHours(int $roundTo = 0): float|int
     {
@@ -98,9 +95,6 @@ trait HasConversions
 
     /**
      * Convert to days
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toDays(int $roundTo = 0): float|int
     {
@@ -120,9 +114,6 @@ trait HasConversions
 
     /**
      * Convert to weeks
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toWeeks(int $roundTo = 0): float|int
     {
@@ -140,12 +131,8 @@ trait HasConversions
         return $this->roundResult($totalWeeks, $roundTo);
     }
 
-
     /**
      * Converts the total duration to months
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toMonths(int $roundTo = 0): float|int
     {
@@ -153,59 +140,52 @@ trait HasConversions
             ($this->years * 12) +
             ($this->quarters * 3) +
             ($this->weeks * 0.25) +
-            ($this->days * (1/30)) +
-            ($this->hours * (1/(30*24))) +
-            ($this->minutes * (1/(30*24*60))) +
-            ($this->seconds * (1/(30*24*60*60))) +
-            ($this->milliseconds * (1/(30*24*60*60*1000))) +
-            ($this->microseconds * (1/(30*24*60*60*1000000)));
+            ($this->days * (1 / 30)) +
+            ($this->hours * (1 / (30 * 24))) +
+            ($this->minutes * (1 / (30 * 24 * 60))) +
+            ($this->seconds * (1 / (30 * 24 * 60 * 60))) +
+            ($this->milliseconds * (1 / (30 * 24 * 60 * 60 * 1000))) +
+            ($this->microseconds * (1 / (30 * 24 * 60 * 60 * 1000000)));
 
         return $this->roundResult($totalMonths, $roundTo);
     }
 
     /**
      * Converts the total duration to quarters
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toQuarters(int $roundTo = 0): float|int
     {
         $totalQuarters = $this->quarters +
             ($this->years * 4) +
-            ($this->weeks * 0.25 * (1/3)) +
-            ($this->days * (1/30) * (1/3)) +
-            ($this->hours * (1/(30*24)) * (1/3)) +
-            ($this->minutes * (1/(30*24*60)) * (1/3)) +
-            ($this->seconds * (1/(30*24*60*60)) * (1/3)) +
-            ($this->milliseconds * (1/(30*24*60*60*1000)) * (1/3)) +
-            ($this->microseconds * (1/(30*24*60*60*1000000)) * (1/3));
+            ($this->weeks * 0.25 * (1 / 3)) +
+            ($this->days * (1 / 30) * (1 / 3)) +
+            ($this->hours * (1 / (30 * 24)) * (1 / 3)) +
+            ($this->minutes * (1 / (30 * 24 * 60)) * (1 / 3)) +
+            ($this->seconds * (1 / (30 * 24 * 60 * 60)) * (1 / 3)) +
+            ($this->milliseconds * (1 / (30 * 24 * 60 * 60 * 1000)) * (1 / 3)) +
+            ($this->microseconds * (1 / (30 * 24 * 60 * 60 * 1000000)) * (1 / 3));
 
         return $this->roundResult($totalQuarters, $roundTo);
     }
 
     /**
      * Converts the total duration to years
-     *
-     * @param int $roundTo
-     * @return float|int
      */
     public function toYears(int $roundTo = 0): float|int
     {
         $totalYears = $this->years +
             ($this->quarters * 0.25) +
-            ($this->months * (1/12)) +
-            ($this->weeks * 0.25 * (1/12)) +
-            ($this->days * (1/30) * (1/12)) +
-            ($this->hours * (1/(30*24)) * (1/12)) +
-            ($this->minutes * (1/(30*24*60)) * (1/12)) +
-            ($this->seconds * (1/(30*24*60*60)) * (1/12)) +
-            ($this->milliseconds * (1/(30*24*60*60*1000)) * (1/12)) +
-            ($this->microseconds * (1/(30*24*60*60*1000000)) * (1/12));
+            ($this->months * (1 / 12)) +
+            ($this->weeks * 0.25 * (1 / 12)) +
+            ($this->days * (1 / 30) * (1 / 12)) +
+            ($this->hours * (1 / (30 * 24)) * (1 / 12)) +
+            ($this->minutes * (1 / (30 * 24 * 60)) * (1 / 12)) +
+            ($this->seconds * (1 / (30 * 24 * 60 * 60)) * (1 / 12)) +
+            ($this->milliseconds * (1 / (30 * 24 * 60 * 60 * 1000)) * (1 / 12)) +
+            ($this->microseconds * (1 / (30 * 24 * 60 * 60 * 1000000)) * (1 / 12));
 
         return $this->roundResult($totalYears, $roundTo);
     }
-
 
     public function roundResult(float|int $result, int $roundTo): float|int
     {
