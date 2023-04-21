@@ -18,6 +18,7 @@
             "src/Functions/uuid.php",
             "src/Functions/first.php",
             "src/Functions/enum.php",
+            "src/Functions/time-conversion.php",
             "helper.php"
         ]
     },
