@@ -26,6 +26,8 @@ This package contains;
   - [Strings](docs/HelperClasses.md)
   - [UserAgent](docs/HelperClasses/UserAgent.md)
 - [Middleware](docs/Middleware.md)
+  - [NoCache](docs/Middleware/NoCache.md)
+  - [LogControllerAndMethod](docs/Middleware/LogControllerAndMethod.md)
 - [Uuid Generator](docs/UuidGenerator.md)
 - Transformers
   - [FileLimiter](docs/Transformers/FileLimiter.md)
