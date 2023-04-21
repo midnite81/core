@@ -18,9 +18,6 @@ class ClassRetriever
     }
 
     /**
-     * @param string $filename
-     * @return array
-     *
      * @throws Exception
      */
     public static function make(string $filename): array
@@ -29,9 +26,6 @@ class ClassRetriever
     }
 
     /**
-     * @param SplFileInfo $splFileInfo
-     * @return array
-     *
      * @throws Exception
      */
     public static function fromSplFileInfo(SplFileInfo $splFileInfo): array
@@ -42,8 +36,6 @@ class ClassRetriever
     }
 
     /**
-     * @return array
-     *
      * @throws Exception
      */
     protected function parseFile(): array

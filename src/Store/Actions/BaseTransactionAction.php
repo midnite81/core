@@ -12,8 +12,6 @@ abstract class BaseTransactionAction extends BaseAction
 {
     /**
      * The database connection class
-     *
-     * @var Connection
      */
     protected Connection $connection;
 
@@ -25,9 +23,6 @@ abstract class BaseTransactionAction extends BaseAction
     /**
      * Execute a transaction within a closure
      *
-     * @param Closure $callback
-     * @param int $attempts
-     * @return mixed
      *
      * @throws Throwable
      */

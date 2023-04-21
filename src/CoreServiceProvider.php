@@ -16,13 +16,12 @@ class CoreServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
         $this->publishes([
             __DIR__ . '/../config/core-ignition.php' => config_path('core-ignition.php'),
+            __DIR__ . '/../config/core-middleware.php' => config_path('core-middleware.php'),
         ], 'config');
     }
 
@@ -39,6 +38,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->bind(CounterInterface::class, Counter::class);
 
         $this->mergeConfigFrom(__DIR__ . '/../config/core-ignition.php', 'core-ignition');
+        $this->mergeConfigFrom(__DIR__ . '/../config/core-middleware.php', 'core-middleware');
     }
 
     /**

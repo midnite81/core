@@ -20,7 +20,6 @@ class RunArtisanCommand
      * If the script should announce itself, you can customise the message which is
      * sent to the user.
      *
-     * @param string $message
      * @return $this
      */
     public function withMessage(string $message): static
@@ -57,8 +56,6 @@ class RunArtisanCommand
 
     /**
      * Serialise Magic Method
-     *
-     * @return array
      */
     public function __serialize(): array
     {
@@ -72,9 +69,6 @@ class RunArtisanCommand
 
     /**
      * Unserialise Magic Method
-     *
-     * @param array $data
-     * @return void
      */
     public function __unserialize(array $data): void
     {
@@ -87,7 +81,6 @@ class RunArtisanCommand
     /**
      * Set State Magic Method
      *
-     * @param $data
      * @return static
      */
     public static function __set_state($data)

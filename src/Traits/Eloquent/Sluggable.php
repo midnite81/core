@@ -43,8 +43,6 @@ trait Sluggable
 
     /**
      * Return the column the slug should be based on
-     *
-     * @return string
      */
     public function getSluggableColumn(): string
     {
@@ -53,8 +51,6 @@ trait Sluggable
 
     /**
      * Build the slug
-     *
-     * @return string
      */
     public function buildSlug(): string
     {
@@ -65,8 +61,6 @@ trait Sluggable
 
     /**
      * Saves Slug to Model
-     *
-     * @param $model
      */
     public function saveSlugToModel($model): void
     {
@@ -93,10 +87,6 @@ trait Sluggable
 
     /**
      * Checks to see if the event should run
-     *
-     * @param $model
-     * @param $type
-     * @return bool
      */
     protected function shouldRunEvent($model, $type): bool
     {

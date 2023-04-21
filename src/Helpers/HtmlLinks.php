@@ -11,10 +11,6 @@ class HtmlLinks
 {
     /**
      * Adds target blank to external urls
-     *
-     * @param string $text
-     * @param Request|null $request
-     * @return string
      */
     public static function targetBlank(string $text, ?Request $request = null): string
     {
@@ -32,10 +28,6 @@ class HtmlLinks
 
     /**
      * Add github package link to html
-     *
-     * @param string $html
-     * @param string $packageUrl
-     * @return string
      */
     public static function addPackageLink(string $html, string $packageUrl): string
     {
@@ -57,12 +49,6 @@ class HtmlLinks
 
     /**
      * Adds github icon and link
-     *
-     * @param string $url
-     * @param string|null $text
-     * @param string|null $svgClass
-     * @param string|null $linkCss
-     * @return string
      */
     public static function githubIconAndLink(string $url, ?string $text = null, string $svgClass = null, ?string $linkCss = null): string
     {

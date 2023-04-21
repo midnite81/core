@@ -8,8 +8,6 @@ interface UuidGeneratorInterface
 {
     /**
      * Generate a UUID
-     *
-     * @return string
      */
     public function generate(): string;
 }

@@ -17,8 +17,6 @@ class CoreCommandServiceProvider extends ServiceProvider
 
     /**
      * Registers commands
-     *
-     * @return void
      */
     protected function registerCommands(): void
     {

@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 class RayMacroProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         \Spatie\Ray\Ray::macro('inside', function () {
             $args = func_get_args();

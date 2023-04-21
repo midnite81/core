@@ -22,8 +22,6 @@ trait HasUuid
 
     /**
      * Get the column that contains the UUID.
-     *
-     * @return string
      */
     public function getUuidColumn(): string
     {

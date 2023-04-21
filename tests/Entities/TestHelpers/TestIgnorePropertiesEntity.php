@@ -16,18 +16,11 @@ class TestIgnorePropertiesEntity extends BaseEntity
 
     public int $age;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return TestIgnorePropertiesEntity
-     */
     public function setId(int $id): TestIgnorePropertiesEntity
     {
         $this->id = $id;
@@ -35,18 +28,11 @@ class TestIgnorePropertiesEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return TestIgnorePropertiesEntity
-     */
     public function setName(string $name): TestIgnorePropertiesEntity
     {
         $this->name = $name;
@@ -54,18 +40,11 @@ class TestIgnorePropertiesEntity extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getAge(): int
     {
         return $this->age;
     }
 
-    /**
-     * @param int $age
-     * @return TestIgnorePropertiesEntity
-     */
     public function setAge(int $age): TestIgnorePropertiesEntity
     {
         $this->age = $age;

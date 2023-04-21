@@ -14,9 +14,6 @@ use RuntimeException;
  *
  * Example usage: \Midnite81\Core\Functions\enum(\Midnite81\Core\Enums\ExpectedType::String)
  * Result: string
- *
- * @param mixed $value
- * @return mixed
  */
 function enum(mixed $value): mixed
 {
