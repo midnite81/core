@@ -11,6 +11,8 @@ This package contains;
 - [Base Repository](docs/BaseRepository.md)
 - [Artisan Commands](docs/Commands.md)
 - [Attributes](docs/Attributes.md)
+- Converters
+    - [Time Conversion](docs/Converters/TimeConvertion.md)
 - [Eloquent Helpers](docs/EloquentHelpers.md)
 - [Entities, Requests and Responses](docs/Entities_Requests_Responses.md)
 - [Exceptions](docs/Exceptions.md)

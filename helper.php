@@ -47,8 +47,6 @@ if (!function_exists('enum')) {
 if (!function_exists('tempus')) {
     /**
      * Returns a new instance of the TimeConverter
-     *
-     * @return TimeConverter
      */
     function tempus(): TimeConverter
     {

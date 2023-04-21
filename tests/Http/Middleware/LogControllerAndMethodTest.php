@@ -35,8 +35,8 @@ it('hits the logs', function () {
 
     $route = Mockery::mock(\Illuminate\Routing\Route::class);
     $route->shouldReceive('getActionName')
-          ->once()
-          ->andReturn('TestController@testMethod');
+        ->once()
+        ->andReturn('TestController@testMethod');
     $request->setRouteResolver(function () use ($route) {
         return $route;
     });
@@ -44,8 +44,8 @@ it('hits the logs', function () {
     $rayMock = Mockery::mock(\Spatie\LaravelRay\Ray::class);
 
     $rayMock->shouldReceive('send')
-            ->once()
-            ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
+        ->once()
+        ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
 
     app()->instance(Spatie\LaravelRay\Ray::class, $rayMock);
 

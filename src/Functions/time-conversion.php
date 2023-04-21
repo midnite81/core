@@ -6,7 +6,6 @@ namespace Midnite81\Core\Functions;
 
 use Midnite81\Core\Converters\TimeConverter;
 
-
 function microseconds(float $value): TimeConverter
 {
     return (new TimeConverter())->fromMicroseconds($value);

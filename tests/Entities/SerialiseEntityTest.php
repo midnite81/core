@@ -23,8 +23,8 @@ it('can un-serialise the entity', function () {
     $sut = unserialize($serialised);
 
     expect($sut)
-       ->toBeInstanceOf(TestEntity::class)
-       ->and($sut->getTitle())->toBe('My Book')
-       ->and($sut->getDescription())->toBe('My first ever book')
-       ->and($sut->getInitialisedProperties())->toHaveCount(2)->toBeArray();
+        ->toBeInstanceOf(TestEntity::class)
+        ->and($sut->getTitle())->toBe('My Book')
+        ->and($sut->getDescription())->toBe('My first ever book')
+        ->and($sut->getInitialisedProperties())->toHaveCount(2)->toBeArray();
 });

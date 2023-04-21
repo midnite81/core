@@ -104,5 +104,5 @@ it('does not throw if array key exists already', function () {
 
     expect($sutArray)
         ->not->toThrow(ArrayKeyAlreadyExistsException::class)
-             ->toHaveCount(2);
+        ->toHaveCount(2);
 });

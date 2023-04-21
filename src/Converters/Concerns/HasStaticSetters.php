@@ -9,7 +9,6 @@ trait HasStaticSetters
     /**
      * Add microseconds
      *
-     * @param float $value
      * @return $this
      */
     public static function microseconds(float $value): static
@@ -20,7 +19,6 @@ trait HasStaticSetters
     /**
      * Add milliseconds
      *
-     * @param float $value
      * @return $this
      */
     public static function milliseconds(float $value): static
@@ -31,7 +29,6 @@ trait HasStaticSetters
     /**
      * Add seconds
      *
-     * @param float $value
      * @return $this
      */
     public static function seconds(float $value): static
@@ -42,7 +39,6 @@ trait HasStaticSetters
     /**
      * Add minutes
      *
-     * @param float $value
      * @return $this
      */
     public static function minutes(float $value): static
@@ -53,7 +49,6 @@ trait HasStaticSetters
     /**
      * Add hours
      *
-     * @param float $value
      * @return $this
      */
     public static function hours(float $value): static
@@ -64,7 +59,6 @@ trait HasStaticSetters
     /**
      * Add days
      *
-     * @param float $value
      * @return $this
      */
     public static function days(float $value): static
@@ -75,7 +69,6 @@ trait HasStaticSetters
     /**
      * Add weeks
      *
-     * @param float $value
      * @return $this
      */
     public static function weeks(float $value): static
@@ -86,7 +79,6 @@ trait HasStaticSetters
     /**
      * Add months
      *
-     * @param float $value
      * @return $this
      */
     public static function months(float $value): static
@@ -97,7 +89,6 @@ trait HasStaticSetters
     /**
      * Add quarters
      *
-     * @param float $value
      * @return $this
      */
     public static function quarters(float $value): static
@@ -108,7 +99,6 @@ trait HasStaticSetters
     /**
      * Add years
      *
-     * @param float $value
      * @return $this
      */
     public static function years(float $value): static
