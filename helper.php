@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Midnite81\Core\Converters\TimeConverter;
+
 if (!function_exists('uuid')) {
     /**
      * [Aliased] Generates as UUID 4 string
@@ -46,5 +48,17 @@ if (!function_exists('enum')) {
     function enum(mixed $value): mixed
     {
         return \Midnite81\Core\Functions\enum($value);
+    }
+}
+
+if (!function_exists('tempus')) {
+    /**
+     * Returns a new instance of the TimeConverter
+     *
+     * @return TimeConverter
+     */
+    function tempus(): TimeConverter
+    {
+        return new TimeConverter();
     }
 }
