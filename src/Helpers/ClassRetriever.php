@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Helpers;
 
-use Exception;
-use PhpToken;
+use Midnite81\Core\Helpers\Response\ClassRetrieverResponse;
+use ReflectionClass;
+use ReflectionException;
 use SplFileInfo;
 
 class ClassRetriever
 {
-    /**
-     * @throws Exception
-     */
     public function __construct(protected string $filename)
     {
     }
 
     /**
-     * @throws Exception
+     * Construct class from filename and return a ClassRetrieverResponse
+     *
+     * @throws ReflectionException
      */
-    public static function make(string $filename): array
+    public static function make(string $filename): ClassRetrieverResponse
     {
         return (new static($filename))->parseFile();
     }
 
     /**
-     * @throws Exception
+     * Construct class from SplFileInfo and return a ClassRetrieverResponse
+     *
+     * @throws ReflectionException
      */
-    public static function fromSplFileInfo(SplFileInfo $splFileInfo): array
+    public static function fromSplFileInfo(SplFileInfo $splFileInfo): ClassRetrieverResponse
     {
         $fileName = $splFileInfo->getRealPath();
 
@@ -36,81 +38,77 @@ class ClassRetriever
     }
 
     /**
-     * @throws Exception
+     * Parses the file passed to the class
+     *
+     * @throws ReflectionException
      */
-    protected function parseFile(): array
+    protected function parseFile(): ClassRetrieverResponse
     {
-        $getNext = null;
-        $getNextNamespace = false;
-        $skipNext = false;
-        $isAbstract = false;
-        $response = ['namespace' => null, 'class' => [], 'trait' => [], 'interface' => [], 'abstract' => []];
+        $name = '';
+        $type = '';
+        $extends = '';
+        $implements = [];
+        $usedTraits = [];
+        $fullyQualifiedName = '';
 
-        foreach (PhpToken::tokenize(file_get_contents($this->filename)) as $token) {
-            if (!$token->isIgnorable()) {
-                $name = $token->getTokenName();
-                switch ($name) {
-                    case 'T_NAMESPACE':
-                        $getNextNamespace = true;
-                        break;
-                    case 'T_EXTENDS':
-                    case 'T_USE':
-                    case 'T_IMPLEMENTS':
-                        $skipNext = true;
-                        break;
-                    case 'T_ABSTRACT':
-                        $isAbstract = true;
-                        break;
-                    case 'T_CLASS':
-                    case 'T_TRAIT':
-                    case 'T_INTERFACE':
-                        if ($skipNext) {
-                            $skipNext = false;
-                        } else {
-                            $getNext = strtolower(substr($name, 2));
-                        }
-                        break;
-                    case 'T_NAME_QUALIFIED':
-                    case 'T_STRING':
-                        if ($getNextNamespace) {
-                            if (array_filter($response)) {
-                                throw new Exception(
-                                    sprintf('Namespace must be defined first in %s', $this->filename)
-                                );
-                            } else {
-                                $response['namespace'] = $token->text;
-                            }
-                            $getNextNamespace = false;
-                        } elseif ($skipNext) {
-                            $skipNext = false;
-                        } elseif ($getNext) {
-                            if (in_array($token->text, $response[$getNext])) {
-                                throw new Exception(
-                                    sprintf('%s %s has already been found in %s',
-                                        $response[$getNext], $token->text,
-                                        $this->filename
-                                    )
-                                );
-                            }
-                            if ($isAbstract) {
-                                $isAbstract = false;
-                                $getNext = 'abstract';
-                            }
-                            $response[$getNext][] = $token->text;
-                            $getNext = null;
-                        }
-                        break;
-                    default:
-                        $getNext = null;
-                }
+        $tokens = token_get_all(file_get_contents($this->filename));
+        $count = count($tokens);
+        for ($i = 0; $i < $count; $i++) {
+            if ($tokens[$i][0] === T_CLASS) {
+                $type = 'class';
+                $i += 2;
+                $name = $tokens[$i][1];
+                break;
+            } elseif ($tokens[$i][0] === T_INTERFACE) {
+                $type = 'interface';
+                $i += 2;
+                $name = $tokens[$i][1];
+                break;
+            } elseif ($tokens[$i][0] === T_TRAIT) {
+                $type = 'trait';
+                $i += 2;
+                $name = $tokens[$i][1];
+                break;
             }
         }
-        $namespace = $response['namespace'] ?? '';
-        $firstClass = $response['class'][0] ?? '';
-        $firstInterface = $response['interface'][0] ?? '';
-        $response['namespace_and_class'] = $namespace . '\\' . $firstClass;
-        $response['namespace_and_interface'] = $namespace . '\\' . $firstInterface;
-        $response['filename'] = $this->filename;
+
+        if (!empty($name)) {
+            $namespace = '';
+            $tokens = token_get_all(file_get_contents($this->filename));
+            $count = count($tokens);
+            for ($i = 0; $i < $count; $i++) {
+                if ($tokens[$i][0] === T_NAMESPACE) {
+                    $i += 2;
+                    $namespace = $tokens[$i][1];
+                    break;
+                }
+            }
+
+            if (!empty($namespace)) {
+                $fullyQualifiedName = $namespace . '\\' . $name;
+            } else {
+                $fullyQualifiedName = $name;
+            }
+
+            if ($type === 'class' || $type === 'trait') {
+                $reflectionClass = new ReflectionClass($fullyQualifiedName);
+
+                if ($reflectionClass->getParentClass()) {
+                    $extends = $reflectionClass->getParentClass()->getName();
+                }
+
+                $implements = $reflectionClass->getInterfaceNames();
+
+                $usedTraits = $reflectionClass->getTraitNames();
+            }
+        }
+
+        $response = new ClassRetrieverResponse();
+        $response->name = $fullyQualifiedName;
+        $response->type = $type;
+        $response->extends = $extends;
+        $response->implements = $implements;
+        $response->traits = $usedTraits;
 
         return $response;
     }

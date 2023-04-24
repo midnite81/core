@@ -1,5 +1,8 @@
 <?php
 
+use Midnite81\Core\Exceptions\Entities\PropertyDoesNotExistException;
+use Midnite81\Core\Exceptions\Entities\PropertyIsNotInitialisedException;
+use Midnite81\Core\Exceptions\Entities\PropertyIsNotPublicException;
 use Midnite81\Core\Tests\Entities\TestHelpers\TestEntity;
 
 it('should get all initialised properties', function () {
@@ -72,4 +75,78 @@ it('should return a json string', function () {
     expect($entity->toJson())
         ->toBeString()
         ->toBe('{"title":"dave","description":"This is my description","preview":"This is my content"}');
+});
+
+it('should be able to access properties as an array', function () {
+    $entity = new TestEntity();
+    $entity->setTitle('Hello')->setContent('This my content');
+
+    expect($entity['title'])->toBe('Hello')
+        ->and($entity['content'])->toBe('This my content');
+});
+
+it('should be not able to access properties as an array if they are not public', function () {
+    $entity = new TestEntity();
+    $entity->setId(23);
+
+    expect(fn () => $entity['id'])->toThrow(
+        PropertyIsNotPublicException::class,
+        'Property [id] is not public'
+    );
+});
+
+it('should be not able to access properties as an array if they are not initialised', function () {
+    $entity = new TestEntity();
+
+    expect(fn () => $entity['content'])->toThrow(
+        PropertyIsNotInitialisedException::class,
+        'Property [content] is not initialised'
+    );
+});
+
+it('should be able to set properties as an array', function () {
+    $entity = new TestEntity();
+    $entity['title'] = 'Hello';
+    $entity['content'] = 'This my content';
+
+    expect($entity->getTitle())->toBe('Hello')
+        ->and($entity->getContent())->toBe('This my content');
+});
+
+it('should be not able to set properties as an array if the property is not public', function () {
+    $entity = new TestEntity();
+
+    expect(fn () => $entity['id'] = 3)->toThrow(
+        PropertyIsNotPublicException::class,
+        'Property [id] is not public'
+    );
+});
+
+it('should be not able to set properties as an array if the property does not exist', function () {
+    $entity = new TestEntity();
+
+    expect(fn () => $entity['full_name'] = 'Derek Johnson')->toThrow(
+        PropertyDoesNotExistException::class,
+        'Property [full_name] does not exist'
+    );
+});
+
+it('should be able to unset properties as an array', function () {
+    $entity = new TestEntity();
+    $entity->setTitle('Hello')->setContent('This my content');
+
+    expect($entity->getTitle())->toBe('Hello')
+        ->and($entity->getContent())->toBe('This my content');
+
+    unset($entity['title']);
+
+    expect(fn () => $entity->getTitle())->toBeObject()
+        ->and($entity->getContent())->toBe('This my content');
+});
+
+it('should find property by property name attribute via array accessor', function () {
+    $entity = new TestEntity();
+    $entity->content = 'This is my content';
+
+    expect($entity['preview'])->toBe('This is my content');
 });
