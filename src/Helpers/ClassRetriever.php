@@ -11,9 +11,6 @@ use SplFileInfo;
 
 class ClassRetriever
 {
-    /**
-     * @param string $filename
-     */
     public function __construct(protected string $filename)
     {
     }
@@ -21,8 +18,6 @@ class ClassRetriever
     /**
      * Construct class from filename and return a ClassRetrieverResponse
      *
-     * @param string $filename
-     * @return ClassRetrieverResponse
      * @throws ReflectionException
      */
     public static function make(string $filename): ClassRetrieverResponse
@@ -33,8 +28,6 @@ class ClassRetriever
     /**
      * Construct class from SplFileInfo and return a ClassRetrieverResponse
      *
-     * @param SplFileInfo $splFileInfo
-     * @return ClassRetrieverResponse
      * @throws ReflectionException
      */
     public static function fromSplFileInfo(SplFileInfo $splFileInfo): ClassRetrieverResponse
@@ -47,7 +40,6 @@ class ClassRetriever
     /**
      * Parses the file passed to the class
      *
-     * @return ClassRetrieverResponse
      * @throws ReflectionException
      */
     protected function parseFile(): ClassRetrieverResponse

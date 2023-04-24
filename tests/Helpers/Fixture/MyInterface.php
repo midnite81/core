@@ -6,5 +6,4 @@ namespace Midnite81\Core\Tests\Helpers\Fixture;
 
 interface MyInterface
 {
-
 }
