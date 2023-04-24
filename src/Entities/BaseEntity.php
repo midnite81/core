@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Entities;
 
+use ArrayAccess;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\ArrayShape;
 use Midnite81\Core\Attributes\CarbonFormat;
 use Midnite81\Core\Attributes\IgnoreProperty;
 use Midnite81\Core\Attributes\PropertiesMustBeInitialised;
@@ -15,15 +17,21 @@ use Midnite81\Core\Attributes\RequiredProperty;
 use Midnite81\Core\Enums\ExpectedType;
 use Midnite81\Core\Exceptions\Entities\DuplicatePropertyNameException;
 use Midnite81\Core\Exceptions\Entities\PropertiesMustBeInitialisedException;
+use Midnite81\Core\Exceptions\Entities\PropertyDoesNotExistException;
+use Midnite81\Core\Exceptions\Entities\PropertyIsNotInitialisedException;
+use Midnite81\Core\Exceptions\Entities\PropertyIsNotPublicException;
 use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
 use ReflectionClass;
 use ReflectionProperty;
 
-abstract class BaseEntity
+abstract class BaseEntity implements ArrayAccess
 {
+    protected readonly array $internalPropertyNames;
+
     public function __construct()
     {
         $this->checkForIdenticalPropertyNameAttributeNames();
+        $this->createInternalPropertyNameArray();
         $this->process();
     }
 
@@ -178,6 +186,9 @@ abstract class BaseEntity
         return $total === $initialised;
     }
 
+    /**
+     * Parses data and returns the expected type
+     */
     protected function parseData(
         object|array|string $data,
         ExpectedType $expectedResponse = ExpectedType::Object
@@ -269,7 +280,6 @@ abstract class BaseEntity
     /**
      * Checks to see if all required properties are initialised and not empty
      *
-     *
      * @throws PropertyIsRequiredException
      */
     protected function checkRequiredPropertiesAreFilled(): void
@@ -310,5 +320,149 @@ abstract class BaseEntity
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function offsetExists($offset): bool
+    {
+        $info = $this->getPropertyInfo($offset);
+
+        if ($info['exists'] && $info['isPublic'] && $info['isInitialised']) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws PropertyIsNotPublicException
+     * @throws PropertyIsNotInitialisedException
+     * @throws PropertyDoesNotExistException
+     */
+    public function offsetGet($offset): mixed
+    {
+        $info = $this->getPropertyInfo($offset);
+
+        if (!$info['exists']) {
+            throw new PropertyDoesNotExistException($offset);
+        }
+
+        if (!$info['isPublic']) {
+            throw new PropertyIsNotPublicException($offset);
+        }
+
+        if (!$info['isInitialised']) {
+            throw new PropertyIsNotInitialisedException($offset);
+        }
+
+        return $this->{$info['actual_property_name']};
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws PropertyIsNotPublicException
+     * @throws PropertyDoesNotExistException
+     */
+    public function offsetSet($offset, $value): void
+    {
+        $info = $this->getPropertyInfo($offset);
+
+        if (!$info['exists']) {
+            throw new PropertyDoesNotExistException($offset);
+        }
+
+        if (!$info['isPublic']) {
+            throw new PropertyIsNotPublicException($offset);
+        }
+
+        $this->{$info['actual_property_name']} = $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function offsetUnset($offset): void
+    {
+        $info = $this->getPropertyInfo($offset);
+
+        if ($info['exists'] && $info['isPublic'] && $info['isInitialised']) {
+            unset($this->{$info['actual_property_name']});
+        }
+    }
+
+    /**
+     * Gets property information
+     */
+    #[ArrayShape([
+        'exists' => 'bool',
+        'isPublic' => 'bool',
+        'isInitialised' => 'bool',
+        'value' => 'mixed',
+        'property_name' => 'string',
+        'actual_property_name' => 'string',
+    ])]
+    protected function getPropertyInfo(string $propertyName): array
+    {
+        $reflection = $this->getReflection();
+        $properties = collect($reflection->getProperties());
+        $actualPropertyName = $propertyName;
+
+        if (!property_exists($this, $propertyName) && array_key_exists($propertyName, $this->internalPropertyNames)) {
+            $actualPropertyName = $this->internalPropertyNames[$propertyName];
+        }
+
+        $response = [
+            'exists' => false,
+            'isPublic' => false,
+            'isInitialised' => false,
+            'value' => null,
+            'property_name' => $propertyName,
+            'actual_property_name' => $actualPropertyName,
+        ];
+
+        /** @var ReflectionProperty $property */
+        $property = $properties->first(function ($property) use ($actualPropertyName) {
+            return $property->getName() === $actualPropertyName;
+        });
+
+        if (!$property) {
+            return $response;
+        }
+
+        $response['exists'] = true;
+        $response['isPublic'] = $property->isPublic();
+        $response['isInitialised'] = $property->isInitialized($this);
+        $response['value'] = $property->isInitialized($this) ? $property->getValue($this) : null;
+        $response['property_name'] = $propertyName;
+        $response['actual_property_name'] = $actualPropertyName;
+
+        return $response;
+    }
+
+    /**
+     * Creates an internal array of property names, and if they have a PropertyName attribute to get that value as the
+     * key instead of the property name
+     */
+    protected function createInternalPropertyNameArray(): void
+    {
+        $class = $this->getReflection();
+        $properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
+        $internal = [];
+
+        foreach ($properties as $property) {
+            $attribute = $property->getAttributes(PropertyName::class);
+            if (!empty($attribute)) {
+                $internal[$attribute[0]->getArguments()[0]] = $property->getName();
+            } else {
+                $internal[$property->getName()] = $property->getName();
+            }
+        }
+
+        $this->internalPropertyNames = $internal;
     }
 }
