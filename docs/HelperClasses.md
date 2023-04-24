@@ -12,7 +12,8 @@ A class for matching a pattern in a given string using regular expressions.
 
 ## ClassRetriever 
 
-To be documented
+A class for retrieving information about a PHP class, interface, or trait from a file.
+[View the documentation](HelperClasses/ClassRetriever.md)
 
 ## HtmlLinks
 
