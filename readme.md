@@ -41,7 +41,7 @@ This package requires PHP 8.1+ and has a Laravel Service Provider, which is auto
 
 To install through composer include the package in your composer.json.
 ```composer
-"midnite81/core": "^1.0"
+"midnite81/core": "^2.0"
 ```
 
 Run composer install or composer update to download the dependencies, or you can run;
