@@ -50,6 +50,7 @@ class ClassRetriever
         $implements = [];
         $usedTraits = [];
         $fullyQualifiedName = '';
+        $isAbstract = false;
 
         $tokens = token_get_all(file_get_contents($this->filename));
         $count = count($tokens);
@@ -97,6 +98,8 @@ class ClassRetriever
                     $extends = $reflectionClass->getParentClass()->getName();
                 }
 
+                $isAbstract = $reflectionClass->isAbstract();
+
                 $implements = $reflectionClass->getInterfaceNames();
 
                 $usedTraits = $reflectionClass->getTraitNames();
@@ -109,6 +112,7 @@ class ClassRetriever
         $response->extends = $extends;
         $response->implements = $implements;
         $response->traits = $usedTraits;
+        $response->isAbstract = $isAbstract;
 
         return $response;
     }

@@ -33,4 +33,11 @@ class ClassRetrieverResponse extends BaseResponse
      * An array of the traits that the class uses
      */
     public array $traits;
+
+    /**
+     * Whether the class is abstract
+     * 
+     * @var bool
+     */
+    public bool $isAbstract;
 }

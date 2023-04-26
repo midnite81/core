@@ -32,6 +32,7 @@ echo $response->type; // class
 echo $response->extends; // MyNamespace\MyParentClass
 print_r($response->implements); // Array ( [0] => MyNamespace\MyInterface )
 print_r($response->traits); // Array ( [0] => MyNamespace\MyTrait )
+print_r($response->isAbstract) // Bool (false)
 ```
 
 ## ClassRetrieverResponse Object
@@ -44,3 +45,4 @@ The ClassRetrieverResponse object returned by the ClassRetriever class contains 
   class does not extend any other class.
 - implements (array): An array of fully-qualified interface names that the current class implements.
 - traits (array): An array of fully-qualified trait names that the current class uses.
+- isAbstract (bool): Whether the class is abstract.
