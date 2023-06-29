@@ -12,6 +12,7 @@
         },
         "phpdoc_align": {
             "align": "left"
-        }
+        },
+        "no_superfluous_phpdoc_tags": false
     }
 }

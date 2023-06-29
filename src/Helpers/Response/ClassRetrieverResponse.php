@@ -36,8 +36,6 @@ class ClassRetrieverResponse extends BaseResponse
 
     /**
      * Whether the class is abstract
-     * 
-     * @var bool
      */
     public bool $isAbstract;
 }

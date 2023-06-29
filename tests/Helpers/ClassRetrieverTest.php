@@ -17,11 +17,11 @@ it('retrieves the abstract class properly', function () {
     $sut = \Midnite81\Core\Helpers\ClassRetriever::make(__DIR__ . '/Fixtures/MyParentClass.php');
 
     expect($sut->name)->toBe('Midnite81\Core\Tests\Helpers\Fixtures\MyParentClass')
-                      ->and($sut->type)->toBe('class')
-                      ->and($sut->extends)->toBe('')
-                      ->and($sut->implements)->toBe([])
-                      ->and($sut->traits)->toBe([])
-                      ->and($sut->isAbstract)->toBe(true);
+        ->and($sut->type)->toBe('class')
+        ->and($sut->extends)->toBe('')
+        ->and($sut->implements)->toBe([])
+        ->and($sut->traits)->toBe([])
+        ->and($sut->isAbstract)->toBe(true);
 });
 
 it('retrieves the interface properly', function () {

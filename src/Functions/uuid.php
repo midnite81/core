@@ -12,5 +12,5 @@ namespace Midnite81\Core\Functions;
  */
 function uuid(): string
 {
-    return app('m81-uuid')->generate();
+    return app(\Midnite81\Core\Contracts\Services\UuidGeneratorInterface::class)->generate();
 }

@@ -29,6 +29,7 @@ class Filesystem
      * @param string|null $user
      * @param string|null $group
      * @return bool
+     *
      * @throws CouldNotChangeGroupException
      * @throws CouldNotChangeOwnerException
      * @throws FileNotFoundException
@@ -78,6 +79,7 @@ class Filesystem
      * @param string $file
      * @param int|null $permissions
      * @return bool
+     *
      * @throws CouldNotChangePermissionsException
      */
     public function chmod(string $file, ?int $permissions): bool
