@@ -12,6 +12,11 @@
         },
         "phpdoc_align": {
             "align": "left"
+        },
+        "no_superfluous_phpdoc_tags": {
+            "allow_mixed": true,
+            "allow_unused_params": true,
+            "remove_inheritdoc": false
         }
     }
 }

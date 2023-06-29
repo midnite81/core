@@ -65,7 +65,6 @@ class Schema
      * @param string $oldName Name of the old database
      * @param string $newName Name of the new database
      * @param string $configConnectionName The name of the connection in the config file
-     * @return bool
      */
     public function updateDatabaseName(string $oldName, string $newName, string $configConnectionName = 'mysql'): bool
     {
@@ -74,9 +73,6 @@ class Schema
 
     /**
      * Offers basic sanitisation for the passed $value to prevent sql injection
-     *
-     * @param string $value
-     * @return string
      */
     protected static function sanitise(string $value): string
     {
