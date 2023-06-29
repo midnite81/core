@@ -32,6 +32,23 @@ if (!function_exists('first_value')) {
     }
 }
 
+if (!function_exists('first_value_from_array')) {
+    /**
+     * [Aliased] Retrieve the first non-empty value from an array, or a default value if none found.
+     *
+     * Example: \Midnite81\Core\Functions\first_value_from_array(['', null, 'Dave']);
+     * Result: Dave
+     *
+     * @param array $array The input array to search for values.
+     * @param mixed $default The default value to return if no non-empty value is found (default: null).
+     * @return mixed The first non-empty value from the array, or the default value if none found.
+     */
+    function first_value_from_array(array $array, mixed $default = null): mixed
+    {
+        return \Midnite81\Core\Functions\first_value_from_array($array);
+    }
+}
+
 if (!function_exists('enum')) {
     /**
      * [Aliased] Returns the value of a backed enum case
