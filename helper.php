@@ -26,7 +26,9 @@ if (!function_exists('first_value')) {
      */
     function first_value(): mixed
     {
-        return \Midnite81\Core\Functions\first_value();
+        $args = func_get_args();
+
+        return \Midnite81\Core\Functions\first_value(...$args);
     }
 }
 
