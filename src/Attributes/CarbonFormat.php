@@ -7,7 +7,8 @@ namespace Midnite81\Core\Attributes;
 use Attribute;
 
 /**
- * This attribute is used to define the format of a Carbon instance on a class property
+ * This attribute is used to define the output format of a Carbon instance on a class property
+ * When used with BaseEntity, it will automatically format the property when it is outputted via toArray() or toJson()
  *
  * @Annotation
  *

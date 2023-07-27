@@ -54,6 +54,10 @@
             "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --processes=24 --coverage --coverage-html build/html --min=70",
             "open build/html/index.html"
         ],
+        "coverageNoMin": [
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --processes=24 --coverage --coverage-html build/html",
+            "open build/html/index.html"
+        ],
         "stan": "vendor/bin/phpstan --memory-limit=-1",
         "pint": "vendor/bin/pint -v --config=./pint.json",
         "docu": "php _bin/phpDocumentor.phar run -d src/ -t docs/generated"

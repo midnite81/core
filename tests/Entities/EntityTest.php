@@ -77,6 +77,30 @@ it('should return a json string', function () {
         ->toBe('{"title":"dave","description":"This is my description","preview":"This is my content"}');
 });
 
+it('should return a query string', function () {
+    $entity = new TestEntity();
+    $entity->setId('102')
+        ->setTitle('dave')
+        ->setContent('This is my content')
+        ->setDescription('This is my description');
+
+    expect($entity->toQueryString())
+        ->toBeString()
+        ->toBe('?title=dave&description=This+is+my+description&preview=This+is+my+content');
+});
+
+it('should return a limited query string', function () {
+    $entity = new TestEntity();
+    $entity->setId('102')
+        ->setTitle('dave')
+        ->setContent('This is my content')
+        ->setDescription('This is my description');
+
+    expect($entity->toQueryString(['title']))
+        ->toBeString()
+        ->toBe('?title=dave');
+});
+
 it('should be able to access properties as an array', function () {
     $entity = new TestEntity();
     $entity->setTitle('Hello')->setContent('This my content');
@@ -149,4 +173,22 @@ it('should find property by property name attribute via array accessor', functio
     $entity->content = 'This is my content';
 
     expect($entity['preview'])->toBe('This is my content');
+});
+
+it('should error when property not found via array accessor', function () {
+    $entity = new TestEntity();
+    $entity->content = 'This is my content';
+
+    expect(fn () => $entity['non-existent-property'])->toThrow(
+        PropertyDoesNotExistException::class,
+        'Property [non-existent-property] does not exist'
+    );
+});
+
+it('can determine if offset exists', function () {
+    $entity = new TestEntity();
+    $entity->content = 'This is my content';
+
+    expect(isset($entity['preview']))->toBeTrue()
+        ->and(isset($entity['non-existent-property']))->toBeFalse();
 });
