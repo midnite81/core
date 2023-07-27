@@ -1,13 +1,4 @@
 <?php
-/**
- * PropertyHandling Trait
- *
- * This trait provides methods for handling properties within entities.
- *
- * PHP version 7.0
- *
- * @license MIT License
- */
 
 declare(strict_types=1);
 
