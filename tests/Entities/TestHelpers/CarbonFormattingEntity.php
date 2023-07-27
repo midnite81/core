@@ -6,6 +6,7 @@ namespace Midnite81\Core\Tests\Entities\TestHelpers;
 
 use Carbon\Carbon;
 use Midnite81\Core\Attributes\CarbonFormat;
+use Midnite81\Core\Attributes\TimeZone;
 use Midnite81\Core\Entities\BaseEntity;
 
 class CarbonFormattingEntity extends BaseEntity
@@ -15,4 +16,8 @@ class CarbonFormattingEntity extends BaseEntity
 
     #[CarbonFormat('d M Y')]
     public Carbon $someOtherDate;
+
+    #[CarbonFormat('d/m/Y H:i:s')]
+    #[TimeZone('Europe/London')]
+    public Carbon $timezoneDateTime;
 }
