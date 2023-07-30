@@ -60,14 +60,14 @@ class Filesystem
      * Try chown, but catch any exceptions and return false
      *
      * @param string $file
-     * @param string $user
-     * @param string $owner
+     * @param string|null $user
+     * @param string|null $group
      * @return bool
      */
-    public function tryChown(string $file, string $user, string $owner): bool
+    public function tryChown(string $file, ?string $user = null, ?string $group = null): bool
     {
         try {
-            return $this->chown($file, $user, $owner);
+            return $this->chown($file, $user, $group);
         } catch (\Exception $e) {
             return false;
         }

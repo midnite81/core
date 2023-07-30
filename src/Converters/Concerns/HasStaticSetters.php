@@ -93,7 +93,7 @@ trait HasStaticSetters
      */
     public static function quarters(float $value): static
     {
-        return static::make()->fromQuarter($value);
+        return static::make()->fromQuarters($value);
     }
 
     /**

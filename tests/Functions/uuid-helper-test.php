@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use function Midnite81\Core\Functions\uuid;
 
-uses(\Midnite81\Core\Tests\TestCase::class);
+uses(\Midnite81\Core\Tests\CoreTestCase::class);
 
 it('can generate a uuid', function () {
     $uuid = uuid();

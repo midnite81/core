@@ -8,7 +8,10 @@ use Illuminate\Support\ServiceProvider;
 
 class CoreCommandServiceProvider extends ServiceProvider
 {
-    public function boot()
+    /**
+     * Boot commands
+     */
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->registerCommands();
@@ -33,7 +36,7 @@ class CoreCommandServiceProvider extends ServiceProvider
             );
             $commandClass = 'Midnite81\\Core\\' . $commandClass;
             if (class_exists($commandClass)) {
-                $command = app($commandClass);
+                $command = $this->app->make($commandClass);
                 $this->commands($command);
             }
         }

@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 use Midnite81\Core\Enums\Algorithm;
+use Midnite81\Core\Tests\CoreTestCase;
 use Midnite81\Core\Tests\Entities\TestHelpers\ChecksumEntity;
 use Midnite81\Core\Tests\Entities\TestHelpers\ChecksumEntity2;
+
+uses(CoreTestCase::class);
 
 it('provides a checksum', function () {
     $entity = new ChecksumEntity();

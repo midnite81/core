@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Entities\Concerns;
 
+use Midnite81\Core\Contracts\Services\ChecksumServiceInterface;
+use Midnite81\Core\Contracts\Services\StringableInterface;
 use Midnite81\Core\Enums\Algorithm;
 use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
 
@@ -22,7 +24,10 @@ trait Checksums
      */
     public function checksum(Algorithm $algorithm = Algorithm::Sha256): string
     {
-        return hash(enum($algorithm), $this->checksumSourceToString($this->getChecksumSourceData()));
+        $stringable = app(StringableInterface::class);
+        $checksum = app(ChecksumServiceInterface::class);
+
+        return $checksum->checksum($stringable->toString($this->getChecksumSourceData()), $algorithm);
     }
 
     /**
@@ -41,9 +46,11 @@ trait Checksums
      */
     public function verifyChecksum(string $providedChecksum, Algorithm $algorithm = Algorithm::Sha256): bool
     {
-        $computedChecksum = hash(enum($algorithm), $this->checksumSourceToString($this->getChecksumSourceData()));
+        $stringable = app(StringableInterface::class);
+        $checksum = app(ChecksumServiceInterface::class);
+        $computedChecksum = $checksum->checksum($stringable->toString($this->getChecksumSourceData()), $algorithm);
 
-        return hash_equals($providedChecksum, $computedChecksum);
+        return $checksum->verifyChecksum($providedChecksum, $computedChecksum);
     }
 
     /**
@@ -56,20 +63,5 @@ trait Checksums
     protected function getChecksumSourceData(): mixed
     {
         return $this->toJson();
-    }
-
-    /**
-     * Convert a value to its string representation.
-     *
-     * @param mixed $value The value to convert to a string.
-     * @return string The string representation of the value.
-     */
-    protected function checksumSourceToString(mixed $value): string
-    {
-        if (is_array($value) || is_object($value)) {
-            return json_encode($value);
-        }
-
-        return (string) $value;
     }
 }

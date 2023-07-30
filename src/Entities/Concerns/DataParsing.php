@@ -36,6 +36,10 @@ trait DataParsing
             return json_decode(json_encode($data));
         }
 
+        if ((is_array($data) || is_object($data)) && $expectedResponse === ExpectedType::String) {
+            return json_encode($data);
+        }
+
         if (is_object($data) && $expectedResponse === ExpectedType::Array) {
             return (array) $data;
         }

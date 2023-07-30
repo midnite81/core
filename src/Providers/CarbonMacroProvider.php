@@ -10,18 +10,13 @@ use Illuminate\Support\ServiceProvider;
 class CarbonMacroProvider extends ServiceProvider
 {
     /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
-    /**
      * Bootstrap services.
+     * @codeCoverageIgnore
      */
     public function boot(): void
     {
+        $carbon = app(Carbon::class);
+
         Carbon::macro('dayDisplay', static function () {
             /* @phpstan-ignore-next-line */
             if (isset($this)) {

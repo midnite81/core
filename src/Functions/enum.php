@@ -28,6 +28,6 @@ function enum(mixed $value): mixed
 
         return $value->value;
     } catch (ReflectionException $e) {
-        throw new RuntimeException('$value passed to this function was not an enum', 429, $e);
+        throw new RuntimeException('$value passed to this function was not an enum 2', 429, $e);
     }
 }

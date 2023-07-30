@@ -81,6 +81,8 @@ abstract class BaseRepository
     }
 
     /**
+     * @param $column
+     * @param int|string|array $value
      * @return Collection<int, Model>
      */
     protected function internalListByColumn($column, int|string|array $value): Collection

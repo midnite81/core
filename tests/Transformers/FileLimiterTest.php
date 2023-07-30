@@ -2,6 +2,21 @@
 
 use Midnite81\Core\Transformers\FileLimiter;
 
+it('constructs via make method', function () {
+    $limiter = FileLimiter::make(__DIR__ . '/Fixtures/test-file.txt');
+
+    $subjectUnderTest = $limiter->readFirstLines(2)->toString();
+
+    expect($subjectUnderTest)
+        ->toBeString()
+        ->toBe("line 1\nline 2\n");
+});
+
+it('throws an exception if it can\'t find the file', function () {
+    expect(fn() => new FileLimiter(__DIR__ . '/Fixtures/non-existent-file.txt'))
+        ->toThrow(RuntimeException::class, 'File could not be found');
+});
+
 it('can get the first lines of a file', function () {
     $limiter = new FileLimiter(__DIR__ . '/Fixtures/test-file.txt');
 
@@ -97,4 +112,15 @@ it('it can return to array', function () {
             fn ($item) => $item->toBe("line 10\n"),
             fn ($item) => $item->toBe(false),
         );
+});
+
+
+it('casts to string', function () {
+    $limiter = FileLimiter::make(__DIR__ . '/Fixtures/test-file.txt');
+
+    $subjectUnderTest = $limiter->readFirstLines(2);
+
+    expect((string)$subjectUnderTest)
+        ->toBeString()
+        ->toBe("line 1\nline 2\n");
 });

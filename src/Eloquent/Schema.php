@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Eloquent;
 
-use Illuminate\Support\Facades\DB;
+use Midnite81\Core\Services\Execute;
 
 class Schema
 {
@@ -34,7 +34,9 @@ class Schema
         $backtickOldName = "`{$oldName}`";
         $backtickNewName = "`{$newName}`";
 
-        $create = DB::statement("CREATE DATABASE IF NOT EXISTS $backtickNewName");
+        $database = app(\Illuminate\Database\Connection::class);
+
+        $create = $database->statement("CREATE DATABASE IF NOT EXISTS $backtickNewName");
 
         $backupAndRestore = sprintf(
             'mysqldump -h %s -P %d -u %s -p%s %s | mysql -h %s -P %d -u %s -p%s %s',
@@ -50,9 +52,10 @@ class Schema
             $newName
         );
 
-        exec($backupAndRestore);
+        $execute = app(Execute::class);
+        $execute->exec($backupAndRestore);
 
-        $drop = DB::statement("DROP DATABASE IF EXISTS $backtickOldName");
+        $drop = $database->statement("DROP DATABASE IF EXISTS $backtickOldName");
 
         return $create && $drop;
     }

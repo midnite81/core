@@ -8,6 +8,10 @@ use Illuminate\Support\ServiceProvider;
 
 class RayMacroProvider extends ServiceProvider
 {
+    /**
+     * @return void
+     * @codeCoverageIgnore
+     */
     public function boot(): void
     {
         \Spatie\Ray\Ray::macro('inside', function () {

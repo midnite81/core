@@ -65,6 +65,18 @@ it('should limit an array to key passed', function () {
         );
 });
 
+it('should pass full array if not limited', function () {
+    $entity = new TestEntity();
+    $entity->setId('102')
+           ->setTitle('dave')
+           ->setContent('This is my content')
+           ->setDescription('This is my description');
+
+    expect($entity->toLimitedArray([]))
+        ->toBeArray()
+        ->toHaveCount(3);
+});
+
 it('should return a json string', function () {
     $entity = new TestEntity();
     $entity->setId('102')
