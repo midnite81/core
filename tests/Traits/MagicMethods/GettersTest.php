@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Midnite81\Core\Attributes\MagicMethods\Getters\CannotGetByMagicMethod;
 use Midnite81\Core\Exceptions\MagicMethods\CannotGetByMagicMethodException;
 use Midnite81\Core\Tests\Traits\Fixtures\ExplicitGetter;
+use Midnite81\Core\Tests\Traits\Fixtures\PublicAndExplicitPropsOnly;
+use Midnite81\Core\Tests\Traits\Fixtures\PublicPropsOnly;
 use Midnite81\Core\Traits\Entities\Getters;
 
 beforeEach(function () {
@@ -33,9 +35,10 @@ it('can get property using magic getter', function () {
     $name = 'John';
     $this->class->setName($name);
 
-    $result = $this->class->name;
-
-    expect($result)->toBe($name);
+    expect($this->class->name)
+        ->toBe($name)
+        ->and($this->class->getName())
+        ->toBe($name);
 });
 
 it('throws exception when getting property without CanAccessViaMagicMethod attribute', function () {
@@ -63,4 +66,23 @@ it('can only get specified props when Explicit is set', function () {
         ->and(fn () => $class->age)->toThrow(CannotGetByMagicMethodException::class)
         ->and(fn () => $class->getLocation())->toThrow(CannotGetByMagicMethodException::class)
         ->and(fn () => $class->location)->toThrow(CannotGetByMagicMethodException::class);
+});
+
+it('can only get public properties via magic method', function () {
+    $class = new PublicPropsOnly();
+
+    expect($class->name)
+        ->toBe('John Doe')
+        ->and($class->getName())->toBe('John Doe')
+        ->and(fn () => $class->age)->toThrow(CannotGetByMagicMethodException::class)
+        ->and(fn () => $class->getAge())->toThrow(CannotGetByMagicMethodException::class);
+});
+
+it('wont get protected props if AccessPublicPropertiesOnly and MagicMethodGetExplicit are set', function () {
+    $class = new PublicAndExplicitPropsOnly();
+
+    expect(fn () => $class->name)
+        ->toThrow(CannotGetByMagicMethodException::class)
+        ->and(fn () => $class->getName())->toThrow(CannotGetByMagicMethodException::class)
+        ->and(fn () => $class->getFullName())->toThrow(CannotGetByMagicMethodException::class);
 });

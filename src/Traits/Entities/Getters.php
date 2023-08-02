@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Traits\Entities;
 
+use Midnite81\Core\Attributes\MagicMethods\Getters\AccessPublicPropertiesOnly;
 use Midnite81\Core\Attributes\MagicMethods\Getters\CanAccessViaMagicMethod;
 use Midnite81\Core\Attributes\MagicMethods\Getters\CannotGetByMagicMethod;
 use Midnite81\Core\Attributes\MagicMethods\Getters\MagicMethodGetExplicit;
@@ -110,11 +111,21 @@ trait Getters
         // Get a reflection property for the specified property name.
         $reflectionProperty = new ReflectionProperty($this, $propertyName);
 
-        // Check if the class has the MagicMethodGetExplicit attribute.
+        // Get a reflection class for the current class.
         $reflectionClass = new ReflectionClass($this);
-        $hasMagicMethodGetExplicit = !empty($reflectionClass->getAttributes(MagicMethodGetExplicit::class));
 
-        if ($hasMagicMethodGetExplicit) {
+        // Check for class based attributes
+        $hasMagicMethodGetExplicit = !empty($reflectionClass->getAttributes(MagicMethodGetExplicit::class));
+        $hasAccessPublicPropertiesOnly = !empty($reflectionClass->getAttributes(AccessPublicPropertiesOnly::class));
+
+        if ($hasMagicMethodGetExplicit && $hasAccessPublicPropertiesOnly) {
+            // Check if the property is explicitly marked with the CanAccessViaMagicMethod attribute.
+            // If the property is not public and does not have CanAccessViaMagicMethod attribute, throw an exception.
+            $canAccess = !empty($reflectionProperty->getAttributes(CanAccessViaMagicMethod::class));
+            if (!$reflectionProperty->isPublic() || ($reflectionProperty->isPublic() && !$canAccess)) {
+                throw new CannotGetByMagicMethodException($propertyName);
+            }
+        } elseif ($hasMagicMethodGetExplicit) {
             // If MagicMethodGetExplicit attribute is present on the class,
             // check if the property is explicitly marked with the CanAccessViaMagicMethod attribute.
             $canAccess = !empty($reflectionProperty->getAttributes(CanAccessViaMagicMethod::class));
@@ -123,8 +134,14 @@ trait Getters
                 // If the property does not have the CanAccessViaMagicMethod attribute, throw an exception.
                 throw new CannotGetByMagicMethodException($propertyName);
             }
+        } elseif ($hasAccessPublicPropertiesOnly) {
+            // If the class has the AccessPublicPropertiesOnly attribute,
+            // check if the property is public. If not, throw an exception.
+            if (!$reflectionProperty->isPublic()) {
+                throw new CannotGetByMagicMethodException($propertyName);
+            }
         } else {
-            // If the class does not have the MagicMethodGetExplicit attribute,
+            // If the class does not have the MagicMethodGetExplicit attribute or AccessPublicPropertiesOnly attribute,
             // check if the property has the CannotGetByMagicMethodException attribute,
             // indicating it cannot be accessed using magic methods.
             $cannotAccess = !empty($reflectionProperty->getAttributes(CannotGetByMagicMethod::class));

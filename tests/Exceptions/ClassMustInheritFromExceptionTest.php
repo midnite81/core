@@ -27,20 +27,20 @@ it('throws the correct exception with correct message when using object class na
 });
 
 it('throws the correct exception with correct message when using class instances', function () {
-    class MyBaseClass
+    class MySecondBaseClass
     {
 }
 
-    class MyClass
+    class MySecondClass extends MySecondBaseClass
     {
 }
 
-    $class = new MyClass();
-    $inheritFromClass = new MyBaseClass();
+    $class = new MySecondClass();
+    $inheritFromClass = new MySecondBaseClass();
 
     try {
         throw new ClassMustInheritFromException($class, $inheritFromClass);
     } catch (ClassMustInheritFromException $exception) {
-        expect($exception->getMessage())->toBe('MyClass must implement from MyBaseClass');
+        expect($exception->getMessage())->toBe('MySecondClass must implement from MySecondBaseClass');
     }
 });
