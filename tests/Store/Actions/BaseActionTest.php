@@ -14,7 +14,8 @@ it('can store data to the model', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $action = new class($modelMock) extends BaseAction {
+    $action = new class($modelMock) extends BaseAction
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -25,9 +26,9 @@ it('can store data to the model', function () {
             return $this->internalStore($data);
         }
     };
-    
+
     $result = $action->store($data);
-    
+
     expect($result)->toBe($modelMock);
 });
 
@@ -36,7 +37,8 @@ it('can update data to the passed model', function () {
     $modelMock = \Mockery::mock(Model::class);
     $modelMock->shouldReceive('update')->with($data)->andReturn(true);
 
-    $action = new class($modelMock) extends BaseAction {
+    $action = new class($modelMock) extends BaseAction
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -47,9 +49,9 @@ it('can update data to the passed model', function () {
             return $this->internalUpdate($model, $data);
         }
     };
-    
+
     $result = $action->update($modelMock, $data);
-    
+
     expect($result)->toBeTrue();
 });
 
@@ -62,7 +64,8 @@ it('can update or create a record', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $action = new class($modelMock) extends BaseAction {
+    $action = new class($modelMock) extends BaseAction
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -73,8 +76,8 @@ it('can update or create a record', function () {
             return $this->internalUpdateOrCreate($attributes, $data);
         }
     };
-    
+
     $result = $action->updateOrCreate($attributes, $data);
-    
+
     expect($result)->toBe($modelMock);
 });

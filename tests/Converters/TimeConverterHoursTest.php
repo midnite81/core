@@ -11,4 +11,3 @@ it('converts from hours to days', function () {
 it('converts from hours to minutes', function () {
     expect(hours(1)->toMinutes())->toBe(60);
 });
-

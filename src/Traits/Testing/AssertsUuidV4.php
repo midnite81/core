@@ -10,7 +10,6 @@ trait AssertsUuidV4
      * Asserts that the given value is a valid UUIDv4.
      *
      * @param mixed $actual The value to be validated.
-     *
      * @return void
      */
     public function assertUuidV4(mixed $actual): void
@@ -24,5 +23,3 @@ trait AssertsUuidV4
         $this->assertTrue(preg_match($uuidV4Pattern, $actual) === 1);
     }
 }
-
-

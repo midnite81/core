@@ -31,6 +31,8 @@ This package contains;
   - [NoCache](docs/Middleware/NoCache.md)
   - [LogControllerAndMethod](docs/Middleware/LogControllerAndMethod.md)
 - [Uuid Generator](docs/UuidGenerator.md)
+- Traits
+  - [Setters and Getters](docs/Traits/SettersAndGetters.md)
 - Transformers
   - [FileLimiter](docs/Transformers/FileLimiter.md)
   - [HumanReadableNumber](docs/Transformers/HumanReadableNumber.md)

@@ -32,7 +32,7 @@ it('should execute', function () {
     $sut = $execute->exec('echo "Hello"');
 
     expect($sut)->toBe([
-        'Hello'
+        'Hello',
     ]);
 });
 
@@ -43,7 +43,6 @@ it('should execute system and return result code', function () {
 
     expect($sut)->toBe(0);
 });
-
 
 it('should escape the argument', function () {
     $argument = 'file with spaces.txt';

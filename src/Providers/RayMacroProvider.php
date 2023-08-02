@@ -10,6 +10,7 @@ class RayMacroProvider extends ServiceProvider
 {
     /**
      * @return void
+     *
      * @codeCoverageIgnore
      */
     public function boot(): void

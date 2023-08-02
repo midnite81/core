@@ -13,7 +13,8 @@ it('can begin a transaction', function () {
         $mock->shouldReceive('beginTransaction')->once();
     });
 
-    $transactionAction = new class($connectionMock) extends BaseTransactionAction {
+    $transactionAction = new class($connectionMock) extends BaseTransactionAction
+    {
         public function getConnection(): Connection
         {
             return $this->connection;
@@ -30,7 +31,8 @@ it('can commit a transaction', function () {
         $mock->shouldReceive('commit')->once();
     });
 
-    $transactionAction = new class($connectionMock) extends BaseTransactionAction {
+    $transactionAction = new class($connectionMock) extends BaseTransactionAction
+    {
         public function getConnection(): Connection
         {
             return $this->connection;
@@ -47,7 +49,8 @@ it('can rollback a transaction', function () {
         $mock->shouldReceive('rollBack')->once();
     });
 
-    $transactionAction = new class($connectionMock) extends BaseTransactionAction {
+    $transactionAction = new class($connectionMock) extends BaseTransactionAction
+    {
         public function getConnection(): Connection
         {
             return $this->connection;
@@ -67,12 +70,13 @@ it('can execute a transaction closure', function () {
 
     $connectionMock = \Mockery::mock(Connection::class, function (MockInterface $mock) use ($expectedResult, $callback) {
         $mock->shouldReceive('transaction')
-             ->with($callback, 1)
-             ->andReturn($expectedResult)
-             ->once();
+            ->with($callback, 1)
+            ->andReturn($expectedResult)
+            ->once();
     });
 
-    $transactionAction = new class($connectionMock) extends BaseTransactionAction {
+    $transactionAction = new class($connectionMock) extends BaseTransactionAction
+    {
         public function getConnection(): Connection
         {
             return $this->connection;

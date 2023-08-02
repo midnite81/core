@@ -19,7 +19,7 @@ class Builder
 
         $formattedBindings = array_map(static function ($binding) {
             // Check if the binding is numeric, if yes, return without single quotes
-            return is_numeric($binding) ? (string)$binding : "'$binding'";
+            return is_numeric($binding) ? (string) $binding : "'$binding'";
         }, $bindings);
 
         return vsprintf(str_replace("'?'", '%s', $addSlashes), $formattedBindings);

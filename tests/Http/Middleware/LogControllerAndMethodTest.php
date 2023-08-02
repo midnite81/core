@@ -68,8 +68,8 @@ it('hits the logs with local', function () {
 
     $route = Mockery::mock(\Illuminate\Routing\Route::class);
     $route->shouldReceive('getActionName')
-          ->never()
-          ->andReturn('TestController@testMethod');
+        ->never()
+        ->andReturn('TestController@testMethod');
     $request->setRouteResolver(function () use ($route) {
         return $route;
     });
@@ -77,8 +77,8 @@ it('hits the logs with local', function () {
     $rayMock = Mockery::mock(\Spatie\LaravelRay\Ray::class);
 
     $rayMock->shouldReceive('send')
-            ->never()
-            ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
+        ->never()
+        ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
 
     app()->instance(Spatie\LaravelRay\Ray::class, $rayMock);
 
