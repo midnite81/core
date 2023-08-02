@@ -12,7 +12,7 @@ it('throws FileNotFoundException if file does not exist', function () {
 
     $filesystemWrapper = new Filesystem($filesystem);
 
-    expect(fn() => $filesystemWrapper->chown($file))
+    expect(fn () => $filesystemWrapper->chown($file))
         ->toThrow(FileNotFoundException::class, "The file {$file} does not exist");
 });
 
@@ -23,7 +23,7 @@ it('throws FileNotFoundException if user or group not passed', function () {
 
     $filesystemWrapper = new Filesystem($filesystem);
 
-    expect(fn() => $filesystemWrapper->chown($file))
+    expect(fn () => $filesystemWrapper->chown($file))
         ->toThrow(InvalidArgumentException::class, 'You must provide a user or group');
 });
 

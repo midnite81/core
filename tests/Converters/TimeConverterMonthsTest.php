@@ -11,4 +11,3 @@ it('converts from months to weeks', function () {
 it('converts from months to days', function () {
     expect(months(1)->toDays())->toBe(30);
 });
-

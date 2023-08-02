@@ -14,7 +14,8 @@ it('can get a record by ID', function () {
     $modelMock->shouldReceive('where')->with('id', $id)->andReturnSelf();
     $modelMock->shouldReceive('first')->andReturn($modelMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -38,7 +39,8 @@ it('throws RecordNotFoundException when getting a non-existent record by ID', fu
     $modelMock->shouldReceive('where')->with('id', $id)->andReturnSelf();
     $modelMock->shouldReceive('first')->andReturn(null);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -50,7 +52,7 @@ it('throws RecordNotFoundException when getting a non-existent record by ID', fu
         }
     };
 
-    expect(fn() => $repository->getById($id))->toThrow(RecordNotFoundException::class);
+    expect(fn () => $repository->getById($id))->toThrow(RecordNotFoundException::class);
 });
 
 it('can list all records', function () {
@@ -61,7 +63,8 @@ it('can list all records', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -76,7 +79,7 @@ it('can list all records', function () {
     $result = $repository->listAll();
 
     expect($result)->toBeInstanceOf(Collection::class)
-                   ->and($result->count())->toBe(1);
+        ->and($result->count())->toBe(1);
 });
 
 it('can get a record by column and identifier', function () {
@@ -87,7 +90,8 @@ it('can get a record by column and identifier', function () {
     $modelMock->shouldReceive('where')->with($column, $identifier)->andReturnSelf();
     $modelMock->shouldReceive('first')->andReturn($modelMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -112,7 +116,8 @@ it('throws RecordNotFoundException when getting a non-existent record by column 
     $modelMock->shouldReceive('where')->with($column, $identifier)->andReturnSelf();
     $modelMock->shouldReceive('first')->andReturn(null);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -139,7 +144,8 @@ it('can list records by column and value', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -154,7 +160,7 @@ it('can list records by column and value', function () {
     $result = $repository->listByColumn($column, $values);
 
     expect($result)->toBeInstanceOf(Collection::class)
-                   ->and($result->count())->toBe(1);
+        ->and($result->count())->toBe(1);
 });
 
 it('can list records by column and single value', function () {
@@ -169,7 +175,8 @@ it('can list records by column and single value', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -184,7 +191,7 @@ it('can list records by column and single value', function () {
     $result = $repository->listByColumn($column, $value);
 
     expect($result)->toBeInstanceOf(Collection::class)
-                   ->and($result->count())->toBe(1);
+        ->and($result->count())->toBe(1);
 });
 
 it('can list ordered records by column and single value', function () {
@@ -204,7 +211,8 @@ it('can list ordered records by column and single value', function () {
 
     $modelMock->shouldReceive('newQuery')->andReturn($queryBuilderMock);
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -229,7 +237,7 @@ it('can list ordered records by column and single value', function () {
     $result = $repository->orderBy($orderBy)->listByColumn($column, $value);
 
     expect($result)->toBeInstanceOf(Collection::class)
-                   ->and($result->count())->toBe(0);
+        ->and($result->count())->toBe(0);
 });
 
 it('can set the order by clause', function () {
@@ -239,7 +247,8 @@ it('can set the order by clause', function () {
     $modelMock->shouldReceive('orderBy')->andReturnSelf();
     $modelMock->shouldReceive('get')->andReturn(Collection::make([]));
 
-    $repository = new class($modelMock) extends BaseRepository {
+    $repository = new class($modelMock) extends BaseRepository
+    {
         public function __construct(Model $model)
         {
             $this->model = $model;
@@ -264,5 +273,5 @@ it('can set the order by clause', function () {
     $result = $repository->orderBy($orderBy)->listAll();
 
     expect($result)->toBeInstanceOf(Collection::class)
-                   ->and($repository->getOrderBy())->toBe($orderBy);
+        ->and($repository->getOrderBy())->toBe($orderBy);
 });

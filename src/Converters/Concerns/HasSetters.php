@@ -26,6 +26,7 @@ trait HasSetters
     public function andMicroseconds(float|int $value): static
     {
         $value = $this->microseconds + $value;
+
         return $this->fromMicroseconds($value);
     }
 
@@ -49,6 +50,7 @@ trait HasSetters
     public function addMilliseconds(float|int $value): static
     {
         $value = $this->milliseconds + $value;
+
         return $this->fromMilliseconds($value);
     }
 
@@ -72,6 +74,7 @@ trait HasSetters
     public function andSeconds(float|int $value): static
     {
         $value = $this->seconds + $value;
+
         return $this->fromSeconds($value);
     }
 
@@ -95,6 +98,7 @@ trait HasSetters
     public function andMinutes(float|int $value): static
     {
         $value = $this->minutes + $value;
+
         return $this->fromMinutes($value);
     }
 
@@ -118,6 +122,7 @@ trait HasSetters
     public function andHours(float|int $value): static
     {
         $value = $this->hours + $value;
+
         return $this->fromHours($value);
     }
 
@@ -141,6 +146,7 @@ trait HasSetters
     public function andDays(float|int $value): static
     {
         $value = $this->days + $value;
+
         return $this->fromDays($value);
     }
 
@@ -164,6 +170,7 @@ trait HasSetters
     public function andWeeks(float|int $value): static
     {
         $value = $this->weeks + $value;
+
         return $this->fromWeeks($value);
     }
 
@@ -187,6 +194,7 @@ trait HasSetters
     public function andMonths(float|int $value): static
     {
         $value = $this->months + $value;
+
         return $this->fromMonths($value);
     }
 
@@ -210,6 +218,7 @@ trait HasSetters
     public function andQuarters(float|int $value): static
     {
         $value = $this->quarters + $value;
+
         return $this->fromQuarters($value);
     }
 
@@ -233,6 +242,7 @@ trait HasSetters
     public function andYears(float|int $value): static
     {
         $value = $this->years + $value;
+
         return $this->fromYears($value);
     }
 }

@@ -22,14 +22,18 @@ it('throws the correct exception with correct message when using object class na
     try {
         throw new ClassMustImplementFromException($class, $inheritFromClass);
     } catch (ClassMustImplementFromException $exception) {
-        expect($exception->getMessage())->toBe("stdClass must extend from stdClass");
+        expect($exception->getMessage())->toBe('stdClass must extend from stdClass');
     }
 });
 
 it('throws the correct exception with correct message when using class instances', function () {
-    class MyBaseClass {}
+    class MyBaseClass
+    {
+}
 
-    class MyClass {}
+    class MyClass
+    {
+}
 
     $class = new MyClass();
     $inheritFromClass = new MyBaseClass();
@@ -37,6 +41,6 @@ it('throws the correct exception with correct message when using class instances
     try {
         throw new ClassMustImplementFromException($class, $inheritFromClass);
     } catch (ClassMustImplementFromException $exception) {
-        expect($exception->getMessage())->toBe("MyClass must extend from MyBaseClass");
+        expect($exception->getMessage())->toBe('MyClass must extend from MyBaseClass');
     }
 });

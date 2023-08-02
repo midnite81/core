@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 use Midnite81\Core\Tests\Traits\Fixtures\TestEnum;
 
 it('should convert enum to array', function () {

@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 it('can return __toString from a class', function () {
-    $class = new class() {
+    $class = new class()
+    {
         public function __toString()
         {
             return 'Hello';

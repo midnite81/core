@@ -9,11 +9,11 @@ uses(\Midnite81\Core\Tests\CoreTestCase::class);
 
 it('creates from object to object', function () {
     $entity = new ParseDataEntity();
-    $data = (object)['name' => 'John', 'age' => 30];
+    $data = (object) ['name' => 'John', 'age' => 30];
     $expectedResponse = ExpectedType::Object;
 
     expect($data)->toBe($entity->parse($data, $expectedResponse))
-                 ->and($entity->parse($data, $expectedResponse))->toBeObject();
+        ->and($entity->parse($data, $expectedResponse))->toBeObject();
 });
 
 it('creates from array to array', function () {
@@ -22,7 +22,7 @@ it('creates from array to array', function () {
     $expectedResponse = ExpectedType::Object;
 
     expect($data)->toBe($entity->parse($data, $expectedResponse))
-                 ->and($entity->parse($data, $expectedResponse))->toBeArray();
+        ->and($entity->parse($data, $expectedResponse))->toBeArray();
 });
 
 it('creates from string to string', function () {
@@ -31,9 +31,8 @@ it('creates from string to string', function () {
     $expectedResponse = ExpectedType::String;
 
     expect($data)->toBe($entity->parse($data, $expectedResponse))
-                 ->and($entity->parse($data, $expectedResponse))->toBeString();
+        ->and($entity->parse($data, $expectedResponse))->toBeString();
 });
-
 
 it('creates from string to object', function () {
     $entity = new ParseDataEntity();
@@ -66,22 +65,22 @@ it('creates from array to string', function () {
 
     $parsed = $entity->parse($data, $expectedResponse);
     expect($parsed)->toBe('{"name":"Dave","age":23,"location":"UK"}')
-                   ->and($parsed)->toBeString();
+        ->and($parsed)->toBeString();
 });
 
 it('creates from object to string', function () {
     $entity = new ParseDataEntity();
-    $data = (object)['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
+    $data = (object) ['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
     $expectedResponse = ExpectedType::String;
 
     $parsed = $entity->parse($data, $expectedResponse);
     expect($parsed)->toBe('{"name":"Dave","age":23,"location":"UK"}')
-                   ->and($parsed)->toBeString();
+        ->and($parsed)->toBeString();
 });
 
 it('creates from object to array', function () {
     $entity = new ParseDataEntity();
-    $data = (object)['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
+    $data = (object) ['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
     $expectedResponse = ExpectedType::Array;
 
     $parsed = $entity->parse($data, $expectedResponse);

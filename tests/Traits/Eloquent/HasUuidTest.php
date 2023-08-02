@@ -5,9 +5,9 @@ declare(strict_types=1);
 use Illuminate\Database\Eloquent\Model;
 use Midnite81\Core\Traits\Eloquent\HasUuid;
 
-
 test('it generates a UUID on creating', function () {
-    $model = new class extends Model {
+    $model = new class extends Model
+    {
         use HasUuid;
     };
 
@@ -18,7 +18,8 @@ test('it generates a UUID on creating', function () {
 });
 
 test('it returns the correct UUID column', function () {
-    $model = new class {
+    $model = new class
+    {
         use HasUuid;
     };
 
@@ -26,7 +27,8 @@ test('it returns the correct UUID column', function () {
 });
 
 test('it returns the correct custom UUID column', function () {
-    $model = new class {
+    $model = new class
+    {
         use HasUuid;
 
         public function getUuidColumn(): string

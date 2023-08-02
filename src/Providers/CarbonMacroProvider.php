@@ -11,6 +11,7 @@ class CarbonMacroProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
+     *
      * @codeCoverageIgnore
      */
     public function boot(): void

@@ -13,12 +13,11 @@ it('correctly returns the value of an enum', function () {
 });
 
 it('throws an exception if a class is passed', function () {
-    expect(fn() => enum(new \Midnite81\Core\Tests\Helpers\Fixtures\MyClass()))->toThrow(
+    expect(fn () => enum(new \Midnite81\Core\Tests\Helpers\Fixtures\MyClass()))->toThrow(
         RuntimeException::class,
         '$value passed to this function was not an enum',
     );
 });
-
 
 it('throws and error if an enum is not passed but string is', function () {
     $sut = fn () => enum('test string');

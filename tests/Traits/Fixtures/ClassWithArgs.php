@@ -17,6 +17,7 @@ class ClassWithArgs
     public function greet(): string
     {
         $hobbies = implode(', ', $this->hobbies);
+
         return "Hi there, {$this->name}! You like the following hobbies: {$hobbies}";
     }
 }

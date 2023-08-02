@@ -13,7 +13,7 @@ it('constructs via make method', function () {
 });
 
 it('throws an exception if it can\'t find the file', function () {
-    expect(fn() => new FileLimiter(__DIR__ . '/Fixtures/non-existent-file.txt'))
+    expect(fn () => new FileLimiter(__DIR__ . '/Fixtures/non-existent-file.txt'))
         ->toThrow(RuntimeException::class, 'File could not be found');
 });
 
@@ -114,13 +114,12 @@ it('it can return to array', function () {
         );
 });
 
-
 it('casts to string', function () {
     $limiter = FileLimiter::make(__DIR__ . '/Fixtures/test-file.txt');
 
     $subjectUnderTest = $limiter->readFirstLines(2);
 
-    expect((string)$subjectUnderTest)
+    expect((string) $subjectUnderTest)
         ->toBeString()
         ->toBe("line 1\nline 2\n");
 });
