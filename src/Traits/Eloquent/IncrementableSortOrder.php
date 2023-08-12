@@ -22,10 +22,10 @@ trait IncrementableSortOrder
      */
     public function updateIncrementedSortOrder(): bool
     {
-        DB::statement("SET @row_number := 0;");
+        DB::statement('SET @row_number := 0;');
 
         $query = sprintf(
-            "UPDATE %s SET %s = (@row_number := @row_number + %s) ORDER BY %s %s;",
+            'UPDATE %s SET %s = (@row_number := @row_number + %s) ORDER BY %s %s;',
             $this->getTable(),
             $this->getSortOrderColumn(),
             $this->getIncrementSeparation(),
@@ -35,7 +35,6 @@ trait IncrementableSortOrder
 
         return DB::statement($query);
     }
-
 
     /**
      * Get the increment separation.
