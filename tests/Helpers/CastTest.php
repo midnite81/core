@@ -102,6 +102,12 @@ it('if value is empty it will not try to cast', function () {
 
     $sut4 = (new Cast)->castIfNotEmpty('0', 'int');
     expect($sut4)->tobe('0')->toBeString();
+
+    $sut5 = Cast::castIfNotEmpty('a', 'string');
+    expect($sut5)->toBe('a')->toBeString();
+
+    $sut6 = (new Cast)->castIfNotEmpty('a', 'string');
+    expect($sut6)->tobe('a')->toBeString();
 });
 
 it('null if empty', function () {
@@ -110,4 +116,11 @@ it('null if empty', function () {
 
     $sut2 = (new Cast())->nullIfEmpty('  ');
     expect($sut2)->toBeNull();
+});
+
+it("throws an exception when calling a method that doesn't exist magically", function () {
+    /* @phpstan-ignore-next-line */
+    $sut = fn () => (new Cast())->nonExistentMethod();
+
+    expect($sut)->toThrow(BadMethodCallException::class, 'Method nonExistentMethod does not exist');
 });
