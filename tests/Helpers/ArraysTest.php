@@ -293,6 +293,58 @@ it('preserves non-numeric keys with preserveKey option', function () {
         ->and($sut['b'])->toMatchArray(['id' => 2, 'name' => 'Bob']);
 });
 
+it('returns items that exactly match the given value with case sensitivity', function () {
+    $input = ['Apple', 'Banana', 'apple', 'Orange'];
+    $expected = ['Apple'];
+
+    $result = Arrays::filter($input, 'Apple', ['fullMatch' => true, 'caseSensitive' => true]);
+
+    expect($result)->toBe($expected);
+});
+
+it('returns items that exactly match the given value without case sensitivity', function () {
+    $input = ['Apple', 'Banana', 'apple', 'Orange'];
+    $expected = ['Apple', 'apple'];
+
+    $result = Arrays::filter($input, 'Apple', ['fullMatch' => true, 'caseSensitive' => false]);
+
+    expect($result)->toBe($expected);
+});
+
+it('works correctly with non-string values for full matching', function () {
+    $input = [1, 2, '3', 4, 3];
+    $expected = [3];
+
+    $result = Arrays::filter($input, 3, ['fullMatch' => true]);
+
+    expect($result)->toBe($expected);
+});
+
+it('returns an empty array if there are no exact matches', function () {
+    $input = ['Apple', 'Banana', 'Orange'];
+    $expected = [];
+
+    $result = Arrays::filter($input, 'Pear', ['fullMatch' => true]);
+
+    expect($result)->toBeEmpty();
+});
+
+
+it('filters array using case incentive method', function () {
+    $array = [
+        'first' => 'This is the first item',
+        'second' => 'This is the second item',
+        'third' => 'This is the third item',
+        'fourth' => 'This is the fourth item',
+    ];
+
+    $sut = Arrays::filterInsensitive($array, 'this');
+    $sut2 = Arrays::filterInsensitive($array, 'this', ['caseSensitive' => true]);
+
+    expect($sut)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth'])
+    ->and($sut2)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth']);
+});
+
 it('orders the array as specified', function () {
     $array = [
         [
@@ -395,4 +447,50 @@ it('does not throw if array key exists already', function () {
     expect($sutArray)
         ->not->toThrow(ArrayKeyAlreadyExistsException::class)
         ->toHaveCount(2);
+});
+
+it('converts a simple one-level array to dot notation', function () {
+    $original = ['key' => 'value'];
+    $expected = ['key' => 'value'];
+
+    expect(Arrays::toDotNotation($original))->toBe($expected);
+});
+
+it('converts a multi-level array to dot notation', function () {
+    $original = ['foo' => ['bar' => 'baz']];
+    $expected = ['foo.bar' => 'baz', 'foo' => ['bar' => 'baz']];
+
+    expect(Arrays::toDotNotation($original))->toBe($expected);
+});
+
+it('handles an empty array when using dot notation', function () {
+    $original = [];
+    $expected = [];
+
+    expect(Arrays::toDotNotation($original))->toBe($expected);
+});
+
+it('converts array to dot notation with simple mode set to true', function () {
+    $original = ['foo' => ['bar' => 'baz']];
+    $expected = ['foo.bar' => 'baz'];
+
+    expect(Arrays::toDotNotation($original, true))->toBe($expected);
+});
+
+it('converts array to dot notation with simple mode set to false', function () {
+    $original = ['foo' => ['bar' => ['baz' => 'qux']]];
+    $expected = [
+        'foo.bar.baz' => 'qux',
+        'foo.bar' => ['baz' => 'qux'],
+        'foo' => ['bar' => ['baz' => 'qux']]
+    ];
+
+    expect(Arrays::toDotNotation($original, false))->toBe($expected);
+});
+
+it('handles arrays with non-string keys', function () {
+    $original = [0 => ['foo' => 'bar']];
+    $expected = ['0.foo' => 'bar', '0' => ['foo' => 'bar']];
+
+    expect(Arrays::toDotNotation($original))->toBe($expected);
 });

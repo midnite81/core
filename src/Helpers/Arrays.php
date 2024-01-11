@@ -21,6 +21,7 @@ class Arrays
      *                       - 'negate' (bool): Whether to negate the filter results.
      *                       - 'caseSensitive' (bool): Whether to perform a case-sensitive search. Defaults to true.
      *                       - 'preserveKey' (bool): Whether to keep the original array key. Defaults to false.
+     *                       - 'fullMatch' (bool): Whether to perform a full match. Defaults to false.
      * @param string|null $filterKey The key to filter by in the associative array. Defaults to null.
      * @param bool $useOriginalIfValueEmpty Specifies whether to return the original array if the value is empty. Defaults to false.
      * @return array The filtered array.
@@ -43,10 +44,14 @@ class Arrays
                 if (array_key_exists($filterKey, $item)) {
                     $currentValue = $item[$filterKey];
                     if (is_string($value) && $value !== '') {
-                        if (!empty($options['caseSensitive'])) {
-                            $matches = Str::contains($currentValue, $value);
+                        if (!empty($options['fullMatch'])) {
+                            $matches = !empty($options['caseSensitive']) ?
+                                $currentValue === $value :
+                                strtolower($currentValue) === strtolower($value);
                         } else {
-                            $matches = Str::contains(strtolower($currentValue), strtolower($value));
+                            $matches = !empty($options['caseSensitive']) ?
+                                Str::contains($currentValue, $value) :
+                                Str::contains(strtolower($currentValue), strtolower($value));
                         }
                     } else {
                         $matches = $currentValue === $value;
@@ -54,10 +59,14 @@ class Arrays
                 }
             } elseif ($filterKey === null || $filterKey === $key) {
                 if (is_string($value) && $value !== '') {
-                    if (!empty($options['caseSensitive'])) {
-                        $matches = Str::contains($item, $value);
+                    if (!empty($options['fullMatch'])) {
+                        $matches = !empty($options['caseSensitive']) ?
+                            $item === $value :
+                            strtolower($item) === strtolower($value);
                     } else {
-                        $matches = Str::contains(strtolower($item), strtolower($value));
+                        $matches = !empty($options['caseSensitive']) ?
+                            Str::contains($item, $value) :
+                            Str::contains(strtolower($item), strtolower($value));
                     }
                 } else {
                     $matches = $item === $value;
@@ -71,13 +80,13 @@ class Arrays
             return $matches;
         }, ARRAY_FILTER_USE_BOTH);
 
-        // If preserveKey is not set, re-index the array
         if (empty($options['preserveKey']) && array_keys($original) === range(0, count($original) - 1)) {
             return array_values($filtered);
         }
 
         return $filtered;
     }
+
 
     /**
      * Filters an array case insensitively by a given value with the provided options.
@@ -88,6 +97,7 @@ class Arrays
      * @param array $options Additional options for filtering.
      *                       Available options are:
      *                       - 'negate' (bool): Whether to negate the filter results.
+     *                       - 'preserveKey' (bool): Whether to keep the original array key. Defaults to false.
      * @param bool $useOriginalIfValueEmpty Specifies whether to return the original array if the value is empty. Defaults to false.
      * @return array The filtered array.
      */
@@ -203,7 +213,6 @@ class Arrays
     {
         $result = [];
 
-        // Closure for getting sub-array by keys.
         $getSubArrayByKeys = function (array $array, array $keys) {
             foreach ($keys as $key) {
                 if (isset($array[$key]) && is_array($array[$key])) {
@@ -222,20 +231,17 @@ class Arrays
         );
 
         foreach ($iterator as $leafValue) {
-            // Building the dot notation key for the current element.
             $keys = [];
             foreach (range(0, $iterator->getDepth()) as $depth) {
                 $keys[] = $iterator->getSubIterator($depth)->key();
             }
             $dotKey = implode('.', $keys);
 
-            // Adding the key-value pair.
             $result[$dotKey] = $leafValue;
 
-            // If simple mode is false, add intermediate arrays.
             if (!$simple) {
                 $subKeys = explode('.', $dotKey);
-                array_pop($subKeys); // Remove the last key as it's already added.
+                array_pop($subKeys);
                 while (count($subKeys) > 0) {
                     $subKey = implode('.', $subKeys);
                     if (!array_key_exists($subKey, $result)) {
