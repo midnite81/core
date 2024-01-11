@@ -42,7 +42,7 @@ it("it negates what's found", function () {
     expect($sut)->toBeArray()->toHaveCount(2)->toHaveKeys(['first', 'second']);
 });
 
-it("is case insensitive by default", function () {
+it('is case insensitive by default', function () {
     $array = [
         'first' => 'This is the first item',
         'second' => 'This is the second item',
@@ -55,7 +55,7 @@ it("is case insensitive by default", function () {
     expect($sut)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth']);
 });
 
-it("it returns original value is empty", function () {
+it('it returns original value is empty', function () {
     $array = [
         'first' => 'This is the first item',
         'second' => 'This is the second item',
@@ -63,7 +63,7 @@ it("it returns original value is empty", function () {
         'fourth' => 'This is the fourth item',
     ];
 
-    $sut = Arrays::filter($array, useOriginalIfValueEmpty: true );
+    $sut = Arrays::filter($array, useOriginalIfValueEmpty: true);
 
     expect($sut)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth']);
 });
@@ -103,9 +103,9 @@ it('filters by key', function () {
     $sut = Arrays::filter($array, 'Trevor', filterKey: 'name');
 
     expect($sut)->toBeArray()->toHaveCount(1)
-                ->and($sut[0]['id'])->toBe(25)
-                ->and($sut[0]['name'])->toBe('Trevor')
-                ->and($sut[0]['age'])->toBe(27);
+        ->and($sut[0]['id'])->toBe(25)
+        ->and($sut[0]['name'])->toBe('Trevor')
+        ->and($sut[0]['age'])->toBe(27);
 });
 
 it('preserves the key', function () {
@@ -130,9 +130,9 @@ it('preserves the key', function () {
     $sut = Arrays::filter(original: $array, value: 'Trevor', options: ['preserveKey' => true], filterKey: 'name');
 
     expect($sut)->toBeArray()->toHaveCount(1)->toHaveKey(2)
-                ->and($sut[2]['id'])->toBe(25)
-                ->and($sut[2]['name'])->toBe('Trevor')
-                ->and($sut[2]['age'])->toBe(27);
+        ->and($sut[2]['id'])->toBe(25)
+        ->and($sut[2]['name'])->toBe('Trevor')
+        ->and($sut[2]['age'])->toBe(27);
 });
 
 it('returns the named keys', function () {
@@ -157,9 +157,9 @@ it('returns the named keys', function () {
     $sut = Arrays::filter(original: $array, value: 'Trevor', filterKey: 'name');
 
     expect($sut)->toBeArray()->toHaveCount(1)->toHaveKey('user3')
-                ->and($sut['user3']['id'])->toBe(25)
-                ->and($sut['user3']['name'])->toBe('Trevor')
-                ->and($sut['user3']['age'])->toBe(27);
+        ->and($sut['user3']['id'])->toBe(25)
+        ->and($sut['user3']['name'])->toBe('Trevor')
+        ->and($sut['user3']['age'])->toBe(27);
 });
 
 it('filters with integer values', function () {
@@ -172,9 +172,8 @@ it('filters with integer values', function () {
     $sut = Arrays::filter($array, 2, filterKey: 'id');
 
     expect($sut)->toBeArray()->toHaveCount(1)
-                ->and($sut[0])->toMatchArray(['id' => 2, 'name' => 'Bob']);
+        ->and($sut[0])->toMatchArray(['id' => 2, 'name' => 'Bob']);
 });
-
 
 it('filters with boolean values', function () {
     $array = [
@@ -186,8 +185,8 @@ it('filters with boolean values', function () {
     $sut = Arrays::filter($array, true, filterKey: 'isActive');
 
     expect($sut)->toBeArray()->toHaveCount(2)
-                ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'isActive' => true])
-                ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'isActive' => true]);
+        ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'isActive' => true])
+        ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'isActive' => true]);
 });
 
 it('handles an empty array', function () {
@@ -210,7 +209,6 @@ it('handles non-existent filter key', function () {
     expect($sut)->toBeArray()->toBeEmpty();
 });
 
-
 it('case sensitivity option with non-string values', function () {
     $array = [
         ['id' => 1, 'isActive' => true],
@@ -221,10 +219,9 @@ it('case sensitivity option with non-string values', function () {
     $sut = Arrays::filter($array, true, ['caseSensitive' => true], filterKey: 'isActive');
 
     expect($sut)->toBeArray()->toHaveCount(2)
-                ->and($sut[0])->toMatchArray(['id' => 1, 'isActive' => true])
-                ->and($sut[1])->toMatchArray(['id' => 3, 'isActive' => true]);
+        ->and($sut[0])->toMatchArray(['id' => 1, 'isActive' => true])
+        ->and($sut[1])->toMatchArray(['id' => 3, 'isActive' => true]);
 });
-
 
 it('combines negate and preserveKey options', function () {
     $array = [
@@ -233,11 +230,11 @@ it('combines negate and preserveKey options', function () {
         'user3' => ['id' => 3, 'name' => 'Charlie'],
     ];
 
-    $sut = Arrays::filter($array, 'Bob',  ['negate' => true, 'preserveKey' => true], 'name');
+    $sut = Arrays::filter($array, 'Bob', ['negate' => true, 'preserveKey' => true], 'name');
 
     expect($sut)->toBeArray()->toHaveCount(2)
-                ->toHaveKey('user1')
-                ->toHaveKey('user3');
+        ->toHaveKey('user1')
+        ->toHaveKey('user3');
 });
 
 it('filters with null value', function () {
@@ -250,10 +247,9 @@ it('filters with null value', function () {
     $sut = Arrays::filter($array, null, filterKey: 'nickname');
 
     expect($sut)->toBeArray()->toHaveCount(2)
-                ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'nickname' => null])
-                ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'nickname' => null]);
+        ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'nickname' => null])
+        ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'nickname' => null]);
 });
-
 
 it('filters with empty string value', function () {
     $array = [
@@ -265,10 +261,9 @@ it('filters with empty string value', function () {
     $sut = Arrays::filter($array, '', filterKey: 'nickname');
 
     expect($sut)->toBeArray()->toHaveCount(2)
-                ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'nickname' => ''])
-                ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'nickname' => '']);
+        ->and($sut[0])->toMatchArray(['id' => 1, 'name' => 'Alice', 'nickname' => ''])
+        ->and($sut[1])->toMatchArray(['id' => 3, 'name' => 'Charlie', 'nickname' => '']);
 });
-
 
 it('handles numeric string keys', function () {
     $array = [
@@ -280,8 +275,8 @@ it('handles numeric string keys', function () {
     $sut = Arrays::filter($array, 'Bob', filterKey: 'name');
 
     expect($sut)->toBeArray()->toHaveCount(1)
-                ->toHaveKey('2')
-                ->and($sut['2'])->toMatchArray(['id' => 2, 'name' => 'Bob']);
+        ->toHaveKey('2')
+        ->and($sut['2'])->toMatchArray(['id' => 2, 'name' => 'Bob']);
 });
 
 it('preserves non-numeric keys with preserveKey option', function () {
@@ -294,8 +289,8 @@ it('preserves non-numeric keys with preserveKey option', function () {
     $sut = Arrays::filter($array, 'Bob', options: ['preserveKey' => true], filterKey: 'name');
 
     expect($sut)->toBeArray()->toHaveCount(1)
-                ->toHaveKey('b')
-                ->and($sut['b'])->toMatchArray(['id' => 2, 'name' => 'Bob']);
+        ->toHaveKey('b')
+        ->and($sut['b'])->toMatchArray(['id' => 2, 'name' => 'Bob']);
 });
 
 it('orders the array as specified', function () {
@@ -324,11 +319,11 @@ it('orders the array as specified', function () {
         ->toHaveCount(3)
         ->sequence(
         /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Bernard'),
+            fn ($value) => $value->name->toBe('Bernard'),
             /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Sharon'),
+            fn ($value) => $value->name->toBe('Sharon'),
             /* @phpstan-ignore-next-line */
-            fn($value) => $value->name->toBe('Trevor'),
+            fn ($value) => $value->name->toBe('Trevor'),
         );
 });
 
@@ -381,7 +376,7 @@ it('throws if array key exists already', function () {
         'address' => '123 Fake Street',
     ];
 
-    expect(fn() => Arrays::renameKey($sutArray, 'age', 'name', true))
+    expect(fn () => Arrays::renameKey($sutArray, 'age', 'name', true))
         ->toThrow(
             ArrayKeyAlreadyExistsException::class,
             'The key [name] already exists in the array'
@@ -399,5 +394,5 @@ it('does not throw if array key exists already', function () {
 
     expect($sutArray)
         ->not->toThrow(ArrayKeyAlreadyExistsException::class)
-             ->toHaveCount(2);
+        ->toHaveCount(2);
 });

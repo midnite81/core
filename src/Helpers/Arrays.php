@@ -17,10 +17,10 @@ class Arrays
      * @param array $original The original array to be filtered.
      * @param mixed $value The value used for filtering. Defaults to null.
      * @param array $options Additional options for filtering.
-     *                        Available options are:
-     *                        - 'negate' (bool): Whether to negate the filter results.
-     *                        - 'caseSensitive' (bool): Whether to perform a case-sensitive search. Defaults to true.
-     *                        - 'preserveKey' (bool): Whether to keep the original array key. Defaults to false.
+     *                       Available options are:
+     *                       - 'negate' (bool): Whether to negate the filter results.
+     *                       - 'caseSensitive' (bool): Whether to perform a case-sensitive search. Defaults to true.
+     *                       - 'preserveKey' (bool): Whether to keep the original array key. Defaults to false.
      * @param string|null $filterKey The key to filter by in the associative array. Defaults to null.
      * @param bool $useOriginalIfValueEmpty Specifies whether to return the original array if the value is empty. Defaults to false.
      * @return array The filtered array.
@@ -79,7 +79,6 @@ class Arrays
         return $filtered;
     }
 
-
     /**
      * Filters an array case insensitively by a given value with the provided options.
      * If no element matches the value and $returnOriginalOnNoMatch is set to true, returns the original array.
@@ -87,10 +86,9 @@ class Arrays
      * @param array $original The original array to filter.
      * @param mixed $value The value to use for filtering.
      * @param array $options Additional options for filtering.
-     *                      Available options are:
-     *                      - 'negate' (bool): Whether to negate the filter results.
+     *                       Available options are:
+     *                       - 'negate' (bool): Whether to negate the filter results.
      * @param bool $useOriginalIfValueEmpty Specifies whether to return the original array if the value is empty. Defaults to false.
-     *
      * @return array The filtered array.
      */
     public static function filterInsensitive(
@@ -104,7 +102,6 @@ class Arrays
 
         return static::filter($original, $value, $options, $filterKey, $useOriginalIfValueEmpty);
     }
-
 
     /**
      * Sorts an array by a specified order
@@ -200,7 +197,6 @@ class Arrays
      * For example, ['foo' => ['bar' => 'baz']] becomes ['foo.bar' => 'baz'].
      *
      * @param array $original The original multidimensional array.
-     *
      * @return array The array converted to dot notation.
      */
     public static function toDotNotation(array $original, bool $simple = false): array
@@ -216,6 +212,7 @@ class Arrays
                     return [];
                 }
             }
+
             return $array;
         };
 
