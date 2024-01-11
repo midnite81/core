@@ -87,7 +87,6 @@ class Arrays
         return $filtered;
     }
 
-
     /**
      * Filters an array case insensitively by a given value with the provided options.
      * If no element matches the value and $returnOriginalOnNoMatch is set to true, returns the original array.

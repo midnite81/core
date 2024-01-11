@@ -120,7 +120,7 @@ it('null if empty', function () {
 
 it("throws an exception when calling a method that doesn't exist magically", function () {
     /* @phpstan-ignore-next-line */
-    $sut = fn() => (new Cast())->nonExistentMethod();
+    $sut = fn () => (new Cast())->nonExistentMethod();
 
     expect($sut)->toThrow(BadMethodCallException::class, 'Method nonExistentMethod does not exist');
 });

@@ -329,7 +329,6 @@ it('returns an empty array if there are no exact matches', function () {
     expect($result)->toBeEmpty();
 });
 
-
 it('filters array using case incentive method', function () {
     $array = [
         'first' => 'This is the first item',
@@ -342,7 +341,7 @@ it('filters array using case incentive method', function () {
     $sut2 = Arrays::filterInsensitive($array, 'this', ['caseSensitive' => true]);
 
     expect($sut)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth'])
-    ->and($sut2)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth']);
+        ->and($sut2)->toBeArray()->toHaveCount(4)->toHaveKeys(['first', 'second', 'third', 'fourth']);
 });
 
 it('orders the array as specified', function () {
@@ -482,7 +481,7 @@ it('converts array to dot notation with simple mode set to false', function () {
     $expected = [
         'foo.bar.baz' => 'qux',
         'foo.bar' => ['baz' => 'qux'],
-        'foo' => ['bar' => ['baz' => 'qux']]
+        'foo' => ['bar' => ['baz' => 'qux']],
     ];
 
     expect(Arrays::toDotNotation($original, false))->toBe($expected);
