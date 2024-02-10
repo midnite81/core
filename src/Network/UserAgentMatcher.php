@@ -109,7 +109,7 @@ class UserAgentMatcher
     /**
      * Sets the dictionaries.
      *
-     * @param array<int, LibraryInterface> $dictionaries An array of dictionaries.
+     * @param array<int, LibraryInterface|class-string> $dictionaries An array of dictionaries.
      * @return UserAgentMatcher The UserAgent object.
      */
     public function setDictionaries(array $dictionaries): UserAgentMatcher
