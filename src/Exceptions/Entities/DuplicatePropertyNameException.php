@@ -9,7 +9,7 @@ use Throwable;
 
 class DuplicatePropertyNameException extends RuntimeException
 {
-    public function __construct(string $value, $class = null, $code = 0, Throwable $previous = null)
+    public function __construct(string $value, $class = null, $code = 0, ?Throwable $previous = null)
     {
         $class = get_class($class);
         $message = "The name [$value] was registered more than once on class [$class]";

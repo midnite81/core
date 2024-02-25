@@ -50,7 +50,7 @@ class HtmlLinks
     /**
      * Adds github icon and link
      */
-    public static function githubIconAndLink(string $url, ?string $text = null, string $svgClass = null, ?string $linkCss = null): string
+    public static function githubIconAndLink(string $url, ?string $text = null, ?string $svgClass = null, ?string $linkCss = null): string
     {
         $svg = <<<'SVG'
 <svg class=":CLASSES:" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

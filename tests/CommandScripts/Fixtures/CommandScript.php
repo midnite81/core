@@ -12,6 +12,6 @@ class CommandScript extends AbstractCommandScript
 {
     public function handle(FireScriptsCommand $command, ExecuteInterface $execute): int
     {
-          return 0;
+        return 0;
     }
 }
