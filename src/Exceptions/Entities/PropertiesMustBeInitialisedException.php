@@ -9,7 +9,7 @@ use Throwable;
 
 class PropertiesMustBeInitialisedException extends RuntimeException
 {
-    public function __construct($class = null, $message = '', $code = 0, Throwable $previous = null)
+    public function __construct($class = null, $message = '', $code = 0, ?Throwable $previous = null)
     {
         if (empty($message)) {
             $message = 'All public properties must be initialised on ' . get_class($class);

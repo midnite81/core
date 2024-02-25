@@ -369,7 +369,7 @@ it('orders the array as specified', function () {
         ->toBeArray()
         ->toHaveCount(3)
         ->sequence(
-        /* @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
             fn ($value) => $value->name->toBe('Bernard'),
             /* @phpstan-ignore-next-line */
             fn ($value) => $value->name->toBe('Sharon'),

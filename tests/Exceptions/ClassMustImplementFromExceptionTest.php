@@ -29,11 +29,11 @@ it('throws the correct exception with correct message when using object class na
 it('throws the correct exception with correct message when using class instances', function () {
     class MyBaseClass
     {
-}
+    }
 
     class MyClass
     {
-}
+    }
 
     $class = new MyClass();
     $inheritFromClass = new MyBaseClass();

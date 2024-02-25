@@ -22,8 +22,8 @@ use Midnite81\Core\Exceptions\MagicMethods\PropertyRequiresCanSetViaMagicMethodA
  */
 trait GettersAndSetters
 {
-    use Getters;
     use FluentSetters;
+    use Getters;
 
     /**
      * Handle dynamic method calls for getters and setters.

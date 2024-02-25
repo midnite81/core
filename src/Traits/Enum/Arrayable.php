@@ -17,7 +17,7 @@ trait Arrayable
      *                               return the desired key for that case.
      * @return array An associative array containing the cases as keys and their corresponding values.
      */
-    public static function toArray(Closure $callback = null): array
+    public static function toArray(?Closure $callback = null): array
     {
         $array = [];
         $enum = new ReflectionEnum(static::class);

@@ -13,12 +13,12 @@ use ArrayAccess;
  */
 abstract class BaseEntity implements ArrayAccess
 {
-    use Concerns\Checksums;
     use Concerns\ArrayAccess;
+    use Concerns\Checksums;
     use Concerns\Conversions;
-    use Concerns\Mapping;
     use Concerns\DataParsing;
     use Concerns\Filtering;
+    use Concerns\Mapping;
     use Concerns\PropertyHandling;
 
     /**

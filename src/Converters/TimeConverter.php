@@ -10,9 +10,9 @@ use Midnite81\Core\Converters\Concerns\HasStaticSetters;
 
 class TimeConverter
 {
-    use HasSetters,
-        HasStaticSetters,
-        HasConversions;
+    use HasConversions,
+        HasSetters,
+        HasStaticSetters;
 
     /**
      * The number of microseconds passed to the TimeConverter class.
