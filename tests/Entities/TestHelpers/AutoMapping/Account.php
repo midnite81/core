@@ -25,7 +25,7 @@ class Account extends BaseEntity
     public array $orders;
 
     /**
-     * @param array $data
+     * @param array|object $data
      * @throws PropertyMappingException
      */
     public function __construct(array|object $data = [])

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Exceptions;
 
-use Exception;
+use RuntimeException;
 
-class PropertyMappingException extends Exception
+class PropertyMappingException extends RuntimeException
 {
 }
