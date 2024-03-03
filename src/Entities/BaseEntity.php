@@ -20,6 +20,7 @@ abstract class BaseEntity implements ArrayAccess
     use Concerns\Filtering;
     use Concerns\Mapping;
     use Concerns\PropertyHandling;
+    use Concerns\PropertyHydration;
 
     /**
      * An array containing the internal representation of property names.
@@ -41,6 +42,8 @@ abstract class BaseEntity implements ArrayAccess
      */
     public function __construct()
     {
+        $this->definePropertyHandlers();
+        $this->defineTypeHandlers();
         $this->checkForIdenticalPropertyNameAttributeNames();
         $this->createInternalPropertyNameArray();
         $this->process();
