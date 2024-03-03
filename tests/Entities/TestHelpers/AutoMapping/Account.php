@@ -14,6 +14,8 @@ class Account extends BaseEntity
 
     public int $accountNumber;
 
+    public string $upperCaseString;
+
     public Address $address;
 
     /**
@@ -26,7 +28,7 @@ class Account extends BaseEntity
      * @param array $data
      * @throws PropertyMappingException
      */
-    public function __construct(array $data = [])
+    public function __construct(array|object $data = [])
     {
         parent::__construct();
         $this->mapProperties($data);
@@ -38,6 +40,13 @@ class Account extends BaseEntity
             ...$this->scalarHandlers(),
             Address::class => fn($value) => new Address($value),
             Orders::class => fn($value) => new Orders($value),
+        ];
+    }
+
+    public function definePropertyHandlers(): void
+    {
+        $this->propertyHandlers = [
+            'upperCaseString' => fn($value) => strtoupper($value),
         ];
     }
 }

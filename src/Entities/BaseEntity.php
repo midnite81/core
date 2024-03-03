@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Midnite81\Core\Entities;
 
 use ArrayAccess;
+use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
+use Midnite81\Core\Exceptions\PropertyMappingException;
 
 /**
  * Class BaseEntity
@@ -63,5 +65,26 @@ abstract class BaseEntity implements ArrayAccess
     public function process(): void
     {
         // Optionally, child classes can implement their own logic here.
+    }
+
+    /**
+     * @return array
+     * @throws PropertyIsRequiredException
+     */
+    public function __serialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     * @throws PropertyMappingException
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->defineTypeHandlers();
+        $this->definePropertyHandlers();
+        $this->mapProperties($data);
     }
 }
