@@ -23,7 +23,7 @@ class UserAgentMatcher
         protected array $dictionaries = [],
     ) {
         if ($userAgent === null) {
-            $this->userAgent = request()->header('User-Agent') ?? null;
+            $this->userAgent = request()->header('User-Agent') ?? 'UnknownUserAgent';
         }
     }
 
