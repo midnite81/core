@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Midnite81\Core\Entities\Concerns;
 
 use Carbon\Carbon;
-use Midnite81\Core\Attributes\ArrayOf;
 use Midnite81\Core\Exceptions\PropertyMappingException;
 use ReflectionClass;
 
@@ -84,29 +83,35 @@ trait PropertyHydration
 
         $reflection = new ReflectionClass($this);
         foreach ($reflection->getProperties() as $property) {
-            $name = $property->getName();
-            if (!array_key_exists($name, $data)) {
+            $attributes = $property->getAttributes(\Midnite81\Core\Attributes\SourceName::class);
+            $sourceNameAttribute = !empty($attributes) ? $attributes[0]->newInstance() : null;
+            $sourceName = $sourceNameAttribute ? $sourceNameAttribute->name : $property->getName();
+
+            // Check if the source name exists in the data, continue to next property if not
+            if (!array_key_exists($sourceName, $data)) {
                 continue;
             }
 
+            $name = $property->getName();
+
             // Handle properties with the ArrayOf attribute
-            $attributes = $property->getAttributes(ArrayOf::class);
-            if (!empty($attributes)) {
-                $attributeInstance = $attributes[0]->newInstance();
+            $arrayOfAttributes = $property->getAttributes(\Midnite81\Core\Attributes\ArrayOf::class);
+            if (!empty($arrayOfAttributes)) {
+                $attributeInstance = $arrayOfAttributes[0]->newInstance();
                 $className = $attributeInstance->class;
 
-                if (is_array($data[$name])) {
+                if (is_array($data[$sourceName])) {
                     $this->$name = array_map(function ($item) use ($className) {
                         // Assumes the class has a constructor that can accept the data for each item
                         return new $className($item);
-                    }, $data[$name]);
+                    }, $data[$sourceName]);
                 }
                 continue; // Proceed to the next property after handling
             }
 
             // Check for a custom property handler
             if (isset($this->propertyHandlers[$name])) {
-                $this->$name = call_user_func($this->propertyHandlers[$name], $data[$name]);
+                $this->$name = call_user_func($this->propertyHandlers[$name], $data[$sourceName]);
                 continue;
             }
 
@@ -114,17 +119,17 @@ trait PropertyHydration
             $type = $property->getType();
             if (!$type) {
                 // Direct assignment if the property has no type
-                $this->$name = $data[$name];
+                $this->$name = $data[$sourceName];
                 continue;
             }
 
             $typeName = $type->getName();
             if (isset($this->typeHandlers[$typeName])) {
                 // Use a type handler if defined
-                $this->$name = call_user_func($this->typeHandlers[$typeName], $data[$name]);
+                $this->$name = call_user_func($this->typeHandlers[$typeName], $data[$sourceName]);
             } else {
                 // Direct assignment as a fallback
-                $this->$name = $data[$name];
+                $this->$name = $data[$sourceName];
             }
         }
     }

@@ -77,6 +77,18 @@ it('should pass full array if not limited', function () {
         ->toHaveCount(3);
 });
 
+it('should exclude items from the array', function () {
+    $entity = new TestEntity();
+    $entity->setId('102')
+        ->setTitle('dave')
+        ->setContent('This is my content')
+        ->setDescription('This is my description');
+
+    expect($entity->toExcludedArray(['preview']))
+        ->toBeArray()
+        ->toHaveCount(2);
+});
+
 it('should return a json string', function () {
     $entity = new TestEntity();
     $entity->setId('102')

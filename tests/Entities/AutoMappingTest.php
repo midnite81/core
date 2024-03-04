@@ -27,6 +27,7 @@ it('can auto-map', function () {
                 'orderDate' => '2021-01-02',
             ],
         ],
+        'accountIdentifier' => '5caea84d-4a93-4eda-99c0-825178b39726',
     ];
 
     $account = new Account($data);
@@ -44,7 +45,8 @@ it('can auto-map', function () {
         ->and($account->orders[0]->orderNumber)->toBe('123456')
         ->and($account->orders[0]->orderDate->format('Y-m-d'))->toBe('2021-01-01')
         ->and($account->orders[1]->orderNumber)->toBe('123457')
-        ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02');
+        ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02')
+        ->and($account->uniqueIdentifier)->toBe('5caea84d-4a93-4eda-99c0-825178b39726');
 });
 
 it('can auto-map stdClass', function () {
@@ -70,6 +72,7 @@ it('can auto-map stdClass', function () {
                 'orderDate' => '2021-01-02',
             ],
         ],
+        'accountIdentifier' => '5caea84d-4a93-4eda-99c0-825178b39726',
     ];
 
     $account = new Account($data);
@@ -87,5 +90,6 @@ it('can auto-map stdClass', function () {
         ->and($account->orders[0]->orderNumber)->toBe('123456')
         ->and($account->orders[0]->orderDate->format('Y-m-d'))->toBe('2021-01-01')
         ->and($account->orders[1]->orderNumber)->toBe('123457')
-        ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02');
+        ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02')
+        ->and($account->uniqueIdentifier)->toBe('5caea84d-4a93-4eda-99c0-825178b39726');
 });
