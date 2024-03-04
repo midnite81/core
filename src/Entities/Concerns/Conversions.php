@@ -38,6 +38,31 @@ trait Conversions
     }
 
     /**
+     * Returns the initialised properties of the entity as an array, excluding specified keys
+     *
+     * @param array $excludedKeys The keys to be excluded from the resulting array (optional)
+     * @return array The array representation of the entity with excluded keys (if specified)
+     * @throws PropertyIsRequiredException
+     */
+    public function toExcludedArray(array $excludedKeys = []): array
+    {
+        $array = $this->toArray();
+
+        if (!empty($excludedKeys)) {
+            $filterExcludedKeys = function(array $array, array $excludedKeys) {
+                foreach ($excludedKeys as $key) {
+                    unset($array[$key]);
+                }
+                return $array;
+            };
+
+            return $filterExcludedKeys($array, $excludedKeys);
+        }
+
+        return $array;
+    }
+
+    /**
      * Returns the initialised properties of the entity as a Json String
      *
      *

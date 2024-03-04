@@ -6,6 +6,7 @@ namespace Midnite81\Core\Entities\Concerns;
 
 use Closure;
 use Illuminate\Support\Collection;
+use Midnite81\Core\Entities\BaseEntity;
 
 trait Mapping
 {
@@ -13,7 +14,7 @@ trait Mapping
      * Maps data to the entity.
      *
      * @param array $data The data to map to the entity.
-     * @return $this The current instance of the entity with mapped data.
+     * @return BaseEntity|Mapping The current instance of the entity with mapped data.
      */
     public function map(array $data = []): self
     {
