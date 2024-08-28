@@ -38,6 +38,7 @@ use Attribute;
  * the base class's support for such attribute-driven behavior.
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]

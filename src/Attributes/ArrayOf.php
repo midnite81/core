@@ -22,6 +22,7 @@ use Attribute;
  * public array $yourProperty;
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]

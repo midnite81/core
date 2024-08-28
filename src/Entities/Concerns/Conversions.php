@@ -42,6 +42,7 @@ trait Conversions
      *
      * @param array $excludedKeys The keys to be excluded from the resulting array (optional)
      * @return array The array representation of the entity with excluded keys (if specified)
+     *
      * @throws PropertyIsRequiredException
      */
     public function toExcludedArray(array $excludedKeys = []): array
@@ -49,10 +50,11 @@ trait Conversions
         $array = $this->toArray();
 
         if (!empty($excludedKeys)) {
-            $filterExcludedKeys = function(array $array, array $excludedKeys) {
+            $filterExcludedKeys = function (array $array, array $excludedKeys) {
                 foreach ($excludedKeys as $key) {
                     unset($array[$key]);
                 }
+
                 return $array;
             };
 
