@@ -46,6 +46,7 @@ use Attribute;
  * serves as a formal declaration of the initialisation requirement for properties.
  *
  * @Annotation
+ *
  * @Target({"CLASS"})
  */
 #[Attribute(Attribute::TARGET_CLASS)]

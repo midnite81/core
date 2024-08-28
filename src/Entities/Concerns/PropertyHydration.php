@@ -26,7 +26,7 @@ trait PropertyHydration
     public function defineTypeHandlers(): void
     {
         $this->typeHandlers = [
-            Carbon::class => fn($value) => Carbon::parse('Y-m-d H:i:s', $value),
+            Carbon::class => fn ($value) => Carbon::parse('Y-m-d H:i:s', $value),
             ...$this->scalarHandlers(),
         ];
     }
@@ -43,10 +43,10 @@ trait PropertyHydration
     public function scalarHandlers(): array
     {
         return [
-            'string' => fn($value) => (string) $value,
-            'int' => fn($value) => (int) $value,
-            'float' => fn($value) => (float) $value,
-            'bool' => fn($value) => (bool) $value,
+            'string' => fn ($value) => (string) $value,
+            'int' => fn ($value) => (int) $value,
+            'float' => fn ($value) => (float) $value,
+            'bool' => fn ($value) => (bool) $value,
         ];
     }
 
@@ -71,14 +71,14 @@ trait PropertyHydration
      * Maps properties from an array or object to the current object instance.
      *
      * @param array|object $data The data to map properties from. Can be an array or an object.
-     *
      * @return void
+     *
      * @throws PropertyMappingException
      */
     protected function mapProperties(array|object $data): void
     {
         if (is_object($data)) {
-            $data = (array)$data;
+            $data = (array) $data;
         }
 
         $reflection = new ReflectionClass($this);
@@ -106,12 +106,14 @@ trait PropertyHydration
                         return new $className($item);
                     }, $data[$sourceName]);
                 }
+
                 continue; // Proceed to the next property after handling
             }
 
             // Check for a custom property handler
             if (isset($this->propertyHandlers[$name])) {
                 $this->$name = call_user_func($this->propertyHandlers[$name], $data[$sourceName]);
+
                 continue;
             }
 
@@ -120,6 +122,7 @@ trait PropertyHydration
             if (!$type) {
                 // Direct assignment if the property has no type
                 $this->$name = $data[$sourceName];
+
                 continue;
             }
 

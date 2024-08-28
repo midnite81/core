@@ -23,7 +23,7 @@ class Orders extends BaseEntity
     {
         $this->typeHandlers = [
             ...$this->scalarHandlers(),
-            Carbon::class => fn($value) => Carbon::parse($value),
+            Carbon::class => fn ($value) => Carbon::parse($value),
         ];
     }
 }

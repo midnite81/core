@@ -40,6 +40,7 @@ use Attribute;
  * data interchange.
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]

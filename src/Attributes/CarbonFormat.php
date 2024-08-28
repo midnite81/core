@@ -34,6 +34,7 @@ use Attribute;
  * and apply the formatting specified by this attribute during serialization processes.
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
