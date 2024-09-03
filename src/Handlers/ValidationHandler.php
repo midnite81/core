@@ -55,18 +55,38 @@ class ValidationHandler
     /**
      * Set the form request to use for validation rules and messages.
      *
-     * @param FormRequest $formRequest The form request to use.
+     * @param FormRequest|class-string $formRequest The form request to use or its class name.
      * @return self
+     * @throws \InvalidArgumentException If the provided argument is neither a FormRequest instance nor a valid class name.
      *
      * @example
      * $handler->setFormRequest(new MyFormRequest());
+     * // or
+     * $handler->setFormRequest(MyFormRequest::class);
      */
-    public function setFormRequest(FormRequest $formRequest): self
+    public function setFormRequest(FormRequest|string $formRequest): self
     {
-        $this->rules = $formRequest->rules();
-        $this->messages = $formRequest->messages();
+        if (is_string($formRequest)) {
+            if (!class_exists($formRequest) || !is_subclass_of($formRequest, FormRequest::class)) {
+                throw new \InvalidArgumentException("The provided class name must be a valid FormRequest class.");
+            }
+            $formRequest = new $formRequest();
+        }
+
+        if (!$formRequest instanceof FormRequest) {
+            throw new \InvalidArgumentException("The provided argument must be an instance of FormRequest or a valid class name.");
+        }
+
+        $this->rules = method_exists($formRequest, 'rules') ? $formRequest->rules() : [];
+        $this->messages = method_exists($formRequest, 'messages') ? $formRequest->messages() : [];
+
+        if (empty($this->rules)) {
+            throw new \InvalidArgumentException("The provided FormRequest class must have a rules() method that returns validation rules.");
+        }
+
         return $this;
     }
+
 
     /**
      * Set the validation rules.
