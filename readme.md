@@ -16,8 +16,6 @@ This package contains;
 - [Eloquent Helpers](docs/EloquentHelpers.md)
 - [Entities, Requests and Responses](docs/Entities_Requests_Responses.md)
 - [Exceptions](docs/Exceptions.md)
-- Handlers
-    - [ValidationHandler](docs/Handlers/ValidationHandler.md)
 - [Helper Functions](docs/HelperFunctions.md)
   - [first](docs/HelperFunctions.md#first-value)
   - [uuid](docs/HelperFunctions.md#uuid)
@@ -38,6 +36,9 @@ This package contains;
 - Transformers
   - [FileLimiter](docs/Transformers/FileLimiter.md)
   - [HumanReadableNumber](docs/Transformers/HumanReadableNumber.md)
+- Validation
+  - [ValidationHandler](docs/Handlers/ValidationHandler.md)
+  - [ValidationExceptionBuilder](docs/Validation/ValidationExceptionBuilder.md))
 
 ## Installation
 
