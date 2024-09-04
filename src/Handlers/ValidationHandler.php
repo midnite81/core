@@ -24,6 +24,8 @@ class ValidationHandler
     protected string $flashMessageKey = 'error';
     protected array $queryParameters = [];
     protected ?string $fragment = null;
+    protected ?Closure $passCallback = null;
+    protected ?Closure $failCallback = null;
 
     /**
      * Constructor for ValidationHandler.
@@ -43,9 +45,6 @@ class ValidationHandler
      *
      * @param Request|null $request The request to validate.
      * @return static
-     *
-     * @example
-     * $handler = ValidationHandler::make($request);
      */
     public static function make(?Request $request = null): static
     {
@@ -58,11 +57,6 @@ class ValidationHandler
      * @param FormRequest|class-string $formRequest The form request to use or its class name.
      * @return self
      * @throws \InvalidArgumentException If the provided argument is neither a FormRequest instance nor a valid class name.
-     *
-     * @example
-     * $handler->setFormRequest(new MyFormRequest());
-     * // or
-     * $handler->setFormRequest(MyFormRequest::class);
      */
     public function setFormRequest(FormRequest|string $formRequest): self
     {
@@ -87,15 +81,11 @@ class ValidationHandler
         return $this;
     }
 
-
     /**
      * Set the validation rules.
      *
      * @param array $rules The validation rules to use.
      * @return self
-     *
-     * @example
-     * $handler->setRules(['name' => 'required|string', 'email' => 'required|email']);
      */
     public function setRules(array $rules): self
     {
@@ -108,9 +98,6 @@ class ValidationHandler
      *
      * @param array $messages The validation error messages to use.
      * @return self
-     *
-     * @example
-     * $handler->setMessages(['name.required' => 'The name field is required.']);
      */
     public function setMessages(array $messages): self
     {
@@ -123,13 +110,6 @@ class ValidationHandler
      *
      * @param string|Closure $url The URL or closure to use for redirection.
      * @return self
-     *
-     * @example
-     * $handler->setRedirectUrl('/error-page');
-     * // or
-     * $handler->setRedirectUrl(function ($request, $errors) {
-     *     return '/custom-error-page?error=' . $errors->first();
-     * });
      */
     public function setRedirectUrl(string|Closure $url): self
     {
@@ -143,9 +123,6 @@ class ValidationHandler
      * @param string $route The route name to redirect to.
      * @param array $parameters The route parameters.
      * @return self
-     *
-     * @example
-     * $handler->setRedirectRoute('error.page', ['type' => 'validation']);
      */
     public function setRedirectRoute(string $route, array $parameters = []): self
     {
@@ -159,9 +136,6 @@ class ValidationHandler
      * Set the redirect behavior to go back to the previous page.
      *
      * @return self
-     *
-     * @example
-     * $handler->setRedirectBack();
      */
     public function setRedirectBack(): self
     {
@@ -176,9 +150,6 @@ class ValidationHandler
      *
      * @param array $params The query parameters to add.
      * @return self
-     *
-     * @example
-     * $handler->withQueryParameters(['source' => 'validation_error']);
      */
     public function withQueryParameters(array $params): self
     {
@@ -191,9 +162,6 @@ class ValidationHandler
      *
      * @param string|null $fragment The fragment to add.
      * @return self
-     *
-     * @example
-     * $handler->withFragment('error-section');
      */
     public function withFragment(?string $fragment): self
     {
@@ -206,9 +174,6 @@ class ValidationHandler
      *
      * @param bool $flash Whether to flash input.
      * @return self
-     *
-     * @example
-     * $handler->flashInput(false);
      */
     public function flashInput(bool $flash = true): self
     {
@@ -222,9 +187,6 @@ class ValidationHandler
      * @param string $message The message to flash.
      * @param string|null $key The key to use for the flashed message.
      * @return self
-     *
-     * @example
-     * $handler->withFlashMessage('Validation failed. Please check your input.', 'warning');
      */
     public function withFlashMessage(string $message, ?string $key = null): self
     {
@@ -236,17 +198,34 @@ class ValidationHandler
     }
 
     /**
+     * Set a callback to be executed when validation passes.
+     *
+     * @param Closure $callback The callback to execute on validation pass.
+     * @return self
+     */
+    public function onPass(Closure $callback): self
+    {
+        $this->passCallback = $callback;
+        return $this;
+    }
+
+    /**
+     * Set a callback to be executed when validation fails.
+     *
+     * @param Closure $callback The callback to execute on validation fail.
+     * @return self
+     */
+    public function onFail(Closure $callback): self
+    {
+        $this->failCallback = $callback;
+        return $this;
+    }
+
+    /**
      * Perform the validation.
      *
-     * @throws ValidationException If validation fails.
+     * @throws ValidationException If validation fails and the fail callback doesn't prevent it.
      * @return void
-     *
-     * @example
-     * try {
-     *     $handler->validate();
-     * } catch (ValidationException $e) {
-     *     // Handle validation failure
-     * }
      */
     public function validate(): void
     {
@@ -254,6 +233,13 @@ class ValidationHandler
 
         if ($validator->fails()) {
             $errors = $validator->errors();
+
+            if ($this->failCallback) {
+                $shouldProceed = ($this->failCallback)($this->request, $errors);
+                if ($shouldProceed === false) {
+                    return;
+                }
+            }
 
             $redirectUrl = $this->redirectBehavior instanceof Closure
                 ? ($this->redirectBehavior)($this->request, $errors)
@@ -279,6 +265,10 @@ class ValidationHandler
             }
 
             throw $exception;
+        } else {
+            if ($this->passCallback) {
+                ($this->passCallback)($this->request);
+            }
         }
     }
 }
