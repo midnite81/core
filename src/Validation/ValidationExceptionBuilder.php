@@ -11,16 +11,27 @@ use Illuminate\Validation\ValidationException;
 class ValidationExceptionBuilder
 {
     protected string $message;
+
     protected string $redirectUrl;
+
     protected ?string $fragment = null;
+
     protected array $queryParameters = [];
+
     protected ?string $routeName = null;
+
     protected array $routeParameters = [];
+
     protected ?string $errorBag = null;
+
     protected bool $shouldFlash = false;
+
     protected string $flashKey = 'error';
+
     protected ?string $flashMessage = null;
+
     protected string $exceptionClass = ValidationException::class;
+
     protected mixed $exceptionCallback = null;
 
     /**
@@ -55,6 +66,7 @@ class ValidationExceptionBuilder
     {
         $this->redirectUrl = $url;
         $this->routeName = null; // Reset route if URL is set directly
+
         return $this;
     }
 
@@ -67,6 +79,7 @@ class ValidationExceptionBuilder
     {
         $this->redirectUrl = URL::previous();
         $this->routeName = null; // Reset route if redirecting back
+
         return $this;
     }
 
@@ -81,6 +94,7 @@ class ValidationExceptionBuilder
     {
         $this->routeName = $name;
         $this->routeParameters = $parameters;
+
         return $this;
     }
 
@@ -93,6 +107,7 @@ class ValidationExceptionBuilder
     public function fragment(string $fragment): self
     {
         $this->fragment = $fragment;
+
         return $this;
     }
 
@@ -105,6 +120,7 @@ class ValidationExceptionBuilder
     public function withQueryParameters(array $params): self
     {
         $this->queryParameters = $params;
+
         return $this;
     }
 
@@ -117,6 +133,7 @@ class ValidationExceptionBuilder
     public function errorBag(string $errorBag): self
     {
         $this->errorBag = $errorBag;
+
         return $this;
     }
 
@@ -132,6 +149,7 @@ class ValidationExceptionBuilder
         $this->shouldFlash = true;
         $this->flashMessage = $message;
         $this->flashKey = $key;
+
         return $this;
     }
 
@@ -140,14 +158,16 @@ class ValidationExceptionBuilder
      *
      * @param string $exceptionClass The fully qualified class name of the exception.
      * @return self
+     *
      * @throws \InvalidArgumentException If the class is not a subclass of Exception.
      */
     public function withException(string $exceptionClass): self
     {
         if (!is_subclass_of($exceptionClass, Exception::class)) {
-            throw new \InvalidArgumentException("The provided class must be a subclass of Exception.");
+            throw new \InvalidArgumentException('The provided class must be a subclass of Exception.');
         }
         $this->exceptionClass = $exceptionClass;
+
         return $this;
     }
 
@@ -160,6 +180,7 @@ class ValidationExceptionBuilder
     public function withExceptionCallback(callable $callback): self
     {
         $this->exceptionCallback = $callback;
+
         return $this;
     }
 
@@ -189,6 +210,7 @@ class ValidationExceptionBuilder
      * Throw the configured exception if the given condition is true.
      *
      * @param bool|callable $condition A boolean value or a callback that returns a boolean.
+     *
      * @throws Exception
      */
     public function throwExceptionIf($condition): void
@@ -204,6 +226,7 @@ class ValidationExceptionBuilder
      * Throw the configured exception unless the given condition is true.
      *
      * @param bool|callable $condition A boolean value or a callback that returns a boolean.
+     *
      * @throws Exception
      */
     public function throwExceptionUnless($condition): void
@@ -252,6 +275,7 @@ class ValidationExceptionBuilder
             if ($this->errorBag) {
                 $exception->errorBag($this->errorBag);
             }
+
             return $exception;
         }
 

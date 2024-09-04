@@ -138,7 +138,7 @@ test('it throws custom exception', function () {
     $builder = ValidationExceptionBuilder::message('Test message')
         ->withException(\RuntimeException::class);
 
-    expect(fn() => $builder->throwException())->toThrow(\RuntimeException::class, 'Test message');
+    expect(fn () => $builder->throwException())->toThrow(\RuntimeException::class, 'Test message');
 });
 
 test('it uses custom exception callback', function () {
@@ -147,25 +147,25 @@ test('it uses custom exception callback', function () {
             return new \RuntimeException("Custom: $message");
         });
 
-    expect(fn() => $builder->throwException())->toThrow(\RuntimeException::class, 'Custom: Test message');
+    expect(fn () => $builder->throwException())->toThrow(\RuntimeException::class, 'Custom: Test message');
 });
 
 test('it throws exception conditionally with if', function () {
     $builder = ValidationExceptionBuilder::message('Test message');
 
-    expect(fn() => $builder->throwExceptionIf(true))->toThrow(ValidationException::class);
-    expect(fn() => $builder->throwExceptionIf(false))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionIf(true))->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionIf(false))->not->toThrow(ValidationException::class);
 
-    expect(fn() => $builder->throwExceptionIf(fn() => true))->toThrow(ValidationException::class);
-    expect(fn() => $builder->throwExceptionIf(fn() => false))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionIf(fn () => true))->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionIf(fn () => false))->not->toThrow(ValidationException::class);
 });
 
 test('it throws exception conditionally with unless', function () {
     $builder = ValidationExceptionBuilder::message('Test message');
 
-    expect(fn() => $builder->throwExceptionUnless(false))->toThrow(ValidationException::class);
-    expect(fn() => $builder->throwExceptionUnless(true))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionUnless(false))->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionUnless(true))->not->toThrow(ValidationException::class);
 
-    expect(fn() => $builder->throwExceptionUnless(fn() => false))->toThrow(ValidationException::class);
-    expect(fn() => $builder->throwExceptionUnless(fn() => true))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionUnless(fn () => false))->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionUnless(fn () => true))->not->toThrow(ValidationException::class);
 });
