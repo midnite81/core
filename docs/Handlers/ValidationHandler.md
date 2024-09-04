@@ -149,6 +149,7 @@ class YourController extends Controller
                 ->onFail(function ($request, $errors) {
                     // Optional: Custom failure handling
                     // This will be called before the ValidationException is thrown
+                    // Unless you return false
                     Log::warning('Form submission failed', ['errors' => $errors->toArray()]);
                 })
                 ->finally(function ($request, $passed) {
