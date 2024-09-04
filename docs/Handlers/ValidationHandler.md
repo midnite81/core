@@ -34,7 +34,7 @@ composer require midnite81/core
 ### Basic Usage
 
 ```php
-use Midnite81\Core\Handlers\ValidationHandler;
+use Midnite81\Core\Validation\ValidationHandler;
 
 $handler = ValidationHandler::make()
     ->setRules([
@@ -58,7 +58,7 @@ classes:
 
 ```php
 use App\Http\Requests\YourCustomFormRequest;
-use Midnite81\Core\Handlers\ValidationHandler;
+use Midnite81\Core\Validation\ValidationHandler;
 
 $handler = ValidationHandler::make()
     ->setFormRequest(YourCustomFormRequest::class)
@@ -129,7 +129,7 @@ Here's a comprehensive example of how you might use the `ValidationHandler` in a
 nature of the `onFail` callback:
 
 ```php
-use Midnite81\Core\Handlers\ValidationHandler;
+use Midnite81\Core\Validation\ValidationHandler;
 use Illuminate\Validation\ValidationException;
 
 class YourController extends Controller

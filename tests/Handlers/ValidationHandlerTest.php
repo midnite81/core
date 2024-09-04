@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
-use Midnite81\Core\Handlers\ValidationHandler;
 use Midnite81\Core\Tests\CoreTestCase;
+use Midnite81\Core\Validation\ValidationHandler;
 
 uses(CoreTestCase::class, WithoutMiddleware::class);
 
