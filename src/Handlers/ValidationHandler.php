@@ -5,188 +5,228 @@ declare(strict_types=1);
 namespace Midnite81\Core\Handlers;
 
 use Closure;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-/**
- * Class ValidationHandler
- *
- * Handles validation of a given request using specified rules and messages.
- */
 class ValidationHandler
 {
     protected array $rules = [];
+
     protected array $messages = [];
+
     protected Closure|string $redirectBehavior;
+
     protected bool $flashInput = true;
+
     protected ?string $flashMessage = null;
+
     protected string $flashMessageKey = 'error';
+
     protected array $queryParameters = [];
+
     protected ?string $fragment = null;
+
     protected ?Closure $passCallback = null;
+
     protected ?Closure $failCallback = null;
 
+    protected ?Closure $finallyCallback = null;
+
+    protected ?string $errorBag = null;
+
+    protected ?FormRequest $formRequest = null;
+
+    protected ValidationFactory $validationFactory;
+
+    protected Request $request;
+
     /**
-     * Constructor for ValidationHandler.
+     * Constructor method.
      *
-     * @param Request|null $request The request to validate. If null, uses the global request.
+     * @param ValidationFactory|null $validationFactory An instance of ValidationFactory.
+     * @param Request|null $request An instance of Request.
+     *
+     * @throws BindingResolutionException
      */
-    public function __construct(protected ?Request $request = null)
+    public function __construct(?ValidationFactory $validationFactory = null, ?Request $request = null)
     {
-        $this->request = $this->request ?? request();
+        $this->validationFactory = $validationFactory ?? app()->make(ValidationFactory::class);
+        $this->request = $request ?? app()->make(Request::class);
+
         $this->redirectBehavior = function () {
             return url()->previous();
         };
     }
 
     /**
-     * Create a new instance of ValidationHandler.
+     * Factory method to instantiate the class.
      *
-     * @param Request|null $request The request to validate.
-     * @return static
+     * @param ValidationFactory $validationFactory An instance of ValidationFactory.
+     * @param Request $request An instance of Request.
+     * @return static Returns a new instance of the class.
      */
-    public static function make(?Request $request = null): static
+    public static function make(ValidationFactory $validationFactory, Request $request): static
     {
-        return new static($request);
+        return new static($validationFactory, $request);
     }
 
     /**
-     * Set the form request to use for validation rules and messages.
+     * Sets the form request for the current instance. The form request can be
+     * an instance of FormRequest or a valid class name that extends FormRequest.
      *
-     * @param FormRequest|class-string $formRequest The form request to use or its class name.
-     * @return self
-     * @throws \InvalidArgumentException If the provided argument is neither a FormRequest instance nor a valid class name.
+     * @param FormRequest|string $formRequest An instance of FormRequest or
+     *                                        a valid class name that extends FormRequest.
+     * @return self The current instance for method chaining.
+     *
+     * @throws \InvalidArgumentException If the provided class name is not a valid FormRequest
+     *                                   class or if the rules method does not return validation rules.
      */
     public function setFormRequest(FormRequest|string $formRequest): self
     {
         if (is_string($formRequest)) {
             if (!class_exists($formRequest) || !is_subclass_of($formRequest, FormRequest::class)) {
-                throw new \InvalidArgumentException("The provided class name must be a valid FormRequest class.");
+                throw new \InvalidArgumentException('The provided class name must be a valid FormRequest class.');
             }
             $formRequest = new $formRequest();
         }
 
         if (!$formRequest instanceof FormRequest) {
-            throw new \InvalidArgumentException("The provided argument must be an instance of FormRequest or a valid class name.");
+            throw new \InvalidArgumentException('The provided argument must be an instance of FormRequest or a valid class name.');
         }
 
+        $this->formRequest = $formRequest;
         $this->rules = method_exists($formRequest, 'rules') ? $formRequest->rules() : [];
         $this->messages = method_exists($formRequest, 'messages') ? $formRequest->messages() : [];
 
         if (empty($this->rules)) {
-            throw new \InvalidArgumentException("The provided FormRequest class must have a rules() method that returns validation rules.");
+            throw new \InvalidArgumentException('The provided FormRequest class must have a rules() method that returns validation rules.');
+        }
+
+        if (method_exists($formRequest, 'errorBag')) {
+            $this->errorBag = $formRequest->errorBag();
         }
 
         return $this;
     }
 
     /**
-     * Set the validation rules.
+     * Sets the validation rules for the current instance.
      *
-     * @param array $rules The validation rules to use.
-     * @return self
+     * @param array $rules An array of validation rules.
+     * @return self The current instance for method chaining.
      */
     public function setRules(array $rules): self
     {
         $this->rules = $rules;
+
         return $this;
     }
 
     /**
-     * Set the validation error messages.
+     * Sets the validation messages for the current instance.
      *
-     * @param array $messages The validation error messages to use.
-     * @return self
+     * @param array $messages An array of validation messages.
+     * @return self The current instance for method chaining.
      */
     public function setMessages(array $messages): self
     {
         $this->messages = $messages;
+
         return $this;
     }
 
     /**
-     * Set the redirect URL or closure for failed validation.
+     * Sets the URL to which the system should redirect.
      *
-     * @param string|Closure $url The URL or closure to use for redirection.
-     * @return self
+     * @param string|Closure $url The URL or a Closure that returns the URL.
+     * @return self Returns the current instance for method chaining.
      */
     public function setRedirectUrl(string|Closure $url): self
     {
         $this->redirectBehavior = $url;
+
         return $this;
     }
 
     /**
-     * Set the redirect route for failed validation.
+     * Sets the route to which the system should redirect with optional parameters.
      *
-     * @param string $route The route name to redirect to.
-     * @param array $parameters The route parameters.
-     * @return self
+     * @param string $route The name of the route.
+     * @param array $parameters Optional parameters for the route.
+     * @return self Returns the current instance for method chaining.
      */
     public function setRedirectRoute(string $route, array $parameters = []): self
     {
         $this->redirectBehavior = function () use ($route, $parameters) {
             return route($route, $parameters);
         };
+
         return $this;
     }
 
     /**
-     * Set the redirect behavior to go back to the previous page.
+     * Sets the redirect behavior to redirect back to the previous URL.
      *
-     * @return self
+     * @return self Returns the current instance for method chaining.
      */
     public function setRedirectBack(): self
     {
         $this->redirectBehavior = function () {
             return url()->previous();
         };
+
         return $this;
     }
 
     /**
-     * Add query parameters to the redirect URL.
+     * Sets the query parameters to be used.
      *
-     * @param array $params The query parameters to add.
-     * @return self
+     * @param array $params An associative array of query parameters.
+     * @return self Returns the current instance for method chaining.
      */
     public function withQueryParameters(array $params): self
     {
         $this->queryParameters = $params;
+
         return $this;
     }
 
     /**
-     * Add a fragment to the redirect URL.
+     * Sets the fragment component of the URL.
      *
-     * @param string|null $fragment The fragment to add.
-     * @return self
+     * @param string|null $fragment The fragment or null if no fragment is to be set.
+     * @return self Returns the current instance for method chaining.
      */
     public function withFragment(?string $fragment): self
     {
         $this->fragment = $fragment;
+
         return $this;
     }
 
     /**
-     * Set whether to flash input to the session.
+     * Sets whether the input should be flashed for the next request.
      *
-     * @param bool $flash Whether to flash input.
-     * @return self
+     * @param bool $flash Indicates whether the input should be flashed. Defaults to true.
+     * @return self Returns the current instance for method chaining.
      */
     public function flashInput(bool $flash = true): self
     {
         $this->flashInput = $flash;
+
         return $this;
     }
 
     /**
-     * Set a flash message for the session.
+     * Sets a flash message to be used in the application.
      *
-     * @param string $message The message to flash.
-     * @param string|null $key The key to use for the flashed message.
-     * @return self
+     * @param string $message The flash message to be set.
+     * @param string|null $key An optional key to categorize the flash message.
+     * @return self Returns the current instance for method chaining.
      */
     public function withFlashMessage(string $message, ?string $key = null): self
     {
@@ -194,42 +234,74 @@ class ValidationHandler
         if ($key !== null) {
             $this->flashMessageKey = $key;
         }
+
         return $this;
     }
 
     /**
-     * Set a callback to be executed when validation passes.
+     * Sets the callback function to be executed on pass condition.
      *
-     * @param Closure $callback The callback to execute on validation pass.
-     * @return self
+     * @param Closure $callback The callback function to be executed.
+     * @return self Returns the current instance for method chaining.
      */
     public function onPass(Closure $callback): self
     {
         $this->passCallback = $callback;
+
         return $this;
     }
 
     /**
-     * Set a callback to be executed when validation fails.
+     * Sets the callback to be executed on failure.
      *
-     * @param Closure $callback The callback to execute on validation fail.
-     * @return self
+     * @param Closure $callback The callback function to be triggered on failure.
+     * @return self Returns the current instance for method chaining.
      */
     public function onFail(Closure $callback): self
     {
         $this->failCallback = $callback;
+
         return $this;
     }
 
     /**
-     * Perform the validation.
+     * Registers a hook to be executed after validation.
      *
-     * @throws ValidationException If validation fails and the fail callback doesn't prevent it.
+     * @param Closure $hook The Closure to be called after validation.
+     * @return self Returns the current instance for method chaining.
+     */
+    public function finally(Closure $hook): self
+    {
+        $this->finallyCallback = $hook;
+
+        return $this;
+    }
+
+    /**
+     * Sets the error bag that should be used.
+     *
+     * @param string $errorBag The name of the error bag.
+     * @return self Returns the current instance for method chaining.
+     */
+    public function setErrorBag(string $errorBag): self
+    {
+        $this->errorBag = $errorBag;
+
+        return $this;
+    }
+
+    /**
+     * Validates the current request data against the specified rules and messages.
+     * If validation fails, it creates a ValidationException with the appropriate
+     * redirect URL and error messages and throws it.
+     *
      * @return void
      */
     public function validate(): void
     {
-        $validator = validator($this->request->all(), $this->rules, $this->messages);
+        $this->authorizeFormRequest();
+
+        $validator = $this->validationFactory->make($this->request->all(), $this->rules, $this->messages);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -256,6 +328,10 @@ class ValidationHandler
             $exception = ValidationException::withMessages($errors->toArray())
                 ->redirectTo($redirectUrl);
 
+            if ($this->errorBag) {
+                $exception->errorBag($this->errorBag);
+            }
+
             if ($this->flashInput) {
                 $this->request->flash();
             }
@@ -264,11 +340,26 @@ class ValidationHandler
                 session()->flash($this->flashMessageKey, $this->flashMessage);
             }
 
+            if ($this->finallyCallback) {
+                ($this->finallyCallback)($this->request, false);
+            }
+
             throw $exception;
         } else {
             if ($this->passCallback) {
                 ($this->passCallback)($this->request);
             }
+
+            if ($this->finallyCallback) {
+                ($this->finallyCallback)($this->request, true);
+            }
+        }
+    }
+
+    protected function authorizeFormRequest(): void
+    {
+        if ($this->formRequest && method_exists($this->formRequest, 'authorize') && !$this->formRequest->authorize()) {
+            throw new AuthorizationException('This action is unauthorized.');
         }
     }
 }
