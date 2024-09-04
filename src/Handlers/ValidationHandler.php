@@ -68,6 +68,7 @@ class ValidationHandler
      * @param ValidationFactory|null $validationFactory An instance of ValidationFactory.
      * @param Request|null $request An instance of Request.
      * @return static Returns a new instance of the class.
+     *
      * @throws BindingResolutionException
      */
     public static function make(?ValidationFactory $validationFactory = null, ?Request $request = null): static

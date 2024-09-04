@@ -345,8 +345,12 @@ test('it throws exception for non-FormRequest class', function () {
 });
 
 test('it throws exception for form request with empty rules', function () {
-    $emptyRulesFormRequest = new class extends FormRequest {
-        public function rules() { return []; }
+    $emptyRulesFormRequest = new class extends FormRequest
+    {
+        public function rules()
+        {
+            return [];
+        }
     };
 
     $handler = ValidationHandler::make($this->validationFactory, request());
@@ -368,9 +372,17 @@ test('it stops validation when fail callback returns false', function () {
 });
 
 test('it authorizes form request with authorized request', function () {
-    $authorizedFormRequest = new class extends FormRequest {
-        public function authorize() { return true; }
-        public function rules() { return ['name' => 'required']; }
+    $authorizedFormRequest = new class extends FormRequest
+    {
+        public function authorize()
+        {
+            return true;
+        }
+
+        public function rules()
+        {
+            return ['name' => 'required'];
+        }
     };
 
     $request = Request::create('/', 'POST', ['name' => 'John Doe']);
