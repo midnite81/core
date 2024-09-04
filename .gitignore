@@ -1,4 +1,5 @@
 /_bin
+/.midnite.config.json
 /.phpdoc
 /docs/generated
 /_data
