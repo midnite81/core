@@ -16,6 +16,8 @@ This package contains;
 - [Eloquent Helpers](docs/EloquentHelpers.md)
 - [Entities, Requests and Responses](docs/Entities_Requests_Responses.md)
 - [Exceptions](docs/Exceptions.md)
+- Handlers
+    - [ValidationHandler](docs/Handlers/ValidationHandler.md)
 - [Helper Functions](docs/HelperFunctions.md)
   - [first](docs/HelperFunctions.md#first-value)
   - [uuid](docs/HelperFunctions.md#uuid)
