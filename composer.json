@@ -52,7 +52,7 @@
             "./vendor/bin/pest --parallel --processes=24"
         ],
         "coverage": [
-            "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --processes=24 --coverage --coverage-html build/html --min=70",
+            "XDEBUG_MODE=coverage ./vendor/bin/pest --parallel --processes=24 --coverage --coverage-html build/html --coverage-xml build/coverage.xml --min=70",
             "open build/html/index.html"
         ],
         "coverageNoMin": [
