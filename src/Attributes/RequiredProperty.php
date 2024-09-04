@@ -39,6 +39,7 @@ use Attribute;
  * design and usage of the class properties.
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]

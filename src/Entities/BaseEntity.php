@@ -69,6 +69,7 @@ abstract class BaseEntity implements ArrayAccess
 
     /**
      * @return array
+     *
      * @throws PropertyIsRequiredException
      */
     public function __serialize(): array
@@ -79,6 +80,7 @@ abstract class BaseEntity implements ArrayAccess
     /**
      * @param array $data
      * @return void
+     *
      * @throws PropertyMappingException
      */
     public function __unserialize(array $data): void

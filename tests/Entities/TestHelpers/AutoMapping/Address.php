@@ -23,6 +23,7 @@ class Address extends BaseEntity
 
     /**
      * @param array $data
+     *
      * @throws PropertyMappingException
      */
     public function __construct(array $data = [])

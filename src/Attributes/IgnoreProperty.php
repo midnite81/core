@@ -31,6 +31,7 @@ use Attribute;
  * functionality into the base class's serialization methods to achieve the desired effect.
  *
  * @Annotation
+ *
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
