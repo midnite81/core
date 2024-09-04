@@ -66,9 +66,6 @@ $handler = ValidationHandler::make()
     ->withFragment('form')
     ->onPass(function ($request) {
         // Handle successful validation
-    })
-    ->onFail(function ($request, $errors) {
-        // Handle failed validation
     });
 
 $handler->validate();
@@ -101,150 +98,82 @@ Control input flashing and set flash messages for the session.
 Define actions to be taken when validation passes successfully. This method is particularly useful for executing logic
 that should occur immediately after successful validation, before proceeding to the next step in your application flow.
 
+### onFail(Closure $callback)
+
+Define optional actions to be taken when validation fails. It's important to note that this method is not mandatory. If
+not specified, the default behavior in the `validate()` method will still throw a `ValidationException` with the
+appropriate redirect URL and error messages.
+
 Example usage:
 
 ```php
-$handler = ValidationHandler::make()
-    ->setRules([
-        'email' => 'required|email',
-        'password' => 'required|min:8',
-    ])
-    ->onPass(function ($request) {
-        // Handle successful validation
-        $user = User::create($request->validated());
-        event(new UserRegistered($user));
-        
-        // Note: You don't need to return or redirect here
-        // The ValidationHandler will allow your code to continue
-        // to the next step after this callback completes
-    });
-
-$handler->validate();
-
-// If we reach here, validation has passed and onPass callback has been executed
-// You can now proceed with your next steps, such as redirecting the user
-return redirect()->route('dashboard')->with('success', 'Registration successful!');
+$handler->onFail(function ($request, $errors) {
+    // Custom failure handling, if needed
+    // Note: ValidationException will still be thrown after this callback
+    Log::error('Validation failed', ['errors' => $errors->toArray()]);
+});
 ```
-
-The `onPass` method allows you to:
-
-- Perform immediate actions with validated data
-- Trigger events or queue jobs based on the validated input
-- Prepare data for the next step in your process
-
-Remember, the `onPass` callback doesn't need to return anything or handle redirection. It's designed to execute its
-logic and then allow your code to continue to the next step naturally.
-
-### onFail(Closure $callback)
-
-Define actions to be taken when validation fails.
 
 ### finally(Closure $hook)
 
 Define actions to be taken after validation, regardless of whether it passed or failed.
 
-## Benefits
+### validate()
 
-1. **Flexible Redirection**: Offers multiple ways to configure redirection behavior, especially useful for returning to
-   specific URLs or specifying a segment after form processing.
-
-2. **Custom Actions**: The `onPass`, `onFail`, and `finally` methods allow you to define custom actions, giving you more
-   control over the application flow.
-
-3. **Enhanced FormRequest Integration**: Works standalone or seamlessly with existing FormRequest classes, adding
-   powerful features without requiring modifications to your current validation setup.
-
-4. **Cleaner Controllers**: By encapsulating validation logic, including redirection and flash messages, you can keep
-   your controllers cleaner and more focused on business logic.
-
-5. **Reusability**: The fluent interface allows for easy reuse of validation logic across different parts of your
-   application.
-
-6. **Automatic Dependency Resolution**: The class can automatically resolve its ValidationFactory and Request
-   dependencies, making it even easier to use in various contexts.
-
-## Implementation Details
-
-### Constructor
-
-The `ValidationHandler` class has a flexible constructor that can instantiate the `ValidationFactory` and `Request` if
-they're not provided:
-
-```php
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-
-class ValidationHandler
-{
-    protected ValidationFactory $validationFactory;
-    protected Request $request;
-
-    public function __construct(ValidationFactory $validationFactory = null, Request $request = null)
-    {
-        $this->validationFactory = $validationFactory ?? App::make(ValidationFactory::class);
-        $this->request = $request ?? App::make(Request::class);
-
-        $this->redirectBehavior = function () {
-            return url()->previous();
-        };
-    }
-
-    // ... rest of the class implementation ...
-}
-```
-
-This allows for flexible instantiation:
-
-1. Without any parameters: `$handler = new ValidationHandler();`
-2. With only the ValidationFactory: `$handler = new ValidationHandler($validationFactory);`
-3. With both ValidationFactory and Request: `$handler = new ValidationHandler($validationFactory, $request);`
-
-### Factory Method
-
-The `make` static method provides a convenient way to create instances:
-
-```php
-public static function make(ValidationFactory $validationFactory = null, Request $request = null): static
-{
-    return new static($validationFactory, $request);
-}
-```
+This method performs the actual validation. If validation fails, it will throw a `ValidationException` with the
+configured redirect URL and error messages, regardless of whether an `onFail` callback has been specified.
 
 ## Full Implementation Example
 
-Here's how you might use the `ValidationHandler` in a controller:
+Here's a comprehensive example of how you might use the `ValidationHandler` in a controller, demonstrating the optional
+nature of the `onFail` callback:
 
 ```php
 use Midnite81\Core\Handlers\ValidationHandler;
+use Illuminate\Validation\ValidationException;
 
 class YourController extends Controller
 {
     public function store()
     {
-        $handler = ValidationHandler::make()
-            ->setFormRequest(YourCustomFormRequest::class)
-            ->setRedirectRoute('form.error')
-            ->withFragment('error-section')
-            ->withFlashMessage('Please correct the errors below.')
-            ->onPass(function ($request) {
-                // Save the validated data
-                // Trigger any necessary events or jobs
-            })
-            ->onFail(function ($request, $errors) {
-                // Custom failure handling, if needed
-            })
-            ->finally(function ($request, $passed) {
-                // Actions to perform regardless of validation outcome
-            });
+        try {
+            $handler = ValidationHandler::make()
+                ->setFormRequest(YourCustomFormRequest::class)
+                ->setRedirectRoute('form.error')
+                ->withFragment('error-section')
+                ->withFlashMessage('Please correct the errors below.')
+                ->onPass(function ($request) {
+                    // Save the validated data
+                    // Trigger any necessary events or jobs
+                })
+                ->onFail(function ($request, $errors) {
+                    // Optional: Custom failure handling
+                    // This will be called before the ValidationException is thrown
+                    Log::warning('Form submission failed', ['errors' => $errors->toArray()]);
+                })
+                ->finally(function ($request, $passed) {
+                    // Actions to perform regardless of validation outcome
+                    Log::info('Validation attempt', ['passed' => $passed]);
+                });
 
-        $handler->validate();
+            $handler->validate();
 
-        // If we reach here, validation passed
-        return redirect()->route('form.success')->with('message', 'Form submitted successfully!');
+            // If we reach here, validation passed
+            return redirect()->route('form.success')->with('message', 'Form submitted successfully!');
+        } catch (ValidationException $e) {
+            // The ValidationException is automatically thrown by the validate() method
+            // when validation fails, whether or not onFail() is used.
+            // The exception handling is typically managed by Laravel's exception handler,
+            // but you can add custom logic here if needed.
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
     }
 }
 ```
+
+In this example, the `onFail` callback is used for optional custom handling (like logging), but the
+`ValidationException` will still be thrown automatically by the `validate()` method, ensuring consistent behavior with
+Laravel's built-in validation.
 
 ## Conclusion
 
@@ -253,4 +182,6 @@ offering a fluent interface, easy integration with existing FormRequest classes,
 simplifies complex validation scenarios while keeping your code clean and maintainable.
 
 Whether you're working on a simple form or a complex multi-step process, the `ValidationHandler` can help streamline
-your validation logic and improve the overall structure of your application.
+your validation logic and improve the overall structure of your application. The automatic throwing of
+`ValidationException` in the `validate()` method ensures consistent behavior with Laravel's standard validation, while
+still allowing for custom failure handling through the optional `onFail` callback.
