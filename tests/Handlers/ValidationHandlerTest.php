@@ -283,3 +283,102 @@ test('it checks authorization for form request', function () {
 
     expect(fn () => $handler->validate())->toThrow(AuthorizationException::class);
 });
+
+// New tests to improve coverage
+
+test('it sets redirect back', function () {
+    $request = Request::create('/', 'POST', ['name' => '']);
+    $request->setLaravelSession($this->app['session.store']);
+
+    $handler = ValidationHandler::make($this->validationFactory, $request)
+        ->setRules(['name' => 'required'])
+        ->setRedirectBack();
+
+    try {
+        $handler->validate();
+    } catch (ValidationException $e) {
+        expect($e->redirectTo)->toBe(url()->previous());
+    }
+});
+
+test('it executes onPass callback', function () {
+    $request = Request::create('/', 'POST', ['name' => 'John Doe']);
+    $request->setLaravelSession($this->app['session.store']);
+
+    $called = false;
+    $handler = ValidationHandler::make($this->validationFactory, $request)
+        ->setRules(['name' => 'required'])
+        ->onPass(function ($request) use (&$called) {
+            $called = true;
+        });
+
+    $handler->validate();
+    expect($called)->toBeTrue();
+});
+
+test('it executes onFail callback', function () {
+    $request = Request::create('/', 'POST', ['name' => '']);
+    $request->setLaravelSession($this->app['session.store']);
+
+    $called = false;
+    $handler = ValidationHandler::make($this->validationFactory, $request)
+        ->setRules(['name' => 'required'])
+        ->onFail(function ($request, $errors) use (&$called) {
+            $called = true;
+        });
+
+    try {
+        $handler->validate();
+    } catch (ValidationException $e) {
+        expect($called)->toBeTrue();
+    }
+});
+
+test('it throws exception for invalid form request class name', function () {
+    $handler = ValidationHandler::make($this->validationFactory, request());
+    expect(fn () => $handler->setFormRequest('InvalidClassName'))->toThrow(\InvalidArgumentException::class);
+});
+
+test('it throws exception for non-FormRequest class', function () {
+    $handler = ValidationHandler::make($this->validationFactory, request());
+    expect(fn () => $handler->setFormRequest(\stdClass::class))->toThrow(\InvalidArgumentException::class);
+});
+
+test('it throws exception for form request with empty rules', function () {
+    $emptyRulesFormRequest = new class extends FormRequest {
+        public function rules() { return []; }
+    };
+
+    $handler = ValidationHandler::make($this->validationFactory, request());
+    expect(fn () => $handler->setFormRequest($emptyRulesFormRequest))->toThrow(\InvalidArgumentException::class);
+});
+
+test('it stops validation when fail callback returns false', function () {
+    $request = Request::create('/', 'POST', ['name' => '']);
+    $request->setLaravelSession($this->app['session.store']);
+
+    $handler = ValidationHandler::make($this->validationFactory, $request)
+        ->setRules(['name' => 'required'])
+        ->onFail(function () {
+            return false;
+        });
+
+    $result = $handler->validate();
+    expect($result)->toBeNull();
+});
+
+test('it authorizes form request with authorized request', function () {
+    $authorizedFormRequest = new class extends FormRequest {
+        public function authorize() { return true; }
+        public function rules() { return ['name' => 'required']; }
+    };
+
+    $request = Request::create('/', 'POST', ['name' => 'John Doe']);
+    $request->setLaravelSession($this->app['session.store']);
+
+    $handler = ValidationHandler::make($this->validationFactory, $request)
+        ->setFormRequest($authorizedFormRequest);
+
+    $handler->validate();
+    $this->assertTrue(true); // If we reach here, no exception was thrown
+});
