@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Midnite81\Core\Handlers;
+namespace Midnite81\Core\Validation;
 
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
