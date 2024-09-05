@@ -11,7 +11,7 @@ Here's a quick example of how to use the `ValidationExceptionBuilder`:
 ```php
 use Midnite81\Core\Validation\ValidationExceptionBuilder;
 
-ValidationExceptionBuilder::message('Invalid input')
+ValidationExceptionBuilder::make('Invalid input')
     ->redirectTo('/form')
     ->flash('Please correct the errors and try again.')
     ->throwException();
@@ -20,15 +20,39 @@ ValidationExceptionBuilder::message('Invalid input')
 This will throw a `ValidationException` with the message "Invalid input", redirect the user to '/form', and flash a
 message to the session.
 
+## Instantiation
+
+You can create a `ValidationExceptionBuilder` instance in two ways:
+
+1. Using the static `make()` method:
+   ```php
+   $builder = ValidationExceptionBuilder::make('Custom message');
+   ```
+
+2. Direct instantiation:
+   ```php
+   $builder = new ValidationExceptionBuilder('Custom message');
+   ```
+
+If no message is provided, a default message will be used: "There is an error in your form".
+
 ## API Reference
 
 ### Static Methods
 
+#### `make(string $message = ''): self`
+
+Create a new ValidationExceptionBuilder instance with an optional error message.
+
 #### `message(string $message): self`
 
-Create a new ValidationExceptionBuilder instance with the specified error message.
+Alias for `make()`. Create a new ValidationExceptionBuilder instance with the specified error message.
 
 ### Instance Methods
+
+#### `withMessage(string $message): self`
+
+Set a custom message for the exception.
 
 #### `redirectTo(string $url): self`
 
@@ -83,7 +107,7 @@ Throw the configured exception unless the given condition is true.
 ### Basic Validation Exception
 
 ```php
-ValidationExceptionBuilder::message('The email is invalid')
+ValidationExceptionBuilder::make('The email is invalid')
     ->redirectBack()
     ->throwException();
 ```
@@ -91,7 +115,7 @@ ValidationExceptionBuilder::message('The email is invalid')
 ### Custom Redirect with Query Parameters
 
 ```php
-ValidationExceptionBuilder::message('Invalid input')
+ValidationExceptionBuilder::make('Invalid input')
     ->redirectTo('/users')
     ->withQueryParameters(['sort' => 'name', 'order' => 'asc'])
     ->throwException();
@@ -100,7 +124,7 @@ ValidationExceptionBuilder::message('Invalid input')
 ### Using Named Routes
 
 ```php
-ValidationExceptionBuilder::message('Access denied')
+ValidationExceptionBuilder::make('Access denied')
     ->redirectRoute('dashboard', ['user' => $userId])
     ->throwException();
 ```
@@ -108,7 +132,7 @@ ValidationExceptionBuilder::message('Access denied')
 ### Flashing Messages
 
 ```php
-ValidationExceptionBuilder::message('Form submission failed')
+ValidationExceptionBuilder::make('Form submission failed')
     ->redirectBack()
     ->flash('Please correct the errors and try again.', 'warning')
     ->throwException();
@@ -119,7 +143,7 @@ ValidationExceptionBuilder::message('Form submission failed')
 ```php
 $someCondition = true;
 
-ValidationExceptionBuilder::message('Conditional error')
+ValidationExceptionBuilder::make('Conditional error')
     ->redirectBack()
     ->throwExceptionIf($someCondition);
 ```
@@ -129,7 +153,7 @@ ValidationExceptionBuilder::message('Conditional error')
 ```php
 class MyCustomException extends Exception {}
 
-ValidationExceptionBuilder::message('Something went wrong')
+ValidationExceptionBuilder::make('Something went wrong')
     ->withException(MyCustomException::class)
     ->throwException();
 ```
@@ -137,10 +161,20 @@ ValidationExceptionBuilder::message('Something went wrong')
 ### Using Exception Callback
 
 ```php
-ValidationExceptionBuilder::message('Custom handling required')
+ValidationExceptionBuilder::make('Custom handling required')
     ->withExceptionCallback(function ($message, $url, $errorBag) {
         // Custom logic here
         return new MyCustomException($message);
     })
     ->throwException();
+```
+
+### Direct Instantiation with Method Chaining
+
+```php
+$builder = new ValidationExceptionBuilder();
+$builder->withMessage('Chained message')
+        ->redirectTo('/custom-page')
+        ->fragment('section1')
+        ->throwException();
 ```
