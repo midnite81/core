@@ -39,10 +39,21 @@ class ValidationExceptionBuilder
      *
      * @param string $message The validation error message.
      */
-    protected function __construct(string $message)
+    public function __construct(string $message = '')
     {
-        $this->message = $message;
+        $this->message = $message ?: 'There is an error in your form';
         $this->redirectUrl = URL::previous();
+    }
+
+    /**
+     * Create a new instance of the class with an optional message.
+     *
+     * @param string $message The message to be associated with the new instance.
+     * @return self
+     */
+    public static function make(string $message = ''): self
+    {
+    	return new self($message);
     }
 
     /**
@@ -54,6 +65,18 @@ class ValidationExceptionBuilder
     public static function message(string $message): self
     {
         return new self($message);
+    }
+
+    /**
+     * Set a custom message.
+     *
+     * @param string $message The message to set.
+     * @return self
+     */
+    public function withMessage(string $message): self
+    {
+        $this->message = $message;
+        return $this;
     }
 
     /**
@@ -271,11 +294,10 @@ class ValidationExceptionBuilder
     protected function createDefaultException(string $url): Exception
     {
         if ($this->exceptionClass === ValidationException::class) {
-            $exception = ValidationException::withMessages(['message' => $this->message])->redirectTo($url);
+            $exception = ValidationException::withMessages(['message' => [$this->message]])->redirectTo($url);
             if ($this->errorBag) {
                 $exception->errorBag($this->errorBag);
             }
-
             return $exception;
         }
 
