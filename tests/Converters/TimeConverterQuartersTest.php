@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{quarters};
+use function Midnite81\Core\Functions\quarters;
 
 it('converts from quarters to milliseconds', function () {
     expect(quarters(1)->toMilliseconds())->toBe(7776000000);

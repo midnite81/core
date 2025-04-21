@@ -47,7 +47,7 @@ it('can parse a class', function () {
 it('can use a custom writer', function () {
     $converter = new EnumConstConverter(
         \Midnite81\Core\Enums\DateFormat::class,
-        new TestWriter()
+        new TestWriter
     );
 
     $sut = $converter->convert();
@@ -56,14 +56,14 @@ it('can use a custom writer', function () {
 });
 
 it('throws an exception if it cannot find the class', function () {
-    expect(fn() => new EnumConstConverter('MyClass', new TestWriter()))
+    expect(fn () => new EnumConstConverter('MyClass', new TestWriter))
         ->toThrow(
             \Midnite81\Core\Exceptions\Transformers\ClassNotFoundException::class,
             'Class or interface MyClass does not exist.'
         )
-        ->and(fn() => new EnumConstConverter(
+        ->and(fn () => new EnumConstConverter(
             MyClass::class,
-            new TestWriter()
+            new TestWriter
         ))->toThrow(
             \Midnite81\Core\Exceptions\Transformers\ClassNotFoundException::class,
             'Class or interface MyClass does not exist.'

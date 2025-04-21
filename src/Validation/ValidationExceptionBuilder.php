@@ -53,7 +53,7 @@ class ValidationExceptionBuilder
      */
     public static function make(string $message = ''): self
     {
-    	return new self($message);
+        return new self($message);
     }
 
     /**
@@ -76,6 +76,7 @@ class ValidationExceptionBuilder
     public function withMessage(string $message): self
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -298,6 +299,7 @@ class ValidationExceptionBuilder
             if ($this->errorBag) {
                 $exception->errorBag($this->errorBag);
             }
+
             return $exception;
         }
 

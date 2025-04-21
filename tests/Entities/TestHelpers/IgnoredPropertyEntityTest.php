@@ -3,7 +3,7 @@
 use Midnite81\Core\Tests\Entities\TestHelpers\TestIgnorePropertiesEntity;
 
 it('ignores ignored properties', function () {
-    $sut = (new TestIgnorePropertiesEntity())
+    $sut = (new TestIgnorePropertiesEntity)
         ->setId(294)
         ->setName('Dave')
         ->setAge(23);

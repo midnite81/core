@@ -13,6 +13,4 @@ use Attribute;
  * (e.g., __set()) in order to enforce strict control over property access.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class CannotBeSetByMagicMethod
-{
-}
+class CannotBeSetByMagicMethod {}

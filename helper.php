@@ -69,6 +69,6 @@ if (!function_exists('tempus')) {
      */
     function tempus(): TimeConverter
     {
-        return new TimeConverter();
+        return new TimeConverter;
     }
 }

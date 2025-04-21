@@ -18,7 +18,7 @@ it('switches to an existing branch', function () {
 
     $execute->shouldReceive('passthru')->with("git checkout {$branchName}")->andReturn(0);
 
-    $switchBranches = new SwitchBranches();
+    $switchBranches = new SwitchBranches;
     $result = $switchBranches->handle($command, $execute);
 
     expect($result)->toBe(Command::SUCCESS);
@@ -36,7 +36,7 @@ it('creates and switches to a new branch', function () {
 
     $execute->shouldReceive('passthru')->with("git checkout -b {$branchName}")->andReturn(0);
 
-    $switchBranches = new SwitchBranches();
+    $switchBranches = new SwitchBranches;
     $result = $switchBranches->handle($command, $execute);
 
     expect($result)->toBe(Command::SUCCESS);
@@ -55,7 +55,7 @@ it('throws an exception on command failure when abort_on_failure is true', funct
 
     $execute->shouldReceive('passthru')->with("git checkout {$branchName}")->andReturn(1);
 
-    $switchBranches = new SwitchBranches();
+    $switchBranches = new SwitchBranches;
 
     expect(function () use ($switchBranches, $command, $execute) {
         $switchBranches->handle($command, $execute);
@@ -68,7 +68,7 @@ it('returns null when no branch name is given', function () {
 
     $command->shouldReceive('arguments')->andReturn(['args' => []]);
 
-    $switchBranches = new SwitchBranches();
+    $switchBranches = new SwitchBranches;
     $result = $switchBranches->handle($command, $execute);
 
     expect($result)->toBe(Command::SUCCESS);

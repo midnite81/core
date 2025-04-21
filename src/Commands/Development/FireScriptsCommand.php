@@ -218,7 +218,7 @@ class FireScriptsCommand extends Command
      */
     protected function executeExtensionClass(mixed $class): int
     {
-        $class = is_string($class) ? new $class() : $class;
+        $class = is_string($class) ? new $class : $class;
         $className = $class::class;
 
         $this->info("> Executing $className class");

@@ -49,7 +49,5 @@ class TimeZone
      *
      * @param string $timezone The desired timezone, represented as a string, to be applied to the Carbon instance.
      */
-    public function __construct(public string $timezone)
-    {
-    }
+    public function __construct(public string $timezone) {}
 }

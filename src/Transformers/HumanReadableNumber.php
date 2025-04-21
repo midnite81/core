@@ -8,9 +8,7 @@ use Midnite81\Core\Exceptions\Transformers\NumberCannotBeNullException;
 
 class HumanReadableNumber
 {
-    public function __construct(public int|float|null $number = null)
-    {
-    }
+    public function __construct(public int|float|null $number = null) {}
 
     /**
      * Factory create of the Number Transformer
@@ -113,7 +111,7 @@ class HumanReadableNumber
     protected function checkReady(): void
     {
         if (is_null($this->number)) {
-            throw new NumberCannotBeNullException();
+            throw new NumberCannotBeNullException;
         }
     }
 

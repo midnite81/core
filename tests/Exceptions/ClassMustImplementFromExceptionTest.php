@@ -16,8 +16,8 @@ it('throws the correct exception with correct message when using non-object clas
 });
 
 it('throws the correct exception with correct message when using object class names', function () {
-    $class = new stdClass();
-    $inheritFromClass = new stdClass();
+    $class = new stdClass;
+    $inheritFromClass = new stdClass;
 
     try {
         throw new ClassMustImplementFromException($class, $inheritFromClass);
@@ -27,16 +27,12 @@ it('throws the correct exception with correct message when using object class na
 });
 
 it('throws the correct exception with correct message when using class instances', function () {
-    class MyBaseClass
-    {
-    }
+    class MyBaseClass {}
 
-    class MyClass
-    {
-    }
+    class MyClass {}
 
-    $class = new MyClass();
-    $inheritFromClass = new MyBaseClass();
+    $class = new MyClass;
+    $inheritFromClass = new MyBaseClass;
 
     try {
         throw new ClassMustImplementFromException($class, $inheritFromClass);

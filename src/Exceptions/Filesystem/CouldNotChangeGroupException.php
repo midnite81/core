@@ -6,6 +6,4 @@ namespace Midnite81\Core\Exceptions\Filesystem;
 
 use Exception;
 
-class CouldNotChangeGroupException extends Exception
-{
-}
+class CouldNotChangeGroupException extends Exception {}

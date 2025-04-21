@@ -11,9 +11,7 @@ use SplFileInfo;
 
 class ClassRetriever
 {
-    public function __construct(protected string $filename)
-    {
-    }
+    public function __construct(protected string $filename) {}
 
     /**
      * Construct class from filename and return a ClassRetrieverResponse
@@ -106,7 +104,7 @@ class ClassRetriever
             }
         }
 
-        $response = new ClassRetrieverResponse();
+        $response = new ClassRetrieverResponse;
         $response->name = $fullyQualifiedName;
         $response->type = $type;
         $response->extends = $extends;

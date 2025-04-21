@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{years};
+use function Midnite81\Core\Functions\years;
 
 it('converts from years to milliseconds', function () {
     expect(years(1)->toMilliseconds())->toBe(31536000000);

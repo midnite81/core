@@ -171,20 +171,20 @@ test('it uses custom exception callback', function () {
 test('it throws exception conditionally with if', function () {
     $builder = ValidationExceptionBuilder::message('Test message');
 
-    expect(fn() => $builder->throwExceptionIf(true))->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionIf(false))->not->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionIf(fn() => true))->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionIf(fn() => false))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionIf(true))->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionIf(false))->not->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionIf(fn () => true))->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionIf(fn () => false))->not->toThrow(ValidationException::class);
 
 });
 
 test('it throws exception conditionally with unless', function () {
     $builder = ValidationExceptionBuilder::message('Test message');
 
-    expect(fn() => $builder->throwExceptionUnless(false))->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionUnless(true))->not->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionUnless(fn() => false))->toThrow(ValidationException::class)
-        ->and(fn() => $builder->throwExceptionUnless(fn() => true))->not->toThrow(ValidationException::class);
+    expect(fn () => $builder->throwExceptionUnless(false))->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionUnless(true))->not->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionUnless(fn () => false))->toThrow(ValidationException::class)
+        ->and(fn () => $builder->throwExceptionUnless(fn () => true))->not->toThrow(ValidationException::class);
 
 });
 
@@ -232,7 +232,7 @@ test('it resets route when redirectBack is called', function () {
 });
 
 test('it uses default message when directly instantiated without a message', function () {
-    $builder = new ValidationExceptionBuilder();
+    $builder = new ValidationExceptionBuilder;
 
     $exception = null;
     try {
@@ -261,7 +261,7 @@ test('it uses custom message when directly instantiated with a message', functio
 });
 
 test('it allows method chaining when directly instantiated', function () {
-    $builder = new ValidationExceptionBuilder();
+    $builder = new ValidationExceptionBuilder;
 
     $exception = null;
     try {

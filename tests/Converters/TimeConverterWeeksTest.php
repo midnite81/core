@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{weeks};
+use function Midnite81\Core\Functions\weeks;
 
 it('converts from weeks to milliseconds', function () {
     expect(weeks(1)->toMilliseconds())->toBe(604800000);

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Midnite81\Core\Tests\Entities\TestHelpers\TestEntity;
 
 it('can serialise the entity', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->title = 'My Book';
     $entity->description = 'My first ever book';
 

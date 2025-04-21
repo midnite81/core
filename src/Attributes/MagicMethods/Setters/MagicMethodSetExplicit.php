@@ -14,6 +14,4 @@ use Attribute;
  * with the `CanSetViaMagicMethod` attribute in order to be fluently set via magic methods (e.g., __set()).
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-class MagicMethodSetExplicit
-{
-}
+class MagicMethodSetExplicit {}

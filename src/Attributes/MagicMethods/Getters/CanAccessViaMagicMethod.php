@@ -15,6 +15,4 @@ use Attribute;
  * This attribute is designed to be used with the Getter, or GetterAndSetter, Trait
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class CanAccessViaMagicMethod
-{
-}
+class CanAccessViaMagicMethod {}

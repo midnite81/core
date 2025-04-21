@@ -23,7 +23,7 @@ class EnumConstConverter
      */
     public function __construct(
         protected string $className,
-        protected WriterInterface $writer = new DefaultWriter()
+        protected WriterInterface $writer = new DefaultWriter
     ) {
         if (!class_exists($className) && !interface_exists($className)) {
             throw new ClassNotFoundException("Class or interface $className does not exist.");

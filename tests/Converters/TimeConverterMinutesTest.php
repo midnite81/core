@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{minutes};
+use function Midnite81\Core\Functions\minutes;
 
 it('converts from minutes to milliseconds', function () {
     expect(minutes(1)->toMilliseconds())->toBe(60000);

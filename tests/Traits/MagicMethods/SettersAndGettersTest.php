@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Midnite81\Core\Tests\Traits\Fixtures\GettersAndSetters;
 
 it('can get and set', function () {
-    $gettersAndSetters = new GettersAndSetters();
+    $gettersAndSetters = new GettersAndSetters;
 
     expect($gettersAndSetters->getName())
         ->toBe('Ben')

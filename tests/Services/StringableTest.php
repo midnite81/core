@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 it('can return __toString from a class', function () {
-    $class = new class()
+    $class = new class
     {
         public function __toString()
         {
@@ -11,7 +11,7 @@ it('can return __toString from a class', function () {
         }
     };
 
-    $sut = (new \Midnite81\Core\Services\Stringable())->toString($class);
+    $sut = (new \Midnite81\Core\Services\Stringable)->toString($class);
 
     expect($sut)->toBe('Hello');
 });

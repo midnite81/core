@@ -10,7 +10,7 @@ use Midnite81\Core\Tests\Entities\TestHelpers\ChecksumEntity2;
 uses(CoreTestCase::class);
 
 it('provides a checksum', function () {
-    $entity = new ChecksumEntity();
+    $entity = new ChecksumEntity;
     $entity->id = 2942;
     $entity->name = 'Dave';
 
@@ -29,11 +29,11 @@ it('provides a checksum', function () {
 });
 
 it('it has different checksums', function () {
-    $entity = new ChecksumEntity();
+    $entity = new ChecksumEntity;
     $entity->id = 2942;
     $entity->name = 'Dave';
 
-    $entity2 = new ChecksumEntity();
+    $entity2 = new ChecksumEntity;
     $entity2->id = 2942;
     $entity2->name = 'Dave2';
 
@@ -41,7 +41,7 @@ it('it has different checksums', function () {
 });
 
 it('checks the checksum', function () {
-    $entity = new ChecksumEntity();
+    $entity = new ChecksumEntity;
     $entity->id = 2942;
     $entity->name = 'Dave';
 
@@ -60,7 +60,7 @@ it('checks the checksum', function () {
 });
 
 it('can produce a checksum from an array', function () {
-    $entity = new ChecksumEntity();
+    $entity = new ChecksumEntity;
     $entity->id = 2942;
     $entity->name = 'Dave';
 
@@ -68,7 +68,7 @@ it('can produce a checksum from an array', function () {
 });
 
 it('can produce a checksum from base method', function () {
-    $entity = new ChecksumEntity2();
+    $entity = new ChecksumEntity2;
     $entity->id = 2942;
     $entity->name = 'Dave';
 

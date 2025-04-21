@@ -6,6 +6,4 @@ namespace Midnite81\Core\Exceptions\Filesystem;
 
 use Exception;
 
-class CouldNotChangeOwnerException extends Exception
-{
-}
+class CouldNotChangeOwnerException extends Exception {}
