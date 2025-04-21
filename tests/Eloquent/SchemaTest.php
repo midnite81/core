@@ -55,7 +55,7 @@ it('correctly renames the database using non-static method', function () {
     $this->instance(\Illuminate\Database\Connection::class, $dbMock);
     $this->instance(\Midnite81\Core\Services\Execute::class, $executeMock);
 
-    $schema = new Schema();
+    $schema = new Schema;
 
     $result = $schema->updateDatabaseName($oldName, $newName);
 

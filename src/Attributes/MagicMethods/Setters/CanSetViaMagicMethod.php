@@ -13,6 +13,4 @@ use Attribute;
  * (e.g., __get()) in order to allow dynamic access to the property.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class CanSetViaMagicMethod
-{
-}
+class CanSetViaMagicMethod {}

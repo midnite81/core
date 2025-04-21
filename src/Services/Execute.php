@@ -13,7 +13,7 @@ class Execute implements ExecuteInterface
      */
     public static function make(): ExecuteInterface
     {
-        return new self();
+        return new self;
     }
 
     /**

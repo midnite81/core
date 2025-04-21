@@ -8,7 +8,7 @@ use Midnite81\Core\Tests\Entities\TestHelpers\ParseDataEntity;
 uses(\Midnite81\Core\Tests\CoreTestCase::class);
 
 it('creates from object to object', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = (object) ['name' => 'John', 'age' => 30];
     $expectedResponse = ExpectedType::Object;
 
@@ -17,7 +17,7 @@ it('creates from object to object', function () {
 });
 
 it('creates from array to array', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = ['apple', 'banana', 'orange'];
     $expectedResponse = ExpectedType::Object;
 
@@ -26,7 +26,7 @@ it('creates from array to array', function () {
 });
 
 it('creates from string to string', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = '{"name":"Alice","age":25}';
     $expectedResponse = ExpectedType::String;
 
@@ -35,7 +35,7 @@ it('creates from string to string', function () {
 });
 
 it('creates from string to object', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = '{"name":"Bob","age":35}';
     $expectedResponse = ExpectedType::Object;
 
@@ -47,7 +47,7 @@ it('creates from string to object', function () {
 });
 
 it('creates from string to array', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = ['name' => 'James', 'location' => 'UK'];
     $expectedResponse = ExpectedType::Array;
 
@@ -59,7 +59,7 @@ it('creates from string to array', function () {
 });
 
 it('creates from array to string', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = ['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
     $expectedResponse = ExpectedType::String;
 
@@ -69,7 +69,7 @@ it('creates from array to string', function () {
 });
 
 it('creates from object to string', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = (object) ['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
     $expectedResponse = ExpectedType::String;
 
@@ -79,7 +79,7 @@ it('creates from object to string', function () {
 });
 
 it('creates from object to array', function () {
-    $entity = new ParseDataEntity();
+    $entity = new ParseDataEntity;
     $data = (object) ['name' => 'Dave', 'age' => 23, 'location' => 'UK'];
     $expectedResponse = ExpectedType::Array;
 

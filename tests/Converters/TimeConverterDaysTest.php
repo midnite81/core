@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{days};
+use function Midnite81\Core\Functions\days;
 
 it('converts from days to milliseconds', function () {
     expect(days(1)->toMilliseconds())->toBe(86400000);

@@ -6,7 +6,7 @@ use Midnite81\Core\Exceptions\Entities\PropertyIsNotPublicException;
 use Midnite81\Core\Tests\Entities\TestHelpers\TestEntity;
 
 it('should get all initialised properties', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->title = 'My Book';
     $entity->description = 'My first ever book';
 
@@ -21,7 +21,7 @@ it('should get all initialised properties', function () {
 });
 
 it('should get renamed properties using attribute', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->content = 'This is my content';
 
     expect($entity->getInitialisedProperties())
@@ -34,7 +34,7 @@ it('should get renamed properties using attribute', function () {
 });
 
 it('should return an array', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -51,7 +51,7 @@ it('should return an array', function () {
 });
 
 it('should not return nulls in an array', function () {
-    $entity = new \Midnite81\Core\Tests\Entities\TestHelpers\NullPropertiesEntity();
+    $entity = new \Midnite81\Core\Tests\Entities\TestHelpers\NullPropertiesEntity;
     $entity->title = 'Null test';
 
     expect($entity->toArray(ignoreNulls: true))
@@ -61,7 +61,7 @@ it('should not return nulls in an array', function () {
 });
 
 it('should limit an array to key passed', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -76,7 +76,7 @@ it('should limit an array to key passed', function () {
 });
 
 it('should pass full array if not limited', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -88,7 +88,7 @@ it('should pass full array if not limited', function () {
 });
 
 it('should exclude items from the array', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -100,7 +100,7 @@ it('should exclude items from the array', function () {
 });
 
 it('should return a json string', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -112,7 +112,7 @@ it('should return a json string', function () {
 });
 
 it('should return a query string', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -124,7 +124,7 @@ it('should return a query string', function () {
 });
 
 it('should return a limited query string', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId('102')
         ->setTitle('dave')
         ->setContent('This is my content')
@@ -136,7 +136,7 @@ it('should return a limited query string', function () {
 });
 
 it('should be able to access properties as an array', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setTitle('Hello')->setContent('This my content');
 
     expect($entity['title'])->toBe('Hello')
@@ -144,7 +144,7 @@ it('should be able to access properties as an array', function () {
 });
 
 it('should be not able to access properties as an array if they are not public', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setId(23);
 
     expect(fn () => $entity['id'])->toThrow(
@@ -154,7 +154,7 @@ it('should be not able to access properties as an array if they are not public',
 });
 
 it('should be not able to access properties as an array if they are not initialised', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
 
     expect(fn () => $entity['content'])->toThrow(
         PropertyIsNotInitialisedException::class,
@@ -163,7 +163,7 @@ it('should be not able to access properties as an array if they are not initiali
 });
 
 it('should be able to set properties as an array', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity['title'] = 'Hello';
     $entity['content'] = 'This my content';
 
@@ -172,7 +172,7 @@ it('should be able to set properties as an array', function () {
 });
 
 it('should be not able to set properties as an array if the property is not public', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
 
     expect(fn () => $entity['id'] = 3)->toThrow(
         PropertyIsNotPublicException::class,
@@ -181,7 +181,7 @@ it('should be not able to set properties as an array if the property is not publ
 });
 
 it('should be not able to set properties as an array if the property does not exist', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
 
     expect(fn () => $entity['full_name'] = 'Derek Johnson')->toThrow(
         PropertyDoesNotExistException::class,
@@ -190,7 +190,7 @@ it('should be not able to set properties as an array if the property does not ex
 });
 
 it('should be able to unset properties as an array', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->setTitle('Hello')->setContent('This my content');
 
     expect($entity->getTitle())->toBe('Hello')
@@ -203,14 +203,14 @@ it('should be able to unset properties as an array', function () {
 });
 
 it('should find property by property name attribute via array accessor', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->content = 'This is my content';
 
     expect($entity['preview'])->toBe('This is my content');
 });
 
 it('should error when property not found via array accessor', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->content = 'This is my content';
 
     expect(fn () => $entity['non-existent-property'])->toThrow(
@@ -220,7 +220,7 @@ it('should error when property not found via array accessor', function () {
 });
 
 it('can determine if offset exists', function () {
-    $entity = new TestEntity();
+    $entity = new TestEntity;
     $entity->content = 'This is my content';
 
     expect(isset($entity['preview']))->toBeTrue()

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{microseconds};
+use function Midnite81\Core\Functions\microseconds;
 
 it('converts from microseconds to milliseconds', function () {
     expect(microseconds(1)->toMilliseconds(3))->toBe(0.001);

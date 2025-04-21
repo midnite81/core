@@ -6,6 +6,4 @@ namespace Midnite81\Core\Requests;
 
 use Midnite81\Core\Entities\BaseEntity;
 
-class BaseRequest extends BaseEntity
-{
-}
+class BaseRequest extends BaseEntity {}

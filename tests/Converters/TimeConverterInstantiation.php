@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Midnite81\Core\Converters\TimeConverter as T;
 
 it('instantiates', function () {
-    $sut = new T();
+    $sut = new T;
 
     expect($sut)->toBeInstanceOf(T::class);
 });

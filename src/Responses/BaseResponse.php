@@ -6,6 +6,4 @@ namespace Midnite81\Core\Responses;
 
 use Midnite81\Core\Entities\BaseEntity;
 
-class BaseResponse extends BaseEntity
-{
-}
+class BaseResponse extends BaseEntity {}

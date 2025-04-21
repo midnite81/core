@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{hours};
+use function Midnite81\Core\Functions\hours;
 
 it('converts from hours to days', function () {
     expect(hours(24)->toDays())->toBe(1);

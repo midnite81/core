@@ -13,9 +13,7 @@ use Midnite81\Core\Exceptions\General\FileNotFoundException;
 
 class Filesystem
 {
-    public function __construct(protected LaravelFilesystem $filesystem)
-    {
-    }
+    public function __construct(protected LaravelFilesystem $filesystem) {}
 
     public static function make(): Filesystem
     {

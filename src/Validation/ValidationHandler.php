@@ -93,7 +93,7 @@ class ValidationHandler
             if (!class_exists($formRequest) || !is_subclass_of($formRequest, FormRequest::class)) {
                 throw new \InvalidArgumentException('The provided class name must be a valid FormRequest class.');
             }
-            $formRequest = new $formRequest();
+            $formRequest = new $formRequest;
         }
 
         if (!$formRequest instanceof FormRequest) {

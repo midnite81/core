@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Midnite81\Core\Http\Middleware\LogControllerAndMethod;
 use Midnite81\Core\Tests\CoreTestCase;
+use Spatie\LaravelRay\Ray as LaravelRay;
 
 uses(CoreTestCase::class);
 
@@ -17,7 +18,7 @@ it('asserts the middleware executes', function () {
         return 'Closure executed';
     };
 
-    $middleware = new LogControllerAndMethod();
+    $middleware = new LogControllerAndMethod;
 
     $response = $middleware->handle($request, $closure);
 
@@ -41,15 +42,15 @@ it('hits the logs', function () {
         return $route;
     });
 
-    $rayMock = Mockery::mock(\Spatie\LaravelRay\Ray::class);
+    $rayMock = Mockery::mock(LaravelRay::class);
 
     $rayMock->shouldReceive('send')
         ->once()
         ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
 
-    app()->instance(Spatie\LaravelRay\Ray::class, $rayMock);
+    app()->instance(LaravelRay::class, $rayMock);
 
-    $middleware = new LogControllerAndMethod();
+    $middleware = new LogControllerAndMethod;
     $response = $middleware->handle($request, $closure);
 
     Mockery::close();
@@ -74,15 +75,15 @@ it('hits the logs with local', function () {
         return $route;
     });
 
-    $rayMock = Mockery::mock(\Spatie\LaravelRay\Ray::class);
+    $rayMock = Mockery::mock(LaravelRay::class);
 
     $rayMock->shouldReceive('send')
         ->never()
         ->with(['Controller' => 'TestController', 'Method' => 'testMethod']);
 
-    app()->instance(Spatie\LaravelRay\Ray::class, $rayMock);
+    app()->instance(LaravelRay::class, $rayMock);
 
-    $middleware = new LogControllerAndMethod();
+    $middleware = new LogControllerAndMethod;
     $response = $middleware->handle($request, $closure);
 
     Mockery::close();

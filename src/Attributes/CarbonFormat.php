@@ -40,7 +40,5 @@ use Attribute;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class CarbonFormat
 {
-    public function __construct(public string $format)
-    {
-    }
+    public function __construct(public string $format) {}
 }

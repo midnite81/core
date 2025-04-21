@@ -10,9 +10,7 @@ class ClassWithArgs
 {
     use Instantiate;
 
-    public function __construct(protected string $name, protected array $hobbies)
-    {
-    }
+    public function __construct(protected string $name, protected array $hobbies) {}
 
     public function greet(): string
     {

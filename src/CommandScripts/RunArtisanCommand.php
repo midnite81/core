@@ -13,8 +13,7 @@ class RunArtisanCommand
     public function __construct(
         public string $commandSignature,
         public array $argumentsAndOptions = []
-    ) {
-    }
+    ) {}
 
     /**
      * If the script should announce itself, you can customise the message which is

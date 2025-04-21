@@ -48,7 +48,7 @@ it('should escape the argument', function () {
     $argument = 'file with spaces.txt';
 
     // Create an instance of the Execute class
-    $execute = new Execute();
+    $execute = new Execute;
 
     $escapedArgument = $execute->escape($argument);
 

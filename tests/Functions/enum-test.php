@@ -13,7 +13,7 @@ it('correctly returns the value of an enum', function () {
 });
 
 it('throws an exception if a class is passed', function () {
-    expect(fn () => enum(new \Midnite81\Core\Tests\Helpers\Fixtures\MyClass()))->toThrow(
+    expect(fn () => enum(new \Midnite81\Core\Tests\Helpers\Fixtures\MyClass))->toThrow(
         RuntimeException::class,
         '$value passed to this function was not an enum',
     );
@@ -29,7 +29,7 @@ it('throws and error if an enum is not passed but string is', function () {
 });
 
 it('throws and error if an enum is not passed but class is', function () {
-    $sut = fn () => enum(new \Midnite81\Core\Entities\AttemptEntity());
+    $sut = fn () => enum(new \Midnite81\Core\Entities\AttemptEntity);
 
     expect($sut)->toThrow(
         RuntimeException::class,

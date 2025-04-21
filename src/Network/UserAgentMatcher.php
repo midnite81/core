@@ -134,7 +134,7 @@ class UserAgentMatcher
         foreach ($this->dictionaries as $key => $dictionary) {
             if (is_string($dictionary)) {
                 if (class_exists($dictionary)) {
-                    $instance = new $dictionary();
+                    $instance = new $dictionary;
                     if ($instance instanceof LibraryInterface) {
                         $this->dictionaries[$key] = $instance;
                     } else {

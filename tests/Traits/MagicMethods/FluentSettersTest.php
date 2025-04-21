@@ -66,7 +66,7 @@ it('can not set address via magic method', function () {
 });
 
 it('cannot set unless explicit', function () {
-    $class = new \Midnite81\Core\Tests\Traits\Fixtures\ExplicitSetter();
+    $class = new \Midnite81\Core\Tests\Traits\Fixtures\ExplicitSetter;
 
     expect(fn () => $class->name = 'John Doe')
         ->toThrow(PropertyRequiresCanSetViaMagicMethodAttributeException::class)

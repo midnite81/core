@@ -13,15 +13,15 @@ it('identifies stringables', function () {
 });
 
 it('identifies non stringables', function () {
-    $entity = new \Midnite81\Core\Tests\Entities\TestHelpers\TestEntity();
+    $entity = new \Midnite81\Core\Tests\Entities\TestHelpers\TestEntity;
 
     expect(DS::isNotStringable(['name' => 'dave']))
         ->toBeTrue()
-        ->and(DS::isNotStringable(new stdClass()))->toBeTrue()
+        ->and(DS::isNotStringable(new stdClass))->toBeTrue()
         ->and(DS::isNotStringable($entity))->toBeTrue();
 });
 
 it('identifies classes with toString as stringable', function () {
-    expect(DS::isStringable(new StringClass()))
+    expect(DS::isStringable(new StringClass))
         ->toBeTrue();
 });

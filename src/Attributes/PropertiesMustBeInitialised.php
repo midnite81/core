@@ -50,6 +50,4 @@ use Attribute;
  * @Target({"CLASS"})
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-class PropertiesMustBeInitialised
-{
-}
+class PropertiesMustBeInitialised {}

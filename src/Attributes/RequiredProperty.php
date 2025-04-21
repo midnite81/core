@@ -43,6 +43,4 @@ use Attribute;
  * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class RequiredProperty
-{
-}
+class RequiredProperty {}

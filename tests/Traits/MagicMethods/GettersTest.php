@@ -57,7 +57,7 @@ it('throws an error if property name doesnt exist on magic call', function () {
 });
 
 it('can only get specified props when Explicit is set', function () {
-    $class = new ExplicitGetter();
+    $class = new ExplicitGetter;
 
     expect($class->name)
         ->toBe('John')
@@ -69,7 +69,7 @@ it('can only get specified props when Explicit is set', function () {
 });
 
 it('can only get public properties via magic method', function () {
-    $class = new PublicPropsOnly();
+    $class = new PublicPropsOnly;
 
     expect($class->name)
         ->toBe('John Doe')
@@ -79,7 +79,7 @@ it('can only get public properties via magic method', function () {
 });
 
 it('wont get protected props if AccessPublicPropertiesOnly and MagicMethodGetExplicit are set', function () {
-    $class = new PublicAndExplicitPropsOnly();
+    $class = new PublicAndExplicitPropsOnly;
 
     expect(fn () => $class->name)
         ->toThrow(CannotGetByMagicMethodException::class)

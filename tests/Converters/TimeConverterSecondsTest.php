@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use function Midnite81\Core\Functions\{seconds};
+use function Midnite81\Core\Functions\seconds;
 
 it('converts from seconds to milliseconds', function () {
     expect(seconds(1)->toMilliseconds())->toBe(1000);

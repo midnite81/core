@@ -84,7 +84,7 @@ abstract class AbstractCommandScript
      */
     public static function __set_state(array $data): object
     {
-        $class = new static();
+        $class = new static;
         $class->shouldAnnounce = $data['shouldAnnounce'];
         $class->message = $data['message'];
 

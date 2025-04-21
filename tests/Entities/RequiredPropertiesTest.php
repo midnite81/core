@@ -6,7 +6,7 @@ use Midnite81\Core\Exceptions\Entities\PropertyIsRequiredException;
 use Midnite81\Core\Tests\Entities\TestHelpers\RequiredPropertiesEntity;
 
 it('throws an error if a required property is not filled or initialised', function () {
-    $entity = new RequiredPropertiesEntity();
+    $entity = new RequiredPropertiesEntity;
 
     expect(fn () => $entity->toArray())
         ->toThrow(
@@ -16,7 +16,7 @@ it('throws an error if a required property is not filled or initialised', functi
 });
 
 it('throws an error if a second required property is not filled or initialised', function () {
-    $entity = new RequiredPropertiesEntity();
+    $entity = new RequiredPropertiesEntity;
     $entity->name = 'Dave';
 
     expect(fn () => $entity->toArray())
@@ -27,7 +27,7 @@ it('throws an error if a second required property is not filled or initialised',
 });
 
 it('does not throw an error if all required items are filled', function () {
-    $entity = new RequiredPropertiesEntity();
+    $entity = new RequiredPropertiesEntity;
     $entity->name = 'Dave';
     $entity->username = 'Dave123';
     $entity->setAge(23);
@@ -39,7 +39,7 @@ it('does not throw an error if all required items are filled', function () {
 });
 
 it('throws when using other output methods', function () {
-    $entity = new RequiredPropertiesEntity();
+    $entity = new RequiredPropertiesEntity;
 
     expect(fn () => $entity->toJson())
         ->toThrow(

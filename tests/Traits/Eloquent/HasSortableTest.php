@@ -3,7 +3,7 @@
 use Midnite81\Core\Traits\Eloquent\HasSortable;
 
 it('gets sort order column', function () {
-    $class = new class()
+    $class = new class
     {
         use HasSortable;
     };
@@ -12,7 +12,7 @@ it('gets sort order column', function () {
 });
 
 it('gets sort order direction', function () {
-    $class = new class()
+    $class = new class
     {
         use HasSortable;
     };
@@ -21,7 +21,7 @@ it('gets sort order direction', function () {
 });
 
 it('scope sorts', function () {
-    $class = new class()
+    $class = new class
     {
         use HasSortable;
     };
