@@ -50,6 +50,16 @@ it('should return an array', function () {
         );
 });
 
+it('should not return nulls in an array', function () {
+    $entity = new \Midnite81\Core\Tests\Entities\TestHelpers\NullPropertiesEntity();
+    $entity->title = 'Null test';
+
+    expect($entity->toArray(ignoreNulls: true))
+        ->toBeArray()
+        ->toHaveCount(1)
+        ->not()->toHaveKey('description');
+});
+
 it('should limit an array to key passed', function () {
     $entity = new TestEntity();
     $entity->setId('102')

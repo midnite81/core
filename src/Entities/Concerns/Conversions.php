@@ -15,9 +15,17 @@ trait Conversions
      *
      * @throws PropertyIsRequiredException
      */
-    public function toArray(): array
+    public function toArray(bool $ignoreNulls = false): array
     {
-        return json_decode(json_encode($this->getInitialisedProperties()), true);
+        $array = $this->getInitialisedProperties();
+
+        if ($ignoreNulls) {
+            $array = array_filter($array, function ($value) {
+                return !is_null($value);
+            });
+        }
+
+        return json_decode(json_encode($array), true);
     }
 
     /**
@@ -26,9 +34,9 @@ trait Conversions
      *
      * @throws PropertyIsRequiredException
      */
-    public function toLimitedArray(array $limitToKeys = []): array
+    public function toLimitedArray(array $limitToKeys = [], bool $ignoreNulls = false): array
     {
-        $array = $this->toArray();
+        $array = $this->toArray($ignoreNulls);
 
         if (!empty($limitToKeys)) {
             return $this->filterKeys($array, $limitToKeys);
@@ -45,9 +53,9 @@ trait Conversions
      *
      * @throws PropertyIsRequiredException
      */
-    public function toExcludedArray(array $excludedKeys = []): array
+    public function toExcludedArray(array $excludedKeys = [], bool $ignoreNulls = false): array
     {
-        $array = $this->toArray();
+        $array = $this->toArray($ignoreNulls);
 
         if (!empty($excludedKeys)) {
             $filterExcludedKeys = function (array $array, array $excludedKeys) {
@@ -70,18 +78,18 @@ trait Conversions
      *
      * @throws PropertyIsRequiredException
      */
-    public function toJson(): string
+    public function toJson(bool $ignoreNulls = false): string
     {
-        return json_encode($this->toArray());
+        return json_encode($this->toArray($ignoreNulls));
     }
 
     /**
      * @throws PropertyIsRequiredException
      */
-    public function toQueryString(?array $limitToKeys = null): string
+    public function toQueryString(?array $limitToKeys = null, bool $ignoreNulls = false): string
     {
         if (!empty($limitToKeys)) {
-            return '?' . http_build_query($this->toLimitedArray($limitToKeys));
+            return '?' . http_build_query($this->toLimitedArray($limitToKeys, $ignoreNulls));
         }
 
         return '?' . http_build_query($this->toArray());
