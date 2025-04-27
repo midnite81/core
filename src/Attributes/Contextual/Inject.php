@@ -6,6 +6,19 @@ use Attribute;
 use InvalidArgumentException;
 use ReflectionParameter;
 
+/**
+ * Inject attribute for contextual dependency injection in Laravel 12+.
+ *
+ * To use this attribute in your Laravel 12+ application, you need to register
+ * the InjectServiceProvider in your application's config/app.php providers array:
+ *
+ * ```php
+ * 'providers' => [
+ *     // Other providers...
+ *     Midnite81\Core\Providers\InjectServiceProvider::class,
+ * ],
+ * ```
+ */
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class Inject
 {
