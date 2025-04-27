@@ -3,27 +3,59 @@
 namespace Midnite81\Core\Attributes\Contextual;
 
 use Attribute;
+use Illuminate\Contracts\Container\ContextualAttribute;
 use InvalidArgumentException;
 use ReflectionParameter;
 
 /**
  * Inject attribute for contextual dependency injection in Laravel 12+.
  *
- * To use this attribute in your Laravel 12+ application, you need to register
- * the InjectServiceProvider in your application's config/app.php providers array:
+ * This attribute allows you to specify concrete implementations for interfaces
+ * directly at the parameter level, providing an alternative to traditional
+ * contextual binding in Laravel applications.
  *
- * ```php
- * 'providers' => [
- *     // Other providers...
- *     Midnite81\Core\Providers\InjectServiceProvider::class,
- * ],
- * ```
+ * Usage Examples:
+ *
+ * 1. Basic Usage:
+ *    ```php
+ *    public function __construct(
+ *        #[Inject(MyConcreteClass::class)] MyInterface $service
+ *    ) {
+ *        // $service will be an instance of MyConcreteClass
+ *    }
+ *    ```
+ *
+ * 2. In Controller Methods:
+ *    ```php
+ *    public function show(
+ *        #[Inject(CustomUserRepository::class)] UserRepositoryInterface $repository,
+ *        int $userId
+ *    ) {
+ *        return $repository->findById($userId);
+ *    }
+ *    ```
+ *
+ * 3. With Multiple Parameters:
+ *    ```php
+ *    public function process(
+ *        #[Inject(FileLogger::class)] LoggerInterface $logger,
+ *        #[Inject(ApiEventDispatcher::class)] EventDispatcherInterface $dispatcher
+ *    ) {
+ *        // Both dependencies will be resolved to their specified implementations
+ *    }
+ *    ```
+ *
+ * Note: This attribute requires Laravel 12+ as it implements the ContextualAttribute
+ * interface. For older Laravel versions, you'll need to use traditional contextual
+ * binding in your service providers.
  */
 #[Attribute(Attribute::TARGET_PARAMETER)]
-class Inject
+class Inject implements ContextualAttribute
 {
     /**
      * Create a new attribute instance.
+     *
+     * @param string $implementation The concrete class that should be injected
      */
     public function __construct(public string $implementation) {}
 
@@ -33,12 +65,12 @@ class Inject
      * This method is only used in Laravel 12+ when the ContextualAttribute interface exists.
      * For older Laravel versions, this method won't be called.
      *
-     * @param self $attribute
+     * @param self $attribute Current attribute instance
      * @param object $container Container implementing the necessary methods
-     * @param ReflectionParameter|null $parameter
-     * @return mixed
+     * @param ReflectionParameter|null $parameter Reflection information about the parameter
+     * @return mixed The resolved implementation
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException When the implementation doesn't implement the required interface
      */
     public static function resolve(self $attribute, mixed $container, ?ReflectionParameter $parameter = null): mixed
     {
