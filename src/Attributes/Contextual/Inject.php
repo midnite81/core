@@ -12,11 +12,12 @@ use ReflectionParameter;
  *
  * This attribute allows you to specify concrete implementations for interfaces
  * directly at the parameter level, providing an alternative to traditional
- * contextual binding in Laravel applications.
+ * contextual binding in Laravel applications. It supports both class names
+ * and container aliases.
  *
  * Usage Examples:
  *
- * 1. Basic Usage:
+ * 1. With Class Names:
  *    ```php
  *    public function __construct(
  *        #[Inject(MyConcreteClass::class)] MyInterface $service
@@ -25,7 +26,20 @@ use ReflectionParameter;
  *    }
  *    ```
  *
- * 2. In Controller Methods:
+ * 2. With Container Aliases:
+ *    ```php
+ *    // In a service provider:
+ *    $this->app->alias(PaymentGatewayInterface::class, 'payment.stripe');
+ *
+ *    // In your class:
+ *    public function processPayment(
+ *        #[Inject('payment.stripe')] PaymentGatewayInterface $gateway
+ *    ) {
+ *        // $gateway will be resolved from the 'payment.stripe' alias
+ *    }
+ *    ```
+ *
+ * 3. In Controller Methods:
  *    ```php
  *    public function show(
  *        #[Inject(CustomUserRepository::class)] UserRepositoryInterface $repository,
@@ -35,11 +49,11 @@ use ReflectionParameter;
  *    }
  *    ```
  *
- * 3. With Multiple Parameters:
+ * 4. With Multiple Parameters:
  *    ```php
  *    public function process(
  *        #[Inject(FileLogger::class)] LoggerInterface $logger,
- *        #[Inject(ApiEventDispatcher::class)] EventDispatcherInterface $dispatcher
+ *        #[Inject('event.api')] EventDispatcherInterface $dispatcher
  *    ) {
  *        // Both dependencies will be resolved to their specified implementations
  *    }
@@ -55,7 +69,7 @@ class Inject implements ContextualAttribute
     /**
      * Create a new attribute instance.
      *
-     * @param string $implementation The concrete class that should be injected
+     * @param string $implementation The concrete class or container alias that should be injected
      */
     public function __construct(public string $implementation) {}
 
@@ -74,20 +88,28 @@ class Inject implements ContextualAttribute
      */
     public static function resolve(self $attribute, mixed $container, ?ReflectionParameter $parameter = null): mixed
     {
-        // Only run validation if we have parameter information
-        if ($parameter !== null) {
+        $implementation = $attribute->implementation;
+
+        // Only run validation if we have parameter information and the implementation is a class
+        if ($parameter !== null && class_exists($implementation)) {
             $parameterType = $parameter->getType()?->getName();
 
             if ($parameterType && interface_exists($parameterType)) {
                 // Check if the implementation class implements the required interface
-                if (!is_subclass_of($attribute->implementation, $parameterType)) {
+                if (!is_subclass_of($implementation, $parameterType)) {
                     throw new InvalidArgumentException(
-                        "The implementation class [{$attribute->implementation}] must implement [{$parameterType}]."
+                        "The implementation class [{$implementation}] must implement [{$parameterType}]."
                     );
                 }
             }
         }
 
-        return $container->make($attribute->implementation);
+        // Check if the container has the binding (handles both classes and aliases)
+        if (method_exists($container, 'bound') && $container->bound($implementation)) {
+            return $container->make($implementation);
+        }
+
+        // Fallback to direct instantiation if it's a class
+        return $container->make($implementation);
     }
 }
