@@ -43,7 +43,7 @@
         "laravel/pint": "^1.1",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-parallel": "^1.2",
-        "orchestra/testbench": "^7.6",
+        "orchestra/testbench": "^7.6|^8.0",
         "phpstan/phpstan": "^1.8",
         "spatie/ray": "^1.40",
         "spatie/laravel-ray": "^1.40"
