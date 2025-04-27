@@ -18,10 +18,10 @@ it('can create an inject attribute instance', function () {
 
 it('can resolve an implementation from a container', function () {
     $inject = new Inject(TestImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     // Register an instance in the container
-    $testInstance = new TestImplementation();
+    $testInstance = new TestImplementation;
     $container->register(TestImplementation::class, $testInstance);
 
     $result = Inject::resolve($inject, $container);
@@ -31,7 +31,7 @@ it('can resolve an implementation from a container', function () {
 
 it('can instantiate a class if not registered in container', function () {
     $inject = new Inject(TestImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $result = Inject::resolve($inject, $container);
 
@@ -40,7 +40,7 @@ it('can instantiate a class if not registered in container', function () {
 
 it('validates that implementation implements the parameter interface', function () {
     $inject = new Inject(TestImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $reflectionParameter = new ReflectionParameter(function (TestInterface $param) {}, 'param');
 
@@ -51,7 +51,7 @@ it('validates that implementation implements the parameter interface', function 
 
 it('allows different implementations of the same interface', function () {
     $inject = new Inject(AnotherImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $reflectionParameter = new ReflectionParameter(function (TestInterface $param) {}, 'param');
 
@@ -62,7 +62,7 @@ it('allows different implementations of the same interface', function () {
 
 it('throws exception when implementation does not implement required interface', function () {
     $inject = new Inject(InvalidImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $reflectionParameter = new ReflectionParameter(function (TestInterface $param) {}, 'param');
 
@@ -72,7 +72,7 @@ it('throws exception when implementation does not implement required interface',
 
 it('skips validation when parameter has no type', function () {
     $inject = new Inject(InvalidImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $reflectionParameter = new ReflectionParameter(function ($param) {}, 'param');
 
@@ -83,7 +83,7 @@ it('skips validation when parameter has no type', function () {
 
 it('skips validation when parameter type is not an interface', function () {
     $inject = new Inject(TestImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $reflectionParameter = new ReflectionParameter(function (string $param) {}, 'param');
 
@@ -94,10 +94,9 @@ it('skips validation when parameter type is not an interface', function () {
 
 it('works when parameter is null', function () {
     $inject = new Inject(TestImplementation::class);
-    $container = new MockContainer();
+    $container = new MockContainer;
 
     $result = Inject::resolve($inject, $container, null);
 
     expect($result)->toBeInstanceOf(TestImplementation::class);
 });
-

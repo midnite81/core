@@ -13,6 +13,6 @@ class MockContainer
 
     public function make(string $abstract)
     {
-        return $this->instances[$abstract] ?? new $abstract();
+        return $this->instances[$abstract] ?? new $abstract;
     }
 }
