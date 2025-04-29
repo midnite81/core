@@ -13,11 +13,11 @@ namespace Midnite81\Core\Functions;
 function toDeepArray(mixed $value): mixed
 {
     if (is_array($value)) {
-        return array_map(fn($item) => toDeepArray($item), $value);
+        return array_map(fn ($item) => toDeepArray($item), $value);
     }
 
     if ($value instanceof \Illuminate\Support\Collection) {
-        return $value->map(fn($item) => toDeepArray($item))->toArray();
+        return $value->map(fn ($item) => toDeepArray($item))->toArray();
     }
 
     if ($value instanceof \Illuminate\Contracts\Support\Arrayable) {

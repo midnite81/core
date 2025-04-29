@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Contracts\Support\Arrayable;
 use Midnite81\Core\Tests\CoreTestCase;
+
 use function Midnite81\Core\Functions\toDeepArray;
 
 uses(CoreTestCase::class);
@@ -26,9 +27,9 @@ it('handles nested arrays', function () {
         'a' => 1,
         'b' => [
             'c' => 3,
-            'd' => 4
+            'd' => 4,
         ],
-        'e' => 5
+        'e' => 5,
     ];
 
     // Act
@@ -57,7 +58,7 @@ it('handles nested collections', function () {
     $collection = collect([
         'a' => 1,
         'b' => collect(['c' => 3, 'd' => 4]),
-        'e' => 5
+        'e' => 5,
     ]);
 
     // Act
@@ -67,7 +68,7 @@ it('handles nested collections', function () {
     $expected = [
         'a' => 1,
         'b' => ['c' => 3, 'd' => 4],
-        'e' => 5
+        'e' => 5,
     ];
     expect($result)->toBe($expected);
     expect($result)->toBeArray();
@@ -76,7 +77,8 @@ it('handles nested collections', function () {
 
 it('handles arrayable objects', function () {
     // Arrange
-    $arrayable = new class implements Arrayable {
+    $arrayable = new class implements Arrayable
+    {
         public function toArray(): array
         {
             return ['a' => 1, 'b' => 2, 'c' => 3];
@@ -93,7 +95,8 @@ it('handles arrayable objects', function () {
 
 it('handles complex nested structures', function () {
     // Arrange
-    $arrayable = new class implements Arrayable {
+    $arrayable = new class implements Arrayable
+    {
         public function toArray(): array
         {
             return ['x' => 10, 'y' => 20];
@@ -105,12 +108,12 @@ it('handles complex nested structures', function () {
         'b' => collect([
             'c' => 3,
             'd' => $arrayable,
-            'e' => collect(['f' => 6])
+            'e' => collect(['f' => 6]),
         ]),
         'g' => [
             'h' => 8,
-            'i' => collect(['j' => 9])
-        ]
+            'i' => collect(['j' => 9]),
+        ],
     ];
 
     // Act
@@ -122,12 +125,12 @@ it('handles complex nested structures', function () {
         'b' => [
             'c' => 3,
             'd' => ['x' => 10, 'y' => 20],
-            'e' => ['f' => 6]
+            'e' => ['f' => 6],
         ],
         'g' => [
             'h' => 8,
-            'i' => ['j' => 9]
-        ]
+            'i' => ['j' => 9],
+        ],
     ];
 
     expect($result)->toBe($expected);
@@ -156,4 +159,3 @@ it('keeps scalar values untouched', function () {
     // Test with null
     expect(toDeepArray(null))->toBeNull();
 });
-
