@@ -19,6 +19,7 @@
             "src/Functions/first.php",
             "src/Functions/enum.php",
             "src/Functions/time-conversion.php",
+            "src/Functions/array-converstion.php",
             "helper.php"
         ]
     },
