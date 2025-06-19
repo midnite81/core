@@ -26,7 +26,7 @@ trait PropertyHydration
     public function defineTypeHandlers(): void
     {
         $this->typeHandlers = [
-            Carbon::class => fn ($value) => Carbon::parse('Y-m-d H:i:s', $value),
+            Carbon::class => fn ($value) => Carbon::parse($value),
             ...$this->scalarHandlers(),
         ];
     }
