@@ -37,10 +37,6 @@ use Attribute;
  * enforcement and validation logic must be implemented within the BaseEntity class or through
  * external validation mechanisms. This attribute serves as a formal declaration, guiding the
  * design and usage of the class properties.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class RequiredProperty {}

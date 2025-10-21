@@ -32,10 +32,6 @@ use Attribute;
  * Note: The effectiveness of this attribute is contingent upon its integration within the serialization
  * logic of BaseEntity or a similar base class. Ensure that your base class is equipped to interpret
  * and apply the formatting specified by this attribute during serialization processes.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class CarbonFormat

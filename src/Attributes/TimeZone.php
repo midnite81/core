@@ -36,10 +36,6 @@ use Attribute;
  * recognize and apply the specified timezone during the serialization process. This attribute acts as
  * a declarative tool to signal the desired timezone conversion, and its actual application depends on
  * the base class's support for such attribute-driven behavior.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class TimeZone

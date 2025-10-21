@@ -36,10 +36,6 @@ use Attribute;
  * handling property mapping must implement logic to interpret and apply the alternate names
  * specified by this attribute during the mapping process. This attribute acts as a formal
  * declaration for alternative property naming in the context of data interchange.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class SourceName

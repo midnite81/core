@@ -38,10 +38,6 @@ use Attribute;
  * deserialization methods to recognize and apply the alternative names specified by this
  * attribute. It serves as a formal declaration for renaming properties in the context of
  * data interchange.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class PropertyName

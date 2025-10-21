@@ -20,10 +20,6 @@ use Attribute;
  * Example usage:
  * #[ArrayOf(\Namespace\To\YourClass::class)]
  * public array $yourProperty;
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class ArrayOf

@@ -44,10 +44,6 @@ use Attribute;
  * Note: The enforcement of property initialisation should be integrated within the BaseEntity's
  * construction or initialisation logic, or ensured through static analysis tools. This attribute
  * serves as a formal declaration of the initialisation requirement for properties.
- *
- * @Annotation
- *
- * @Target({"CLASS"})
  */
 #[Attribute(Attribute::TARGET_CLASS)]
 class PropertiesMustBeInitialised {}

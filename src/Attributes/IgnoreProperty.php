@@ -29,10 +29,6 @@ use Attribute;
  * Note: The effectiveness of this attribute relies on its support within the serialization logic of
  * BaseEntity or the base class handling serialization. It is essential to integrate this attribute's
  * functionality into the base class's serialization methods to achieve the desired effect.
- *
- * @Annotation
- *
- * @Target({"PROPERTY"})
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class IgnoreProperty
