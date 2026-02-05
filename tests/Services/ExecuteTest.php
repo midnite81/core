@@ -13,7 +13,7 @@ it('instantiate via factory method', function () {
 it('passes thru', function () {
     $execute = Execute::make();
 
-    $sut = $execute->passthru('echo "Hello"');
+    $sut = $execute->passthru('echo "Hello" > /dev/null');
 
     expect($sut)->toBe(0);
 });
@@ -21,7 +21,7 @@ it('passes thru', function () {
 it('passes through', function () {
     $execute = Execute::make();
 
-    $sut = $execute->passThrough('echo "Hello"');
+    $sut = $execute->passThrough('echo "Hello" > /dev/null');
 
     expect($sut)->toBe(0);
 });
@@ -39,7 +39,7 @@ it('should execute', function () {
 it('should execute system and return result code', function () {
     $execute = Execute::make();
 
-    $sut = $execute->system('echo "Hello"');
+    $sut = $execute->system('echo "Hello" > /dev/null');
 
     expect($sut)->toBe(0);
 });
