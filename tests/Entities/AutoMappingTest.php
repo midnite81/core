@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
 use Midnite81\Core\Tests\Entities\TestHelpers\AutoMapping\Account;
 
 it('can auto-map', function () {
@@ -27,6 +28,16 @@ it('can auto-map', function () {
                 'orderDate' => '2021-01-02',
             ],
         ],
+        'orderCollection' => Collection::make([
+            [
+                'orderNumber' => '123458',
+                'orderDate' => '2021-01-03',
+            ],
+            [
+                'orderNumber' => '123459',
+                'orderDate' => '2021-01-04',
+            ],
+        ]),
         'accountIdentifier' => '5caea84d-4a93-4eda-99c0-825178b39726',
     ];
 
@@ -46,6 +57,12 @@ it('can auto-map', function () {
         ->and($account->orders[0]->orderDate->format('Y-m-d'))->toBe('2021-01-01')
         ->and($account->orders[1]->orderNumber)->toBe('123457')
         ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02')
+        ->and($account->orderCollection)->toBeInstanceOf(Collection::class)
+        ->and($account->orderCollection)->toHaveCount(2)
+        ->and($account->orderCollection[0]->orderNumber)->toBe('123458')
+        ->and($account->orderCollection[0]->orderDate->format('Y-m-d'))->toBe('2021-01-03')
+        ->and($account->orderCollection[1]->orderNumber)->toBe('123459')
+        ->and($account->orderCollection[1]->orderDate->format('Y-m-d'))->toBe('2021-01-04')
         ->and($account->uniqueIdentifier)->toBe('5caea84d-4a93-4eda-99c0-825178b39726');
 });
 
@@ -72,6 +89,16 @@ it('can auto-map stdClass', function () {
                 'orderDate' => '2021-01-02',
             ],
         ],
+        'orderCollection' => [
+            [
+                'orderNumber' => '123458',
+                'orderDate' => '2021-01-03',
+            ],
+            [
+                'orderNumber' => '123459',
+                'orderDate' => '2021-01-04',
+            ],
+        ],
         'accountIdentifier' => '5caea84d-4a93-4eda-99c0-825178b39726',
     ];
 
@@ -91,5 +118,11 @@ it('can auto-map stdClass', function () {
         ->and($account->orders[0]->orderDate->format('Y-m-d'))->toBe('2021-01-01')
         ->and($account->orders[1]->orderNumber)->toBe('123457')
         ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02')
+        ->and($account->orderCollection)->toBeInstanceOf(Collection::class)
+        ->and($account->orderCollection)->toHaveCount(2)
+        ->and($account->orderCollection[0]->orderNumber)->toBe('123458')
+        ->and($account->orderCollection[0]->orderDate->format('Y-m-d'))->toBe('2021-01-03')
+        ->and($account->orderCollection[1]->orderNumber)->toBe('123459')
+        ->and($account->orderCollection[1]->orderDate->format('Y-m-d'))->toBe('2021-01-04')
         ->and($account->uniqueIdentifier)->toBe('5caea84d-4a93-4eda-99c0-825178b39726');
 });
