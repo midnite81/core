@@ -37,3 +37,37 @@ jobs:
 
       - name: Run tests
         run: ./vendor/bin/pest --parallel --processes=24
+
+  php81-smoke:
+    runs-on: ubuntu-latest
+
+    name: PHP 8.1 smoke
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-php-8.1-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-8.1-composer-
+
+      - name: Install runtime dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress
+
+      - name: Lint package source
+        run: |
+          php -l helper.php
+          find src config -name '*.php' -print0 | xargs -0 -n 1 php -l
+
+      - name: Bootstrap package autoload
+        run: php -r "require 'vendor/autoload.php'; exit(class_exists('Midnite81\\\\Core\\\\CoreServiceProvider') ? 0 : 1);"
