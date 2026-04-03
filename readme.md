@@ -40,6 +40,13 @@ This package contains;
   - [ValidationHandler](docs/Handlers/ValidationHandler.md)
   - [ValidationExceptionBuilder](docs/Validation/ValidationExceptionBuilder.md))
 
+## Attribute Highlights
+
+For full attribute usage and examples, see [Attributes](docs/Attributes.md).
+
+- `#[TrimString]` trims a mapped string value for a single property before property handlers and type handlers run.
+- `#[TrimStrings]` applies the same trimming behaviour to all mapped string properties on a class.
+
 ## Installation
 
 This package requires PHP 8.1+ and has a Laravel Service Provider, which is auto-registered.

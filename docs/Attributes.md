@@ -75,3 +75,29 @@ This attribute ensures that a property has been initialized, as it is required, 
 protected string $name;
 ```
 
+## TrimString Attribute
+
+**Usage:** Used with `BaseEntity`  
+**Target:** Properties
+
+This attribute trims leading and trailing whitespace from a mapped string value before property handlers and type
+handlers are applied.
+
+```php
+#[\Midnite81\Core\Attributes\TrimString]
+protected string $name;
+```
+
+## TrimStrings Attribute
+
+**Usage:** Used with `BaseEntity`  
+**Target:** Classes
+
+This attribute applies the same trimming behavior as `TrimString`, but to every mapped property in the class.
+
+```php
+#[\Midnite81\Core\Attributes\TrimStrings]
+class MyEntity
+{
+}
+```

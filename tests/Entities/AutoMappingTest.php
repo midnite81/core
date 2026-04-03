@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Midnite81\Core\Tests\Entities\TestHelpers\AutoMapping\Account;
+use Midnite81\Core\Tests\Entities\TestHelpers\AutoMapping\TrimmedClassEntity;
+use Midnite81\Core\Tests\Entities\TestHelpers\AutoMapping\TrimmedPropertyEntity;
 
 it('can auto-map', function () {
     $data = [
@@ -92,4 +94,24 @@ it('can auto-map stdClass', function () {
         ->and($account->orders[1]->orderNumber)->toBe('123457')
         ->and($account->orders[1]->orderDate->format('Y-m-d'))->toBe('2021-01-02')
         ->and($account->uniqueIdentifier)->toBe('5caea84d-4a93-4eda-99c0-825178b39726');
+});
+
+it('can trim a mapped property marked with trim string', function () {
+    $entity = new TrimmedPropertyEntity([
+        'trimmed' => '  keep me tidy  ',
+        'untouched' => '  leave me alone  ',
+    ]);
+
+    expect($entity->trimmed)->toBe('keep me tidy')
+        ->and($entity->untouched)->toBe('  leave me alone  ');
+});
+
+it('can trim all mapped string properties from a class attribute', function () {
+    $entity = new TrimmedClassEntity([
+        'trimmed' => '  tidy me  ',
+        'upperCaseString' => '  make me loud  ',
+    ]);
+
+    expect($entity->trimmed)->toBe('tidy me')
+        ->and($entity->upperCaseString)->toBe('MAKE ME LOUD');
 });
