@@ -70,4 +70,5 @@ jobs:
           find src config -name '*.php' -print0 | xargs -0 -n 1 php -l
 
       - name: Bootstrap package autoload
-        run: php -r "require 'vendor/autoload.php'; exit(class_exists('Midnite81\\\\Core\\\\CoreServiceProvider') ? 0 : 1);"
+        run: |
+          php -r 'require "vendor/autoload.php"; exit(class_exists("Midnite81\\Core\\CoreServiceProvider") ? 0 : 1);'
