@@ -71,4 +71,4 @@ jobs:
 
       - name: Bootstrap package autoload
         run: |
-          php -r 'require "vendor/autoload.php"; exit(class_exists("Midnite81\\Core\\CoreServiceProvider") ? 0 : 1);'
+          php -r 'require "vendor/autoload.php"; exit((function_exists("first_value") && enum_exists("Midnite81\\Core\\Enums\\DateFormat")) ? 0 : 1);'
