@@ -75,6 +75,19 @@ This attribute ensures that a property has been initialized, as it is required, 
 protected string $name;
 ```
 
+## CollectionOf Attribute
+
+**Usage:** Used with `BaseEntity`
+**Target:** Properties
+
+This attribute converts each mapped item into an instance of the specified class and stores the
+result in an `Illuminate\Support\Collection`.
+
+```php
+#[\Midnite81\Core\Attributes\CollectionOf(Order::class)]
+public Collection $orders;
+```
+
 ## TrimString Attribute
 
 **Usage:** Used with `BaseEntity`  

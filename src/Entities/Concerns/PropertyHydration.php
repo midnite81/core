@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Midnite81\Core\Entities\Concerns;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Midnite81\Core\Exceptions\PropertyMappingException;
 use ReflectionClass;
 use ReflectionProperty;
@@ -113,6 +114,22 @@ trait PropertyHydration
                         // Assumes the class has a constructor that can accept the data for each item
                         return new $className($item);
                     }, $value);
+                }
+
+                continue; // Proceed to the next property after handling
+            }
+
+            // Handle properties with the CollectionOf attribute
+            $collectionOfAttributes = $property->getAttributes(\Midnite81\Core\Attributes\CollectionOf::class);
+            if (!empty($collectionOfAttributes)) {
+                $attributeInstance = $collectionOfAttributes[0]->newInstance();
+                $className = $attributeInstance->class;
+
+                if ($value instanceof Collection) {
+                    $this->$name = $value->map(fn ($item) => new $className($item));
+                } elseif (is_array($value)) {
+                    $this->$name = Collection::make($value)
+                        ->map(fn ($item) => new $className($item));
                 }
 
                 continue; // Proceed to the next property after handling

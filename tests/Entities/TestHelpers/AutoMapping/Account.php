@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Midnite81\Core\Tests\Entities\TestHelpers\AutoMapping;
 
+use Illuminate\Support\Collection;
 use Midnite81\Core\Attributes\ArrayOf;
+use Midnite81\Core\Attributes\CollectionOf;
 use Midnite81\Core\Attributes\PropertyName;
 use Midnite81\Core\Attributes\SourceName;
 use Midnite81\Core\Entities\BaseEntity;
@@ -29,6 +31,12 @@ class Account extends BaseEntity
      */
     #[ArrayOf(Orders::class)]
     public array $orders;
+
+    /**
+     * @var Collection<int, Orders>
+     */
+    #[CollectionOf(Orders::class)]
+    public Collection $orderCollection;
 
     /**
      * @param array|object $data
