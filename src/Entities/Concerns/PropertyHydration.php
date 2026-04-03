@@ -124,12 +124,11 @@ trait PropertyHydration
             if (!empty($collectionOfAttributes)) {
                 $attributeInstance = $collectionOfAttributes[0]->newInstance();
                 $className = $attributeInstance->class;
-                $items = $data[$sourceName];
 
-                if ($items instanceof Collection) {
-                    $this->$name = $items->map(fn ($item) => new $className($item));
-                } elseif (is_array($items)) {
-                    $this->$name = Collection::make($items)
+                if ($value instanceof Collection) {
+                    $this->$name = $value->map(fn ($item) => new $className($item));
+                } elseif (is_array($value)) {
+                    $this->$name = Collection::make($value)
                         ->map(fn ($item) => new $className($item));
                 }
 
