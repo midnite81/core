@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Midnite81\Core\Exceptions\PropertyMappingException;
 use ReflectionClass;
+use ReflectionProperty;
 
 trait PropertyHydration
 {
@@ -83,6 +84,8 @@ trait PropertyHydration
         }
 
         $reflection = new ReflectionClass($this);
+        $trimAllStrings = !empty($reflection->getAttributes(\Midnite81\Core\Attributes\TrimStrings::class));
+
         foreach ($reflection->getProperties() as $property) {
             $attributes = $property->getAttributes(\Midnite81\Core\Attributes\SourceName::class);
             $sourceNameAttribute = !empty($attributes) ? $attributes[0]->newInstance() : null;
@@ -94,6 +97,11 @@ trait PropertyHydration
             }
 
             $name = $property->getName();
+            $value = $this->trimMappedValue(
+                $data[$sourceName],
+                $property,
+                $trimAllStrings,
+            );
 
             // Handle properties with the ArrayOf attribute
             $arrayOfAttributes = $property->getAttributes(\Midnite81\Core\Attributes\ArrayOf::class);
@@ -101,11 +109,11 @@ trait PropertyHydration
                 $attributeInstance = $arrayOfAttributes[0]->newInstance();
                 $className = $attributeInstance->class;
 
-                if (is_array($data[$sourceName])) {
+                if (is_array($value)) {
                     $this->$name = array_map(function ($item) use ($className) {
                         // Assumes the class has a constructor that can accept the data for each item
                         return new $className($item);
-                    }, $data[$sourceName]);
+                    }, $value);
                 }
 
                 continue; // Proceed to the next property after handling
@@ -130,7 +138,7 @@ trait PropertyHydration
 
             // Check for a custom property handler
             if (isset($this->propertyHandlers[$name])) {
-                $this->$name = call_user_func($this->propertyHandlers[$name], $data[$sourceName]);
+                $this->$name = call_user_func($this->propertyHandlers[$name], $value);
 
                 continue;
             }
@@ -139,7 +147,7 @@ trait PropertyHydration
             $type = $property->getType();
             if (!$type) {
                 // Direct assignment if the property has no type
-                $this->$name = $data[$sourceName];
+                $this->$name = $value;
 
                 continue;
             }
@@ -147,11 +155,27 @@ trait PropertyHydration
             $typeName = $type->getName();
             if (isset($this->typeHandlers[$typeName])) {
                 // Use a type handler if defined
-                $this->$name = call_user_func($this->typeHandlers[$typeName], $data[$sourceName]);
+                $this->$name = call_user_func($this->typeHandlers[$typeName], $value);
             } else {
                 // Direct assignment as a fallback
-                $this->$name = $data[$sourceName];
+                $this->$name = $value;
             }
         }
+    }
+
+    protected function trimMappedValue(
+        mixed $value,
+        ReflectionProperty $property,
+        bool $trimAllStrings,
+    ): mixed {
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        if ($trimAllStrings || !empty($property->getAttributes(\Midnite81\Core\Attributes\TrimString::class))) {
+            return trim($value);
+        }
+
+        return $value;
     }
 }
