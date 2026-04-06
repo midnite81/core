@@ -14,11 +14,11 @@ trait HasUuid
      * This method is called automatically when the trait is being used by a model.
      * It registers a "creating" event that generates a UUID and assigns it to the specified column.
      */
-    public static function bootHasUUID(): void
+    public static function bootHasUuid(): void
     {
-        static::creating(function ($model) {
+        static::creating(function ($model): void {
             $column = $model->getUuidColumn();
-            $model->$column = uuid();
+            $model->$column ??= uuid();
         });
     }
 
