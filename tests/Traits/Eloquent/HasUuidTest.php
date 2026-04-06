@@ -12,7 +12,7 @@ test('it generates a UUID on creating', function () {
     };
 
     // Simulate the "creating" event
-    $model->bootHasUUID();
+    $model->bootHasUuid();
 
     expect($model)->toBeInstanceOf(Model::class);
 });
